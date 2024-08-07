@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .input{
+        @apply block my-2 p-2 w-[85%]
+    }
+}

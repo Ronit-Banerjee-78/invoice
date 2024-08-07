@@ -1,0 +1,52 @@
+/* theme */
+
+#light {
+  --primary-color: #222831;
+  --secondary-color: #DDDDDD;
+  --highlight-color: #8973f9;
+  --highlight-hover-color : #775df7;
+}
+
+#dark {
+  --primary-color: #DDDDDD;
+  --secondary-color: #1B2430;
+  --highlight-color: #8973f9;
+}
+
+.app , .app form {
+  background-color: var(--secondary-color);
+  transition: background-color 150ms ease-in 50ms;
+  color: var(--primary-color);
+}
+
+
+.app form button{
+  background-color: var(--highlight-color);
+}
+
+.app form button:hover {
+  background-color: var(--highlight-hover-color);
+}
+
+
+
+.Cells{
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom:3rem
+}
+
+form h3{
+  color: var(--hover-color);
+  margin-bottom: 1rem;
+}
+
+.logo{
+  background: #4776E6;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8E54E9, #4776E6);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8E54E9, #4776E6);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
