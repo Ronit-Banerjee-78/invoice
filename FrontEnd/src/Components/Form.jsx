@@ -14,7 +14,7 @@ const formSchema = z.object({
     streetAddress: z.string().min(6, "Street Address is required"),
     city: z.string().min(1, "City is required"),
     postCode: z.string().min(6, "Post Code is required"),
-    country: z.string().min(6, "Country is required"),
+    country: z.string("Country is required"),
   }),
   Client: z.object({
     name: z.string().min(1, "Client name is required"),
@@ -22,7 +22,7 @@ const formSchema = z.object({
     streetAddress: z.string().min(6, "Street Address is required"),
     city: z.string().min(1, "City is required"),
     postCode: z.string().min(6, "Post Code is required"),
-    country: z.string().min(6, "Country is required"),
+    country: z.string("Country is required"),
     invoiceDate: z.date(),
     paymentTerms: z.enum(['Net 30 Days', 'Net 60 Days', 'Net 90 Days'], {
       message: 'Payment Terms is required'
