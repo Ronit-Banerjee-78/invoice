@@ -3,7 +3,19 @@
 @tailwind utilities;
 
 @layer components {
-    .input{
-        @apply block my-2 p-2 w-[85%]
+    input{
+        @apply block m-2 p-2 w-full border border-gray-300 rounded
     }
+
+    .cells{
+        @apply flex flex-col items-center justify-center
+    }
+    
+    .cell-title{
+        @apply text-[#8973f9] font-semibold text-base tracking-wider mb-2
+    }
+
+    /* .input-group {
+        @apply flex items-center justify-around min-w-fit h-fit
+    } */
 }

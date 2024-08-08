@@ -37,8 +37,6 @@ function App() {
     setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'))
   }
 
-  console.log(theme)
-
 
   return (
     <ThemeContext.Provider value={{theme, toggleTheme}}>
