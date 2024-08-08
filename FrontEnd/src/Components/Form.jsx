@@ -33,8 +33,8 @@ const formSchema = z.object({
     z.object({
       name: z.string().min(1, "Item name is required"),
       quantity: z.number().min(1, "At least one item is required"),
-      price: z.number().min(1, "Price is required"),
-      total: z.number().min(1, "Total is required"),
+      price: z.number("Price is required"),
+      total: z.number("Total is required"),
     })
   ).min(1, "At least one item is required"),
 });
@@ -89,7 +89,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
     console.log(data);
   };
 
-  const today = new Date().toLocaleDateString('en-GB').split('/').reverse().join('-');
+  const today = new Date();
 
   return (
     <form
@@ -106,7 +106,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
           <option value="Draft">Draft</option>
           <option value="Paid">Paid</option>
           <option value="Pending">Pending</option>
-        </select>
+          </select> 
         {errors.Status?.value && <p className="text-red-500">{errors.Status.value.message}</p>}
       </div>
 
@@ -182,7 +182,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
                 defaultValue={dayjs(today)}
                 value={field.value ? dayjs(field.value) : null}
                 maxDate={dayjs(today)}
-                onChange={(invoiceDate) => field.onChange(dayjs(invoiceDate).format('YYYY-MM-DD'))}
+                onChange={(invoiceDate) => field.onChange(invoiceDate ? invoiceDate.toDate() : null)}
                 textField={(params) => <input {...params.inputProps} className='w-full px-3 py-2 border rounded-md' />}
               />
             )}
@@ -274,7 +274,6 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
           + Add New Item
         </button>
       </div>
-
       <div className='flex justify-end gap-2'>
         <button
           type="button"
