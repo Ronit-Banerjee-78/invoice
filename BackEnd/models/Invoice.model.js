@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { organization } from "./Organization.model";
 
 const itemSchema = new mongoose.Schema(
     {

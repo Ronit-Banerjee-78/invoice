@@ -19,10 +19,7 @@ const organizationSchema = new mongoose.Schema(
             type: String,
             required: true,
         }
-    },
-    {
-        timestamps: true
     }
 )
 
-export const organization = mongoose.model('Organization',organizationSchema)
+export const Organization = mongoose.model('Organization',organizationSchema)
