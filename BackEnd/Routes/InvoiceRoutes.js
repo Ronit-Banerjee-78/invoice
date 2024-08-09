@@ -10,6 +10,6 @@ router.get('/', getInvoices);
 router.post('/', postInvoice);
 
 // DELETE Invoice
-router.delete('/', deleteInvoice);
+router.delete('/:id', deleteInvoice);
 
 export default router;

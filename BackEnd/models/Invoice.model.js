@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const itemSchema = new mongoose.Schema(
     {
-        itemName: {
+        name: {
             type: String,
             required: true,
         },
@@ -16,12 +16,12 @@ const itemSchema = new mongoose.Schema(
         },
         total: {
             type: Number,
-            required: true
+            required: true,
         }
     }
-)
+);
 
-const invoiceSchema = mongoose.Schema(
+const invoiceSchema = new mongoose.Schema(
     {
         client: {
             type: mongoose.Schema.Types.ObjectId,
@@ -34,12 +34,12 @@ const invoiceSchema = mongoose.Schema(
             required: true,
         },
         invoiceDate: {
-            type: Date,
+            type: String,
             required: true,
         },
         paymentTerms: {
             type: String,
-            enum: ['Net 30 Days','Net 60 Days','Net 90 Days'],
+            enum: ['Net 30 Days', 'Net 60 Days', 'Net 90 Days'],
             required: true,
         },
         projectDescription: {
@@ -47,19 +47,15 @@ const invoiceSchema = mongoose.Schema(
             required: true,
         },
         items: [itemSchema],
-        totalAmount: {
+        status: {
             type: String,
-            required: true,
-        },
-        stauts: {
-            type: String,
-            enum: ['Draft','Pending','Paid'],
+            enum: ['Draft', 'Pending', 'Paid'],
             required: true,
         }
     },
     {
         timestamps: true
     }
-)
+);
 
-export const Invoice = mongoose.model('Invoice', invoiceSchema)
+export const Invoice = mongoose.model('Invoice', invoiceSchema);
