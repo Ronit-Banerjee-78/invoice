@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import Form from '../Components/Form.jsx'
 import { FaPlus } from "react-icons/fa";
+import { InvoicesApi } from '../Redux/ApiSlice.js';
+import InvoiceList from '../Components/InvoiceList.jsx';
 
 const Home = () => {
   const [isFormVisible, setIsFormVisible] = useState(false)
+
 
   const controlFormVisibility = () => {
     setIsFormVisible(prevState => !prevState)
@@ -14,7 +17,6 @@ const Home = () => {
       <div className="taskbar border-2 border-solid border-black w-full p-4 flex items-center justify-between">
         <div>
           <h1 className="title font-bold text-xl md:text-2xl lg:text-3xl tracking-wider">Invoices</h1>
-          <p>There are 7 total Invoices</p>
         </div>
 
         <div className="actions">
@@ -28,7 +30,7 @@ const Home = () => {
         </div>
       </div>
       {isFormVisible && <Form controlFormVisibility={controlFormVisibility} isFormVisible={isFormVisible} />}
-      <h1>Home Page</h1>
+      <InvoiceList/>
     </div>
   )
 }
