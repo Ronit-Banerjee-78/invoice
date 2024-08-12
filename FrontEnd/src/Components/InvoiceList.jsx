@@ -45,7 +45,7 @@ const InvoiceList = () => {
     }
 
     return (
-        <section className='invoice-list min-h-full m-4 p-4 border-2 border-solid border-black'>
+        <section className='invoice-list min-h-full m-4 p-4'>
             <FilterMode filterInvoices={filterInvoices} />
             {filterData.length === 0 ? (
                 <p className='text-center font-bold capitalize tracking-widest text-xl m-8'>No invoices found</p>

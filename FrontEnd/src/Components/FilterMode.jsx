@@ -10,14 +10,14 @@ const FilterMode = ({ filterInvoices }) => {
     };
 
     return (
-        <div className='mx-auto p-4 border-2 flex items-center justify-center border-solid border-black'>
+        <div className='mx-auto p-4 flex items-center justify-center'>
             {filterTypes.map((type, index) => (
                 <button
                     key={index}
                     value={type}
                     className={`mx-2 my-2 px-6 py-2 rounded-full tracking-wider ${
                         selectedType === type
-                            ? 'bg-blue-500 text-white'
+                            ? 'bg-[#8973f9] text-white'
                             : 'bg-black text-white'
                     }`}
                     onClick={() => handleClick(type)}

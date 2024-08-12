@@ -1,5 +1,8 @@
 import React from 'react'
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
+import { GoDotFill } from "react-icons/go";
+import { NavLink } from 'react-router-dom';
+
 
 const InvoiceCard = ({invoice}) => {
     const {_id , client , organization , items , invoiceDate , paymentTerms , status} = invoice
@@ -39,13 +42,21 @@ const trimId = _id.substr(-5)
 
 
   return (
-    <section className='invoice-card flex items-center justify-around shadow-lg p-8 my-8'>
-        <p>#{trimId}</p>
+    <section className='invoiceCard font-semibold tracking-wider text-base rounded-lg flex items-center justify-around shadow-lg p-8 my-8'>
+        <p className='uppercase'>#{trimId}</p>
         <p>Due {dueDate}</p>
-        <p>{name}</p>
-        <p>${totalAmount}</p>
-        <p className=''>{status}</p>
-        <button><IoIosArrowForward /></button>
+        <p className='capitalize'>{name}</p>
+        <p className='text-xl font-bold'>${totalAmount}</p>
+        <p className={`flex items-center justify-center
+            ${status === 'Pending' ? 'bg-yellow-300 text-yellow-600' : ''}
+            ${status === 'Paid' ? 'text-green-600 bg-green-300' : ''}
+            ${status === 'Draft' ? 'bg-gray-500 text-gray-100' : ''}
+         px-4 py-2 rounded-md`}>
+            <GoDotFill size={18} />{status}
+        </p>
+        <NavLink to={`/${_id}`}>
+            <button className='invoiceCardButton'><IoIosArrowDroprightCircle  size={32} /></button>
+        </NavLink>
     </section>
   )
 }

@@ -1,7 +1,7 @@
 /* theme */
 
 #light {
-  --primary-color: #222831;
+  --primary-color: #131315;
   --secondary-color: #DDDDDD;
   --highlight-color: #8973f9;
   --highlight-hover-color : #775df7;
@@ -9,7 +9,7 @@
 
 #dark {
   --primary-color: #DDDDDD;
-  --secondary-color: #1B2430;
+  --secondary-color: #131315;
   --highlight-color: #8973f9;
 }
 
@@ -17,6 +17,28 @@
   background-color: var(--secondary-color);
   transition: background-color 150ms ease-in 50ms;
   color: var(--primary-color);
+}
+
+#form {
+  background-color: white;
+  transition: background-color 150ms ease-in 50ms;
+  color: black;
+}
+
+/* #light .invoiceCard{
+    background-color: rgb(223, 222, 222);
+    transition: background-color 150ms ease-in 50ms;
+    color: white;
+}
+
+#dark .invoiceCard {
+  background-color: white;
+  transition: background-color 150ms ease-in 50ms;
+  color: black;
+} */
+
+.invoiceCard{
+  border: 2px solid var(--highlight-color);
 }
 
 .addInvoice{
