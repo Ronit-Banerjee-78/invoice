@@ -14,6 +14,19 @@ export const getInvoices = async (req, res) => {
     }
 };
 
+export const getSingleInvoice = async (req, res) => {
+  if(!req.params) return res.status(404).json({message : `Error while finding Invoice for requested Id`})
+    try {
+        const {id} = req.params
+        const invoice = await Invoice.findById(id)
+            .populate('client')
+            .populate('organization')
+        return res.status(200).json(invoice);
+    } catch (error) {
+        return res.status(500).json({ message: 'Error while fetching the data', error: error.message });
+    }
+};
+
 
 // POST Invoice
 export const postInvoice = async (req, res) => {

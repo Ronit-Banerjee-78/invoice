@@ -104,7 +104,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
     <form
       id='form'
       onSubmit={handleSubmit(onFormSubmit)}
-      className='border-2 border-solid border-gray-300 p-8 m-4 w-[30rem] bg-white rounded-lg'
+      className='border-2 border-solid overflow-y-scroll absolute border-gray-300 p-8 m-4 w-[30rem] bg-white rounded-lg'
     >
       {/* Status */}
       <div className='mb-2'>
@@ -120,7 +120,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
 
       {/* organizationData */}
       <div className='mb-4'>
-        <h3 className='text-lg font-medium mb-2'>Bill From</h3>
+        <h3 className='text-lg font-semibold mt-4 mb-2 text-[#8973f9]'>Bill From</h3>
         <div className='mb-2'>
           <label className='block mb-1'>Street Address</label>
           <input {...register('organizationData.streetAddress')} className='w-full px-3 py-2 border rounded-md' />
@@ -147,7 +147,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
 
       {/* clientData */}
       <div className='mb-4'>
-        <h3 className='text-lg font-medium mb-2'>Bill To</h3>
+        <h3 className='text-lg font-semibold mt-4 mb-2 text-[#8973f9]'>Bill To</h3>
         <div className='mb-2'>
           <label className='block mb-1'>Name</label>
           <input {...register('clientData.name')} className='w-full px-3 py-2 border rounded-md' />
@@ -221,7 +221,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
 
       {/* Items */}
       <div className='mb-4'>
-        <h3 className='text-lg font-medium mb-2'>Item List</h3>
+        <h3 className='text-lg font-semibold mt-4  mb-2 text-[#8973f9]'>Item List</h3>
         {fields.map((field, index) => (
           <div key={field.id} className='mb-4 border rounded-md p-4'>
             <div className='mb-2'>
@@ -272,7 +272,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
               type="button"
               onClick={() => remove(index)}
               disabled={fields.length === 1}
-              className='text-red-500 mt-2 flex items-center'
+              className={`text-red-500 mt-2 flex items-center ${fields.length === 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
             >
               <IoTrashBin className='mr-1' /> Remove
             </button>
