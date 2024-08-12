@@ -28,7 +28,7 @@ const formSchema = z.object({
       message: 'Payment Terms is required'
     }),
     projectDescription: z.string().min(4, "Project Description is required"),
-  Item: z.array(
+  items: z.array(
     z.object({
       name: z.string().min(1, "Item name is required"),
       quantity: z.number().min(1, "At least one item is required"),
@@ -39,7 +39,7 @@ const formSchema = z.object({
 });
 
 const Form = ({ isFormVisible, controlFormVisibility }) => {
-  const { register, handleSubmit, control, setValue, formState: { errors } } = useForm({
+  const { register, handleSubmit, control, setValue, formState: { errors } , reset } = useForm({
     defaultValues: {
       status: 'Draft',
       organizationData: {
@@ -61,7 +61,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
       paymentTerms: 'Net 30 Days',
       projectDescription: '',
 
-      Item: [
+      items: [
         {
           name: '',
           quantity: 1,
@@ -76,32 +76,22 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'Item',
+    name: 'items',
   });
 
   const watchItems = useWatch({
     control,
-    name: 'Item',
+    name: 'items',
   });
 
   const [addInvoice] = InvoicesApi.useAddInvoiceMutation();
-
-  // const onFormSubmit = async(data) => {
-  //   // if (!data) return;
-  //   // console.log(data);
-  //   // try {
-  //   //   await addInvoice(data).unwrap();
-  //   // } catch (err) {
-  //   //   console.error('Failed to save invoice:', err);
-  //   // }
-  //   console.log(data)
-  // };
 
   const onFormSubmit = async (data) => {
   console.log('Form submitted with data:', data);
   try {
     await addInvoice(data).unwrap();
     console.log('Invoice added successfully');
+    controlFormVisibility(false)
   } catch (err) {
     console.error('Failed to save invoice:', err);
   }
@@ -125,7 +115,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
           <option value="Paid">Paid</option>
           <option value="Pending">Pending</option>
         </select> 
-        {errors.Status?.value && <p className="text-red-500">{errors.Status.value.message}</p>}
+        {errors?.status && <p className="text-red-500">{errors.status.message}</p>}
       </div>
 
       {/* organizationData */}
@@ -236,19 +226,35 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
           <div key={field.id} className='mb-4 border rounded-md p-4'>
             <div className='mb-2'>
               <label className='block mb-1'>Item Name</label>
-              <input {...register(`Item.${index}.name`)} className='w-full px-3 py-2 border rounded-md' />
-              {errors.Item?.[index]?.name && <p className="text-red-500">{errors.Item[index].name.message}</p>}
+              <input {...register(`items.${index}.name`)} className='w-full px-3 py-2 border rounded-md' />
+              {errors.items?.[index]?.name && <p className="text-red-500">{errors.items[index].name.message}</p>}
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-3 gap-2'>
               <div>
                 <label className='block mb-1'>Quantity</label>
-                <input type="number" {...register(`Item.${index}.quantity`, { valueAsNumber: true })} className='w-full px-3 py-2 border rounded-md' />
-                {errors.Item?.[index]?.quantity && <p className="text-red-500">{errors.Item[index].quantity.message}</p>}
+                <input 
+                type="number"
+                 {...register(`items.${index}.quantity`, { valueAsNumber: true })}
+                  onChange={(e) => {
+                  const value = parseInt(e.target.value, 10);
+                  setValue(`items.${index}.quantity`, value);
+                  setValue(`items.${index}.total`, value * watchItems[index]?.price);
+                }}
+                  className='w-full px-3 py-2 border rounded-md' />
+                {errors.items?.[index]?.quantity && <p className="text-red-500">{errors.items[index].quantity.message}</p>}
               </div>
               <div>
                 <label className='block mb-1'>Price</label>
-                <input type="number" {...register(`Item.${index}.price`, { valueAsNumber: true })} className='w-full px-3 py-2 border rounded-md' />
-                {errors.Item?.[index]?.price && <p className="text-red-500">{errors.Item[index].price.message}</p>}
+                <input 
+                type="number" 
+                {...register(`items.${index}.price`, { valueAsNumber: true })} 
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value);
+                  setValue(`items.${index}.price`, value);
+                  setValue(`items.${index}.total`, value * watchItems[index]?.quantity);
+                }}
+                className='w-full px-3 py-2 border rounded-md' />
+                {errors.items?.[index]?.price && <p className="text-red-500">{errors.items[index].price.message}</p>}
               </div>
               <div>
                 <label className='block mb-1'>Total</label>
@@ -259,7 +265,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
                   disabled
                   readOnly
                 />
-                {errors.Item?.[index]?.total && <p className="text-red-500">{errors.Item[index].total.message}</p>}
+                {errors.items?.[index]?.total && <p className="text-red-500">{errors.items[index].total.message}</p>}
               </div>
             </div>
             <button
@@ -293,8 +299,6 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
         <button
           type="submit"
           className='bg-blue-500 text-white py-2 px-4 rounded-md'
-          // onClick={() => controlFormVisibility(false)}
-
         >
           Save
         </button>
