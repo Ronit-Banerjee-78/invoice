@@ -10,10 +10,9 @@ const app = express();
 // middleware
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend's URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
-}));app.use(express.json())
+  origin: 'http://localhost:5173', // Replace with your front-end origin
+}));
+app.use(express.json())
 
 dotenv.config({
     path : './env'
