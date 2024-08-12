@@ -28,12 +28,15 @@ export const postInvoice = async (req, res) => {
             status
         } = req.body;
 
-        let client = new Client(clientData);
-            await client.save();
+        // Create and save new Client
+        const client = new Client(clientData);
+        await client.save();
 
-        let organization = new Organization(organizationData);
-            await organization.save();
+        // Create and save new Organization
+        const organization = new Organization(organizationData);
+        await organization.save();
 
+        // Create and save new Invoice
         const invoice = new Invoice({
             client: client._id,
             organization: organization._id,
@@ -48,10 +51,9 @@ export const postInvoice = async (req, res) => {
 
         res.status(201).json({ message: 'Invoice created successfully', invoice });
     } catch (error) {
-        res.status(500).json({ message: 'Error creating invoice', error });
+        res.status(500).json({ message: 'Error creating invoice', error: error.message });
     }
 };
-
 
 
 

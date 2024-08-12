@@ -8,9 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { InvoicesApi } from '../Redux/ApiSlice';
 
 const formSchema = z.object({
-  Status: z.object({
-    value: z.enum(['Paid', 'Pending', 'Draft']),
-  }),
+  status: z.enum(['Paid', 'Pending', 'Draft']),
   organizationData: z.object({
     streetAddress: z.string().min(6, "Street Address is required"),
     city: z.string().min(1, "City is required"),
@@ -25,19 +23,17 @@ const formSchema = z.object({
     postCode: z.string().min(6, "Post Code is required"),
     country: z.string().min(1, "Country is required"),
   }),
-  Invoice: z.object({
     invoiceDate: z.date(),
     paymentTerms: z.enum(['Net 30 Days', 'Net 60 Days', 'Net 90 Days'], {
       message: 'Payment Terms is required'
     }),
     projectDescription: z.string().min(4, "Project Description is required"),
-  }),
   Item: z.array(
     z.object({
       name: z.string().min(1, "Item name is required"),
       quantity: z.number().min(1, "At least one item is required"),
       price: z.number().min(0.01, "Price is required"),
-      total: z.number( "Total is required"),
+      total: z.number("Total is required"),
     })
   ).min(1, "At least one item is required"),
 });
@@ -45,9 +41,7 @@ const formSchema = z.object({
 const Form = ({ isFormVisible, controlFormVisibility }) => {
   const { register, handleSubmit, control, setValue, formState: { errors } } = useForm({
     defaultValues: {
-      Status: {
-        value: 'Draft',
-      },
+      status: 'Draft',
       organizationData: {
         streetAddress: '',
         city: '',
@@ -62,11 +56,11 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
         postCode: '',
         country: '',
       },
-      Invoice: {
-        invoiceDate: new Date(),
-        paymentTerms: '',
-        projectDescription: '',
-      },
+      
+      invoiceDate: new Date(),
+      paymentTerms: 'Net 30 Days',
+      projectDescription: '',
+
       Item: [
         {
           name: '',
@@ -92,15 +86,27 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
 
   const [addInvoice] = InvoicesApi.useAddInvoiceMutation();
 
-  const onFormSubmit = async(data) => {
-    if (!data) return;
-    console.log(data);
-    try {
-      await addInvoice(data).unwrap();
-    } catch (err) {
-      console.error('Failed to save invoice:', err);
-    }
-  };
+  // const onFormSubmit = async(data) => {
+  //   // if (!data) return;
+  //   // console.log(data);
+  //   // try {
+  //   //   await addInvoice(data).unwrap();
+  //   // } catch (err) {
+  //   //   console.error('Failed to save invoice:', err);
+  //   // }
+  //   console.log(data)
+  // };
+
+  const onFormSubmit = async (data) => {
+  console.log('Form submitted with data:', data);
+  try {
+    await addInvoice(data).unwrap();
+    console.log('Invoice added successfully');
+  } catch (err) {
+    console.error('Failed to save invoice:', err);
+  }
+};
+
 
   const today = new Date();
 
@@ -113,7 +119,7 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
       {/* Status */}
       <div className='mb-2'>
         <label className='block mb-1'>Status</label>
-        <select {...register('Status.value')} className='w-full px-3 py-2 border rounded-md'>
+        <select {...register('status')} className='w-full px-3 py-2 border rounded-md'>
           <option value=""></option>
           <option value="Draft">Draft</option>
           <option value="Paid">Paid</option>
@@ -197,29 +203,29 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
               <DatePicker
                 {...field}
                 value={dayjs(field.value)}
-                onChange={(date) => setValue('Invoice.invoiceDate', date ? new Date(date) : null)}
+                onChange={(date) => setValue('invoiceDate', date ? new Date(date) : null)}
                 maxDate={dayjs(today)}
                 className='w-full px-3 py-2 border rounded-md'
                 slotProps={{ textField: { size: 'small', fullWidth: true } }}
               />
             )}
           />
-          {errors.Invoice?.invoiceDate && <p className="text-red-500">{errors.Invoice.invoiceDate.message}</p>}
+          {errors.invoiceDate && <p className="text-red-500">{errors.invoiceDate.message}</p>}
         </div>
         <div className='mb-2'>
           <label className='block mb-1'>Payment Terms</label>
-          <select {...register('Invoice.paymentTerms')} className='w-full px-3 py-2 border rounded-md'>
+          <select {...register('paymentTerms')} className='w-full px-3 py-2 border rounded-md'>
             <option value=""></option>
             <option value="Net 30 Days">Net 30 Days</option>
             <option value="Net 60 Days">Net 60 Days</option>
             <option value="Net 90 Days">Net 90 Days</option>
           </select>
-          {errors.Invoice?.paymentTerms && <p className="text-red-500">{errors.Invoice.paymentTerms.message}</p>}
+          {errors.paymentTerms && <p className="text-red-500">{errors.paymentTerms.message}</p>}
         </div>
         <div className='mb-2'>
           <label className='block mb-1'>Project Description</label>
-          <textarea {...register('Invoice.projectDescription')} className='w-full px-3 py-2 border rounded-md' rows={3} />
-          {errors.Invoice?.projectDescription && <p className="text-red-500">{errors.Invoice.projectDescription.message}</p>}
+          <textarea {...register('projectDescription')} className='w-full px-3 py-2 border rounded-md' rows={3} />
+          {errors.projectDescription && <p className="text-red-500">{errors.projectDescription.message}</p>}
         </div>
       </div>
 
@@ -287,6 +293,8 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
         <button
           type="submit"
           className='bg-blue-500 text-white py-2 px-4 rounded-md'
+          // onClick={() => controlFormVisibility(false)}
+
         >
           Save
         </button>
