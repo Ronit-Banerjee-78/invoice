@@ -9,17 +9,15 @@ const InvoiceList = () => {
     const [filterType, setFilterType] = useState('');
 
     useEffect(() => {
-        // Initialize filterData when data is available
         if (data) {
             setFilterData(data);
         }
     }, [data]);
 
     useEffect(() => {
-        // Apply filter when filterType changes
         if (data) {
             if (filterType === '') {
-                setFilterData(data); // Show all data if no filter type
+                setFilterData(data);
             } else {
                 setFilterData(data.filter((invoice) => filterType === invoice.status));
             }
@@ -27,7 +25,7 @@ const InvoiceList = () => {
     }, [filterType, data]);
 
     const filterInvoices = (type) => {
-        setFilterType(type); // Set the filter type to trigger the effect
+        setFilterType(type);
     };
 
     if (isLoading) {
@@ -48,9 +46,9 @@ const InvoiceList = () => {
 
     return (
         <section className='invoice-list min-h-full m-4 p-4 border-2 border-solid border-black'>
-            {/* <FilterMode filterInvoices={filterInvoices} /> */}
+            <FilterMode filterInvoices={filterInvoices} />
             {filterData.length === 0 ? (
-                <p>No invoices found.</p>
+                <p className='text-center font-bold capitalize tracking-widest text-xl m-8'>No invoices found</p>
             ) : (
                 filterData.map((invoice) => (
                     <InvoiceCard invoice={invoice} key={invoice._id} />
