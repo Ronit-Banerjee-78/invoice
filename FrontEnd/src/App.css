@@ -19,6 +19,12 @@
   color: var(--primary-color);
 }
 
+.addInvoice{
+    background-color: var(--primary-color);
+    transition: background-color 150ms ease-in 50ms;
+    color: var(--secondary-color);
+}
+
 /* Loader */
 
 .loader {

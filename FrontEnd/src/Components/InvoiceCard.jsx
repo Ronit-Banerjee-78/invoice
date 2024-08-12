@@ -39,7 +39,7 @@ const trimId = _id.substr(-5)
 
 
   return (
-    <section className='invoice-card '>
+    <section className='invoice-card flex items-center justify-around shadow-lg p-8 my-8'>
         <p>#{trimId}</p>
         <p>Due {dueDate}</p>
         <p>{name}</p>

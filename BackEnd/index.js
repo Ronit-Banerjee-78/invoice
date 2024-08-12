@@ -10,7 +10,7 @@ const app = express();
 // middleware
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your front-end origin
+  origin: 'http://localhost:5173',
 }));
 app.use(express.json())
 

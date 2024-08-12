@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div className='home relative p-4'>
-      <div className="taskbar border-2 border-solid border-black w-full p-4 flex items-center justify-between">
+      <div className="taskbar w-full p-4 flex items-center justify-between">
         <div>
           <h1 className="title font-bold text-xl md:text-2xl lg:text-3xl tracking-wider">Invoices</h1>
         </div>
