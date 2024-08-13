@@ -38,30 +38,34 @@ const formSchema = z.object({
   ).min(1, "At least one item is required"),
 });
 
-const Form = ({ isFormVisible, controlFormVisibility }) => {
+const Form = ({ isFormVisible, controlFormVisibility , data }) => {
+  const {client , organization , status, projectDescription , invoiceDate , items , paymentTerms , _id } = data || {}
+  const {streetAddress , city , postCode , country} = organization || {}
+  const {name, email , streetAddress : clientStreetAddress , city : clientCity , postCode : clientPostCode , country : clientCountry} = client || {}
+
+  const date = typeof invoiceDate === 'string' ? new Date(invoiceDate) : invoiceDate;
   const { register, handleSubmit, control, setValue, formState: { errors } , reset } = useForm({
     defaultValues: {
-      status: 'Draft',
+      status: status || 'Draft',
       organizationData: {
-        streetAddress: '',
-        city: '',
-        postCode: '',
-        country: '',
+        streetAddress: streetAddress || '',
+        city: city || '',
+        postCode: postCode || '',
+        country: country || '',
       },
       clientData: {
-        name: '',
-        email: '',
-        streetAddress: '',
-        city: '',
-        postCode: '',
-        country: '',
+        name: name || '',
+        email: email || '',
+        streetAddress: clientStreetAddress || '',
+        city: clientCity || '',
+        postCode: clientPostCode || '',
+        country: clientCountry || '',
       },
-      
-      invoiceDate: new Date(),
-      paymentTerms: 'Net 30 Days',
-      projectDescription: '',
+      invoiceDate: date || new Date(),
+      paymentTerms: paymentTerms || 'Net 30 Days',
+      projectDescription: projectDescription || '',
 
-      items: [
+      items: items || [
         {
           name: '',
           quantity: 1,
@@ -85,20 +89,33 @@ const Form = ({ isFormVisible, controlFormVisibility }) => {
   });
 
   const [addInvoice] = InvoicesApi.useAddInvoiceMutation();
+  const [updateInvoice] = InvoicesApi.useUpdateInvoiceMutation();
 
-  const onFormSubmit = async (data) => {
-  console.log('Form submitted with data:', data);
+
+  const onFormSubmit = async (formData) => {
+  // console.log('Form submitted with data:', formData);
+  // console.log('Existing data id:', _id);
+
   try {
-    await addInvoice(data).unwrap();
-    console.log('Invoice added successfully');
-    controlFormVisibility(false)
+    if (_id) {
+      console.log('Editing existing invoice');
+      await updateInvoice({ id: _id, ...formData }).unwrap();
+      console.log('Invoice edited successfully');
+    } else {
+      console.log('Adding new invoice');
+      await addInvoice(formData).unwrap();
+      console.log('Invoice added successfully');
+    }
+    controlFormVisibility(false);
   } catch (err) {
     console.error('Failed to save invoice:', err);
   }
 };
 
 
+
   const today = new Date();
+
 
   return (
     <form

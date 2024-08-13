@@ -1,13 +1,19 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { InvoicesApi } from '../Redux/ApiSlice';
 import { useParams , useNavigate } from 'react-router-dom';
+import Form from '../Components/Form';
 import dayjs from 'dayjs';
 
 const Invoice = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [isFormVisible, setIsFormVisible] = useState(false)
   const { data, isError, isLoading, error } = InvoicesApi.useGetSingleInvoiceQuery(id);
   const [deleteInvoice] = InvoicesApi.useDeleteInvoiceMutation(id)
+
+const controlFormVisibility = () => {
+    setIsFormVisible(prevState => !prevState)
+}
 
  const handleDelete = async () => {
     try {
@@ -60,6 +66,7 @@ const Invoice = () => {
   return (
     <div className='min-h-screen bg-gray-100 p-8'>
       <div className='bg-white shadow-md rounded-lg p-6'>
+      {isFormVisible && <Form data={data} controlFormVisibility={controlFormVisibility} isFormVisible={isFormVisible} />}
         <header className='flex items-center justify-between mb-6'>
           <h1 className='text-3xl font-bold text-gray-900'>Invoice #{id}</h1>
           <span className={`px-4 py-2 rounded-full text-white ${status === 'Paid' ? 'bg-green-500' : status === 'Pending' ? 'bg-yellow-500' : 'bg-gray-500'}`}>
@@ -68,7 +75,9 @@ const Invoice = () => {
         </header>
 
         <div className='flex justify-end mb-6 space-x-4'>
-          <button className='px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-150'>
+          <button 
+          onClick={() => controlFormVisibility()}
+          className='px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-150'>
             Edit
           </button>
           <button 
@@ -76,9 +85,10 @@ const Invoice = () => {
           className='px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition duration-150'>
             Delete
           </button>
+          {status !== 'Paid' && 
           <button className='px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-150'>
             Mark as Paid
-          </button>
+          </button>}
         </div>
 
         <section className='mb-8'>

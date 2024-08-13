@@ -1,38 +1,46 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+    import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const URL = 'http://localhost:8000/'
+    const URL = 'http://localhost:8000/'
 
-export const InvoicesApi = createApi({
-    reducerPath : "InvoicesApi",
-    baseQuery : fetchBaseQuery({
-        baseUrl : `${URL}`
-    }),
-    endpoints: (builder) => ({
-        getInvoices : builder.query({
-            query: () => 'api/invoices',
-            providesTags: ['invoice']
+    export const InvoicesApi = createApi({
+        reducerPath : "InvoicesApi",
+        baseQuery : fetchBaseQuery({
+            baseUrl : `${URL}`
         }),
-        getSingleInvoice : builder.query({
-            query: (id) => `api/invoices/${id}`,
-            providesTags: ['invoice']
-        }),
-        addInvoice : builder.mutation({
-            query: (newInvoice) => ({
-                url: 'api/invoices',
-                method: 'POST',
-                body: newInvoice
+        endpoints: (builder) => ({
+            getInvoices : builder.query({
+                query: () => 'api/invoices',
+                providesTags: ['invoice']
             }),
-            invalidatesTags: ['invoice']
-        }),
-        deleteInvoice : builder.mutation({
-            query: (id) => ({
-                url: `api/invoices/${id}`,
-                method: 'DELETE',
-                body: id
+            getSingleInvoice : builder.query({
+                query: (id) => `api/invoices/${id}`,
+                providesTags: ['invoice']
             }),
-            invalidatesTags: ['invoice']
-        }),
-    })
+            addInvoice : builder.mutation({
+                query: (newInvoice) => ({
+                    url: 'api/invoices',
+                    method: 'POST',
+                    body: newInvoice
+                }),
+                invalidatesTags: ['invoice']
+            }),
+            updateInvoice : builder.mutation({
+                query: ({ id, ...updatedData }) => ({
+                    url: `api/invoices/${id}`,
+                    method: 'PATCH',
+                    body: updatedData
+                }),
+                invalidatesTags: ['invoice']
+            }),
+            deleteInvoice : builder.mutation({
+                query: (id) => ({
+                    url: `api/invoices/${id}`,
+                    method: 'DELETE',
+                    body: id
+                }),
+                invalidatesTags: ['invoice']
+            }),
+        })
 
-}) 
+    }) 
 
