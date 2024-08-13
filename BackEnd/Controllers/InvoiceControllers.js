@@ -73,7 +73,7 @@ export const postInvoice = async (req, res) => {
 
 export const updateInvoice = async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body) // facing the issue over here where the i'm getting the actual updated body in req but unable to update the data in db and eventually failing to update the UI.
     const { id } = req.params; 
     const updateData = req.body;
 
@@ -93,20 +93,20 @@ export const updateInvoice = async (req, res) => {
 // DELETE Invoice
 export const deleteInvoice = async (req, res) => {
 
-    const {id} = req.params
+  const {id} = req.params
   if (!req.params.id) {
     return res.status(400).json({ message: 'Please provide the Invoice ID to delete' });
   }
 
-   const invoice = await Invoice.findById(id).exec();
-   console.log(invoice)
-   const {client , organization} = invoice
-    await Client.findByIdAndDelete(client);
-    await Organization.findByIdAndDelete(organization);
-
   try {
-    const result = await Invoice.findByIdAndDelete(id);
-    if (!result) {
+        const invoice = await Invoice.findById(id).exec();
+        console.log(invoice)
+        const {client , organization} = invoice
+        // Delete Invoice , Client & Organization
+        await Client.findByIdAndDelete(client);
+        await Organization.findByIdAndDelete(organization);
+        await Invoice.findByIdAndDelete(id);
+    if (!invoice) {
       return res.status(404).json({ message: 'Invoice not found' });
     }
     res.json({ message: 'Invoice Deleted' });
