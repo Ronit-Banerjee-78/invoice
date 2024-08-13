@@ -77,10 +77,7 @@ export const updateInvoice = async (req, res) => {
     const { id } = req.params; 
     const updateData = req.body;
 
-    const updatedInvoice = await Invoice.findByIdAndUpdate(id, updateData, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedInvoice = await Invoice.findByIdAndUpdate(id, updateData, {new: true});
 
     if (!updatedInvoice) {
       return res.status(404).json({ message: 'Invoice not found' });
@@ -95,12 +92,20 @@ export const updateInvoice = async (req, res) => {
 
 // DELETE Invoice
 export const deleteInvoice = async (req, res) => {
+
+    const {id} = req.params
   if (!req.params.id) {
     return res.status(400).json({ message: 'Please provide the Invoice ID to delete' });
   }
 
+   const invoice = await Invoice.findById(id).exec();
+   console.log(invoice)
+   const {client , organization} = invoice
+    await Client.findByIdAndDelete(client);
+    await Organization.findByIdAndDelete(organization);
+
   try {
-    const result = await Invoice.findByIdAndDelete(req.params.id);
+    const result = await Invoice.findByIdAndDelete(id);
     if (!result) {
       return res.status(404).json({ message: 'Invoice not found' });
     }
