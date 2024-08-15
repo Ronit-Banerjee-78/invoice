@@ -10,6 +10,7 @@ const Invoice = () => {
   const [isFormVisible, setIsFormVisible] = useState(false)
   const { data, isError, isLoading, error } = InvoicesApi.useGetSingleInvoiceQuery(id);
   const [deleteInvoice] = InvoicesApi.useDeleteInvoiceMutation(id)
+  const [updateInvoiceStatus] = InvoicesApi.useUpdateInvoiceStatusMutation(id)
 
 const controlFormVisibility = () => {
     setIsFormVisible(prevState => !prevState)
@@ -23,6 +24,15 @@ const controlFormVisibility = () => {
       console.error('Failed to delete the invoice:', error);
     }
   };
+
+
+const handleStatus = async () => {
+  try {
+    await updateInvoiceStatus({ id, status: 'Paid' }).unwrap();
+  } catch (error) {
+    console.error('Failed to update the invoice status:', error);
+  }
+}
 
   if (isLoading) {
     return (
@@ -85,8 +95,10 @@ const controlFormVisibility = () => {
           className='px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition duration-150'>
             Delete
           </button>
-          {status !== 'Paid' && 
-          <button className='px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-150'>
+          {status !== 'Paid' &&
+          <button 
+          onClick = {() => handleStatus()} 
+          className='px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-150'>
             Mark as Paid
           </button>}
         </div>

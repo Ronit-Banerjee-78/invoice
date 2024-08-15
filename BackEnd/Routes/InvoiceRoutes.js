@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteInvoice, getInvoices, getSingleInvoice, postInvoice  , updateInvoice} from '../Controllers/InvoiceControllers.js';
+import { deleteInvoice, getInvoices, getSingleInvoice, postInvoice  , updateInvoiceStatus , updateInvoice} from '../Controllers/InvoiceControllers.js';
 
 const router = express.Router();
 
@@ -11,6 +11,9 @@ router.get('/:id', getSingleInvoice);
 
 // POST invoices
 router.post('/', postInvoice);
+
+// PATCH invoices
+router.patch('/:id', updateInvoiceStatus);
 
 // PATCH invoices
 router.patch('/:id', updateInvoice);

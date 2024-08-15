@@ -24,6 +24,17 @@
                 }),
                 invalidatesTags: ['invoice']
             }),
+            updateInvoiceStatus : builder.mutation({
+                query: ({ id, status }) => ({
+                    url: `api/invoices/${id}`,
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: {status}
+                }),
+                invalidatesTags: ['invoice']
+            }),
             updateInvoice : builder.mutation({
                 query: ({ id, ...updatedData }) => ({
                     url: `api/invoices/${id}`,
