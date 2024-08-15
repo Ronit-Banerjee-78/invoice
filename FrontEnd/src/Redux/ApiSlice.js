@@ -28,6 +28,9 @@
                 query: ({ id, ...updatedData }) => ({
                     url: `api/invoices/${id}`,
                     method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                     body: updatedData
                 }),
                 invalidatesTags: ['invoice']

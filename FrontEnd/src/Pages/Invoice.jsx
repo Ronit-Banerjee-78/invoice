@@ -27,7 +27,7 @@ const controlFormVisibility = () => {
   if (isLoading) {
     return (
       <section className='flex items-center justify-center min-h-screen bg-gray-100'>
-        <div className="loader border-blue-500 border-solid rounded-full w-16 h-16 border-t-4 animate-spin"></div>
+        <div className="loader border-blue-500 border-solid rounded-full w-16 h-16 border-t-4"></div>
       </section>
     );
   }

@@ -95,7 +95,7 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
 
 
   const onFormSubmit = async (formData) => {
-  console.log('Form submitted with data:', formData);
+  console.log('Form submitted with data:');
   // console.log('Existing data id:', _id);
 
   try {

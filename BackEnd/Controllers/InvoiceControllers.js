@@ -70,24 +70,39 @@ export const postInvoice = async (req, res) => {
 
 
 // UPDATE Invoice
-
 export const updateInvoice = async (req, res) => {
   try {
-    console.log(req.body) // facing the issue over here where the i'm getting the actual updated body in req but unable to update the data in db and eventually failing to update the UI.
-    const { id } = req.params; 
-    const updateData = req.body;
+    const { id } = req.params;
+    const data = req.body;
 
-    const updatedInvoice = await Invoice.findByIdAndUpdate(id, updateData, {new: true});
+    if (!data) {
+    return res.status(400).json({ message: 'No data provided' });
+  }
 
-    if (!updatedInvoice) {
-      return res.status(404).json({ message: 'Invoice not found' });
-    }
+    const {organizationData , clientData , invoiceDate , paymentTerms , projectDescription , status, items} = data
+    
+    // Retrieve existing invoice to get client and organization IDs
+    const existingInvoice = await Invoice.findById(id)
+            .populate('client')
+            .populate('organization');
+    console.log(existingInvoice)
 
+
+    const { client, organization } = existingInvoice;
+
+    // Update Client and Organization
+    const updatedClient = await Client.findByIdAndUpdate(client._id, clientData, { new: true });
+    const updatedOrganization = await Organization.findByIdAndUpdate(organization._id, organizationData, { new: true });
+
+    // Update Invoice
+    const updatedData = {client : updatedClient , organization : updatedOrganization , invoiceDate , paymentTerms , projectDescription , status , items}
+    const updatedInvoice = await Invoice.findByIdAndUpdate(id, updatedData, { new: true });
     res.status(200).json(updatedInvoice);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 // DELETE Invoice
