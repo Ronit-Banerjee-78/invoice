@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller, useFieldArray, useWatch } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
@@ -39,6 +39,8 @@ const formSchema = z.object({
 });
 
 const Form = ({ isFormVisible, controlFormVisibility , data }) => {
+
+
   const {client , organization , status, projectDescription , invoiceDate , items , paymentTerms , _id } = data || {}
   const {streetAddress , city , postCode , country} = organization || {}
   const {name, email , streetAddress : clientStreetAddress , city : clientCity , postCode : clientPostCode , country : clientCountry} = client || {}
@@ -93,14 +95,14 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
 
 
   const onFormSubmit = async (formData) => {
-  // console.log('Form submitted with data:', formData);
+  console.log('Form submitted with data:', formData);
   // console.log('Existing data id:', _id);
 
   try {
     if (_id) {
       console.log('Editing existing invoice');
       await updateInvoice({ id: _id, ...formData }).unwrap();
-      console.log('Invoice edited successfully');
+      console.log('Invoice edited successfully' , formData);
     } else {
       console.log('Adding new invoice');
       await addInvoice(formData).unwrap();
@@ -111,7 +113,6 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
     console.error('Failed to save invoice:', err);
   }
 };
-
 
 
   const today = new Date();
