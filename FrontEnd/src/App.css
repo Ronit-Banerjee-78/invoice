@@ -13,40 +13,6 @@
   --highlight-color: #8973f9;
 }
 
-.app {
-  background-color: var(--secondary-color);
-  transition: background-color 150ms ease-in 50ms;
-  color: var(--primary-color);
-}
-
-#form {
-  background-color: white;
-  transition: background-color 150ms ease-in 50ms;
-  color: black;
-}
-
-/* #light .invoiceCard{
-    background-color: rgb(223, 222, 222);
-    transition: background-color 150ms ease-in 50ms;
-    color: white;
-}
-
-#dark .invoiceCard {
-  background-color: white;
-  transition: background-color 150ms ease-in 50ms;
-  color: black;
-} */
-
-.invoiceCard{
-  border: 2px solid var(--highlight-color);
-}
-
-.addInvoice{
-    background-color: var(--primary-color);
-    transition: background-color 150ms ease-in 50ms;
-    color: var(--secondary-color);
-}
-
 /* Loader */
 
 .loader {

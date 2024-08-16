@@ -10,8 +10,8 @@ const Header = () => {
     const { theme, toggleTheme } = themeData;
 
     return (
-        <section className='header bg-[#393E46] w-full md:w-auto h-full md:min-h-screen flex justify-between items-center md:flex-col md:justify-between md:items-start md:rounded-tr-xl md:rounded-br-xl'>
-            <div className="logo w-fit p-5 rounded-tr-xl rounded-br-xl">
+        <section className='header'>
+            <div className="logo">
                 <BiSolidCircleThreeQuarter size={36} className='rotate-45 text-white' />
             </div>
             <nav className="profile flex items-center h-full md:w-full md:flex-col">
