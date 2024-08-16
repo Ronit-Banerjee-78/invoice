@@ -11,6 +11,7 @@ const AppLayout = () => {
       colSpan={{ base: 6 , lg : 1}}
       minH={{lg: "100vh"}}
       bg="gray.800"
+      marginBottom={{base : "1.5em" , lg: "oem"}}
       >
         <Header className='header' />
       </GridItem>
