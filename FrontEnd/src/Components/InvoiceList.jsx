@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { InvoicesApi } from '../Redux/ApiSlice';
 import InvoiceCard from './InvoiceCard';
 import FilterMode from './FilterMode';
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
 const InvoiceList = () => {
     const { data, isError, isLoading, error } = InvoicesApi.useGetInvoicesQuery();
@@ -31,7 +32,11 @@ const InvoiceList = () => {
     if (isLoading) {
         return (
             <section className='invoice-list flex items-center justify-center min-h-full'>
-                <div className="loader"></div>
+                <CircularProgress
+                isIndeterminate
+                size="75px"
+                thickness="10px"
+                color="#8973f9"/>
             </section>
         );
     }

@@ -5,10 +5,10 @@ import { Grid, GridItem } from '@chakra-ui/react'
 
 const AppLayout = () => {
   return (
-    <Grid templateColumns="repeat(6,1fr)" bg="gray.50">
+    <Grid templateColumns="repeat(12,1fr)" bg="gray.50">
       <GridItem
       as="aside"
-      colSpan={{ base: 6 , lg : 1}}
+      colSpan={{ base: 12 , md : 1}}
       minH={{lg: "100vh"}}
       bg="gray.800"
       marginBottom={{base : "1.5em" , lg: "oem"}}
@@ -17,7 +17,7 @@ const AppLayout = () => {
       </GridItem>
       <GridItem
       minH="100vh"
-      colSpan={{ base : 6 , lg : 5}}
+      colSpan={{ base : 12 , md : 11}}
       >
         <Outlet />
       </GridItem>

@@ -10,7 +10,7 @@ const FilterMode = ({ filterInvoices }) => {
     };
 
     return (
-        <div className='mx-auto p-4 flex items-center justify-center'>
+        <div className='mx-auto p-4 flex items-center justify-center flex-wrap'>
             {filterTypes.map((type, index) => (
                 <button
                     key={index}

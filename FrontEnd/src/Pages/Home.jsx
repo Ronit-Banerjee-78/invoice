@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import Form from '../Components/Form.jsx'
 import { FaPlus } from "react-icons/fa";
-import { InvoicesApi } from '../Redux/ApiSlice.js';
 import InvoiceList from '../Components/InvoiceList.jsx';
+import { Box } from '@mui/material';
+import { Flex, Text , Button
+ } from '@chakra-ui/react';
 
 const Home = () => {
   const [isFormVisible, setIsFormVisible] = useState(false)
@@ -13,25 +15,43 @@ const Home = () => {
   }
 
   return (
-    <div className='home relative p-4'>
-      <div className="taskbar w-full p-4 flex items-center justify-between">
-        <div>
-          <h1 className="title font-bold text-xl md:text-2xl lg:text-3xl tracking-wider">Invoices</h1>
-        </div>
+    <Box className='home relative p-4'>
+      <Flex 
+      align="center"
+      justifyContent="space-between"
+      p="1em"
+      >
+          <Text
+           as="h1"
+           letterSpacing="0.1em"
+           fontWeight="700"
+           fontSize="x-large"
+           >Invoices</Text>
 
-        <div className="actions">
-          <div className="filters">
-
-          </div>
-          <button className={`addInvoice flex items-center justify-center px-4 py-3 font-semibold rounded-full text-base tracking-widest ${isFormVisible ? 'cursor-not-allowed' : 'cursor-pointer'} `} disabled={isFormVisible} onClick={controlFormVisibility}>
+        <Button
+          className="addInvoice"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          px={4}
+          py={3}
+          variant="ghost"
+          fontWeight="semibold"
+          borderRadius="full"
+          fontSize="base"
+          letterSpacing="widest"
+          cursor={isFormVisible ? 'not-allowed' : 'pointer'}
+          isDisabled={isFormVisible}
+          onClick={controlFormVisibility}
+        > 
             <FaPlus className='mr-2' />
             New Invoice
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Flex>
+        
       {isFormVisible && <Form controlFormVisibility={controlFormVisibility} isFormVisible={isFormVisible} />}
       <InvoiceList/>
-    </div>
+    </Box>
   )
 }
 

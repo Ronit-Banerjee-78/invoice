@@ -3,6 +3,8 @@ import { InvoicesApi } from '../Redux/ApiSlice';
 import { useParams , useNavigate } from 'react-router-dom';
 import Form from '../Components/Form';
 import dayjs from 'dayjs';
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+
 
 const Invoice = () => {
   const { id } = useParams();
@@ -34,13 +36,20 @@ const handleStatus = async () => {
   }
 }
 
-  if (isLoading) {
-    return (
-      <section className='flex items-center justify-center min-h-screen bg-gray-100'>
-        <div className="loader border-blue-500 border-solid rounded-full w-16 h-16 border-t-4"></div>
-      </section>
-    );
-  }
+
+    if (isLoading) {
+        return (
+            <section className='flex items-center justify-center min-h-full'>
+                <CircularProgress
+                isIndeterminate
+                size="75px"
+                thickness="10px"
+                color="#8973f9"/>
+            </section>
+        );
+    }
+
+
 
   if (isError) {
     return (

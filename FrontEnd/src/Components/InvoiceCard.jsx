@@ -2,6 +2,8 @@ import React from 'react'
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
 import { NavLink } from 'react-router-dom';
+import { Box} from '@mui/material';
+import { Flex, Text } from '@chakra-ui/react';
 
 
 const InvoiceCard = ({invoice}) => {
@@ -42,22 +44,34 @@ const trimId = _id.substr(-5)
 
 
   return (
-    <section className='invoiceCard font-semibold tracking-wider text-base rounded-lg flex items-center justify-around shadow-lg p-8 my-8'>
-        <p className='uppercase'>#{trimId}</p>
-        <p>Due {dueDate}</p>
-        <p className='capitalize'>{name}</p>
-        <p className='text-xl font-bold'>${totalAmount}</p>
-        <p className={`flex items-center justify-center
+    <Flex
+    flexWrap="wrap"
+    gap="1rem"
+    alignItems="center"
+    justifyContent="space-around"
+    p="2em"
+    borderWidth="1px"
+    borderRadius="md"
+    shadow="sm"
+    bg="gray.200"
+    className='invoiceCard'
+    >  
+
+        <Text className='uppercase'>#{trimId}</Text>
+        <Text>Due {dueDate}</Text>
+        <Text className='text-xl font-bold'>${totalAmount}</Text>    
+        <Text className='capitalize'>{name}</Text>
+        <Text className={`flex items-center justify-center
             ${status === 'Pending' ? 'bg-yellow-300 text-yellow-600' : ''}
             ${status === 'Paid' ? 'text-green-600 bg-green-300' : ''}
             ${status === 'Draft' ? 'bg-gray-500 text-gray-100' : ''}
          px-4 py-2 rounded-md`}>
-            <GoDotFill size={18} />{status}
-        </p>
+        <GoDotFill size={18} />{status}
+        </Text>
         <NavLink to={`/${_id}`}>
             <button className='invoiceCardButton'><IoIosArrowDroprightCircle  size={32} /></button>
         </NavLink>
-    </section>
+    </Flex>
   )
 }
 

@@ -4,7 +4,7 @@ import { FaMoon } from "react-icons/fa";
 import { PiSunFill } from "react-icons/pi";
 import { ThemeContext } from '../App';
 import User from '../assets/Images/User.jpg'
-import { Flex, Spacer } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { Box } from '@mui/material';
 
 const Header = () => {
@@ -13,24 +13,30 @@ const Header = () => {
 
     return (
         <Flex 
-        direction={{base : "row" , lg : "column"}} 
+        direction={{base : "row" , md : "column"}} 
         justifyContent="space-between" 
         alignItems="center"
-        minH={{base : "2em" , lg: "100vh"}}
+        minH={{base : "2em" , md: "100vh"}}
+        // className='rounded-b-lg md:rounded-r-lg'
         >
-            <Box
-            minWidth="sm"
-            px="2.5em"
-            py="1.5em"
-              className="logo">
+                <Box
+                minWidth="sm"
+                px="2em"
+                py="1.55em"
+                className="logo text-center rounded-r-2xl md:rounded-bl-2xl md:rounded-tr-none md:rounded-br-2xl"
+                //  rounded-tr-lg md:rounded-br-lg md:rounded-bl-lg
+                >
                 <BiSolidCircleThreeQuarter
-                 size={36} className='rotate-45 text-white' />
-            </Box>
+                    size={36}
+                    className='rotate-45 text-white'
+                />
+                </Box>
+
             <Flex 
             as="nav" 
-            direction={{base: "row" , lg: "column"}}
-            mr={{base : "1em" , lg: "0em"}}
-            mb={{base : "0em" , lg: "1em"}}
+            direction={{base: "row" , md: "column"}}
+            mr={{base : "1em" , md: "0em"}}
+            mb={{base : "0em" , md: "1em"}}
             className="profile">
                 {theme === 'light' ? (
                     <button className='m-4' onClick={toggleTheme}>
