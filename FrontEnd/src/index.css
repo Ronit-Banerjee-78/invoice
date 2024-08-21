@@ -3,17 +3,23 @@
 @tailwind utilities;
 
 @layer components {
-    input{
-        @apply block m-2 p-2 w-full border border-gray-300 rounded
+    .input{
+        @apply w-full px-3 py-2 border rounded-md
     }
 
-    .cells{
-        @apply flex flex-col items-center justify-center
+    .label{
+        @apply block mb-1 tracking-wider
     }
+
+    .tag{
+        @apply text-lg font-semibold mt-4 mb-2 text-[#8973f9]
+    }
+
+
     
-    .cell-title{
+    /* .cell-title{
         @apply text-[#8973f9] font-semibold text-base tracking-wider mb-2
-    }
+    } */
 
     /* .input-group {
         @apply flex items-center justify-around min-w-fit h-fit

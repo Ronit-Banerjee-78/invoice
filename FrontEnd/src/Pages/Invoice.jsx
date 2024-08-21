@@ -1,10 +1,15 @@
 import React , {useState} from 'react';
 import { InvoicesApi } from '../Redux/ApiSlice';
-import { useParams , useNavigate } from 'react-router-dom';
+import { useParams , useNavigate, NavLink } from 'react-router-dom';
 import Form from '../Components/Form';
 import dayjs from 'dayjs';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
-
+import { CircularProgress, Text , Flex , Button, Box} from '@chakra-ui/react'
+import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
+import { GoDotFill } from "react-icons/go";
+import { calculateDueDate } from '../Components/InvoiceCard';
+import { RiEdit2Fill } from "react-icons/ri";
+import { IoTrashBinSharp } from "react-icons/io5";
+import { MdOutlinePublishedWithChanges } from "react-icons/md";
 
 const Invoice = () => {
   const { id } = useParams();
@@ -13,6 +18,9 @@ const Invoice = () => {
   const { data, isError, isLoading, error } = InvoicesApi.useGetSingleInvoiceQuery(id);
   const [deleteInvoice] = InvoicesApi.useDeleteInvoiceMutation(id)
   const [updateInvoiceStatus] = InvoicesApi.useUpdateInvoiceStatusMutation(id)
+
+const trimId = id.substr(-7);
+
 
 const controlFormVisibility = () => {
     setIsFormVisible(prevState => !prevState)
@@ -82,90 +90,119 @@ const handleStatus = async () => {
     status,
   } = data;
 
+
+
+  
+
+const convertDate = (invoiceDate) => {
+      const date = new Date(invoiceDate);
+      const day = date.getDate();
+      const monthName = date.toLocaleString('en-US', { month: 'short' });
+      const year = date.getFullYear();
+
+      return `${day} ${monthName} ${year}`
+}
+
+const ConvertedInvoiceDate = convertDate(invoiceDate)
+
+  
+
+ const paymentDate = calculateDueDate(invoiceDate , paymentTerms)
+
+
+
   return (
-    <div className='min-h-screen bg-gray-100 p-8'>
-      <div className='bg-white shadow-md rounded-lg p-6'>
-      {isFormVisible && <Form data={data} controlFormVisibility={controlFormVisibility} isFormVisible={isFormVisible} />}
-        <header className='flex items-center justify-between mb-6'>
-          <h1 className='text-3xl font-bold text-gray-900'>Invoice #{id}</h1>
-          <span className={`px-4 py-2 rounded-full text-white ${status === 'Paid' ? 'bg-green-500' : status === 'Pending' ? 'bg-yellow-500' : 'bg-gray-500'}`}>
-            {status}
-          </span>
-        </header>
+    <Box className='min-h-screen mx-auto w-[100vw] md:w-[70vw] p-8'>
+        <NavLink to="/">
+        <Text gap="0" maxW="fit-content" _hover={{
+          color: "#775df7"
+        }} >
+        <MdOutlineKeyboardDoubleArrowLeft size={32} />
+        </Text>
+        </NavLink>
 
-        <div className='flex justify-end mb-6 space-x-4'>
-          <button 
-          onClick={() => controlFormVisibility()}
-          className='px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition duration-150'>
-            Edit
-          </button>
-          <button 
-          onClick={() => handleDelete()}
-          className='px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition duration-150'>
-            Delete
-          </button>
-          {status !== 'Paid' &&
-          <button 
-          onClick = {() => handleStatus()} 
-          className='px-4 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition duration-150'>
-            Mark as Paid
-          </button>}
-        </div>
+        {isFormVisible && <Form data={data} controlFormVisibility={controlFormVisibility} isFormVisible={isFormVisible} />}
 
-        <section className='mb-8'>
-          <h2 className='text-xl font-semibold text-gray-700 mb-4'>Bill From</h2>
-          <div className='bg-gray-50 p-4 rounded-lg shadow-inner'>
-            <p className='text-gray-600'>{organization.streetAddress}</p>
-            <p className='text-gray-600'>{organization.city}, {organization.country}</p>
-            <p className='text-gray-600'>{organization.postCode}</p>
-          </div>
-        </section>
 
-        <section className='mb-8'>
-          <h2 className='text-xl font-semibold text-gray-700 mb-4'>Bill To</h2>
-          <div className='bg-gray-50 p-4 rounded-lg shadow-inner'>
-            <p className='text-gray-600'>{client.name}</p>
-            <p className='text-gray-600'>{client.email}</p>
-            <p className='text-gray-600'>{client.streetAddress}</p>
-            <p className='text-gray-600'>{client.city}, {client.country}</p>
-            <p className='text-gray-600'>{client.postCode}</p>
-          </div>
-        </section>
 
-        <section className='mb-8'>
-          <h2 className='text-xl font-semibold text-gray-700 mb-4'>Invoice Details</h2>
-          <div className='bg-gray-50 p-4 rounded-lg shadow-inner'>
-            <p className='text-gray-600'><strong>Invoice Date:</strong> {dayjs(invoiceDate).format('MMMM D, YYYY')}</p>
-            <p className='text-gray-600'><strong>Payment Terms:</strong> {paymentTerms}</p>
-            <p className='text-gray-600'><strong>Project Description:</strong> {projectDescription}</p>
-          </div>
-        </section>
 
-        <section>
-          <h2 className='text-xl font-semibold text-gray-700 mb-4'>Item List</h2>
-          <table className='w-full bg-white border border-gray-300 rounded-lg shadow-sm'>
-            <thead>
-              <tr className='bg-gray-100 border-b'>
-                <th className='p-4 text-left text-gray-600'>Item Name</th>
-                <th className='p-4 text-left text-gray-600'>Quantity</th>
-                <th className='p-4 text-left text-gray-600'>Price</th>
-                <th className='p-4 text-left text-gray-600'>Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item, index) => (
-                <tr key={index} className='border-b'>
-                  <td className='p-4 text-gray-700'>{item.name}</td>
-                  <td className='p-4 text-gray-700'>{item.quantity}</td>
-                  <td className='p-4 text-gray-700'>${item.price.toFixed(2)}</td>
-                  <td className='p-4 text-gray-700'>${item.total.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
-      </div>
-    </div>
+        <Flex align="center" bg="gray.200" flexWrap="wrap" justify="space-between" p="4" my="6" shadow="lg" rounded="md"
+         className=''>
+           <Text fontWeight="600" rounded="md" letterSpacing="widest" className={`flex items-center justify-center
+              ${status === 'Pending' ? 'bg-yellow-300 text-yellow-600' : ''}
+              ${status === 'Paid' ? 'text-green-600 bg-green-300' : ''}
+              ${status === 'Draft' ? 'bg-gray-500 text-gray-100' : ''} px-4 py-2`}>
+              <GoDotFill size={18} />
+              {status}
+          </Text>
+          <Box>
+            <Button variant='ghost'  className='px-4 font-semibold bg-blue-400 text-white rounded-md tracking-wider py-2 m-2' onClick={() => controlFormVisibility()}><RiEdit2Fill size={22} /></Button>
+            <Button variant='ghost' className='px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-red-400 text-white' onClick={() => handleDelete()}><IoTrashBinSharp size={22}/></Button>
+            <Button variant='ghost' className='px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-[#8973f9] text-white' onClick={() => handleStatus()}><MdOutlinePublishedWithChanges size={22}/></Button>
+          </Box>
+        </Flex>
+
+
+ {/* direction={{base: "column" , md: "row"}} */}
+
+        <Box shadow="lg" bg="gray.200" rounded="md" p={{base: "1em" , md: "2em"}} mt="3em" m="1em">
+          <Flex align="start" justify={{base: "space-between" , md: "space-between"}}>
+            <Box>
+              <Text as="h1" letterSpacing="wider" fontWeight="700" textTransform="uppercase" fontSize={{base: "1em" , sm: "1.25em"}}>#{trimId}</Text>
+              <Text textTransform="capitalize">{projectDescription}</Text>
+            </Box>
+            <Box textAlign={{base: "left" , md: "right"}} textTransform="capitalize">
+              <Text>{organization.streetAddress}</Text>
+              <Text>{organization.city}</Text>
+              <Text>{organization.postCode}</Text>
+              <Text>{organization.country}</Text>
+            </Box>
+          </Flex>
+
+
+
+
+
+{/* direction={{base: "column" , md: "row"}} */}
+          {/* --------- 3 columns ----------- */}
+          <Flex mt="2em" align="start" flexWrap="wrap"  justify="space-between">
+            {/* --------- 1 ------ */}
+          <Flex align="start" justify={{base: "start" , md: "space-between"}} direction="column" minH={{base: "fit-content" , md: "10em"}} textAlign="left" m="1em">
+            <div>
+            <Text textTransform="capitalize">invoice date</Text>
+            <Text fontSize={{base: "1.05em" , md: "1.25em"}} fontWeight="700">{ConvertedInvoiceDate}</Text>
+            </div>
+            <div>
+            <Text textTransform="capitalize">payment date</Text>
+            <Text fontSize={{base: "1.05em" , md: "1.25em"}} fontWeight="700">{paymentDate}</Text>
+            </div>
+          </Flex>
+          {/* --------- 2 ------- */}
+          <Flex textAlign="start" textTransform="capitalize" direction="column" m="1em">
+            <Text>Bill To</Text>
+            <Text my="0.25em" fontSize={{base: "1.05em" , md: "1.25em"}} fontWeight="700">{client.name}</Text>
+            <Text>{client.streetAddress}</Text>
+            <Text>{client.city}</Text>
+            <Text>{client.postCode}</Text>
+            <Text>{client.country}</Text>
+          </Flex>
+          {/* ---------- 3 -------------- */}
+          <Flex textAlign="start" direction="column" m="1em">
+          <Text>Sent To</Text>
+          <Text mt="0.25em" fontSize={{base: "1.05em" , md: "1.25em"}} fontWeight="700">{client.email}</Text>
+          </Flex>
+        </Flex>
+        </Box>
+
+
+        {/* ---------- items ------------ */}
+
+
+
+
+
+
+    </Box>
   );
 };
 

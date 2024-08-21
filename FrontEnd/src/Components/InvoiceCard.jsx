@@ -5,19 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { Flex, Text } from '@chakra-ui/react';
 
-const InvoiceCard = ({ invoice }) => {
-    const { _id, client, organization, items, invoiceDate, paymentTerms, status } = invoice;
-    const { name, steetAddress, city, postCode, country } = client;
 
-    const itemsTotal = items.map((item) => item.total);
-
-    function calculateTotalAmount(accumulator, value) {
-        return accumulator + value;
-    }
-
-    const totalAmount = itemsTotal.reduce(calculateTotalAmount, 0);
-
-    function calculateDueDate(invoiceDate, paymentTerms) {
+export const calculateDueDate = (invoiceDate, paymentTerms) => {
         const date = new Date(invoiceDate);
 
         let daysToAdd = 0;
@@ -38,8 +27,22 @@ const InvoiceCard = ({ invoice }) => {
         return `${day} ${monthName} ${year}`;
     }
 
+const InvoiceCard = ({ invoice }) => {
+    const { _id, client, organization, items, invoiceDate, paymentTerms, status } = invoice;
+    const { name, steetAddress, city, postCode, country } = client;
+
+    const itemsTotal = items.map((item) => item.total);
+
+    function calculateTotalAmount(accumulator, value) {
+        return accumulator + value;
+    }
+
+    const totalAmount = itemsTotal.reduce(calculateTotalAmount, 0);
+
+
+
     const dueDate = calculateDueDate(invoiceDate, paymentTerms);
-    const trimId = _id.substr(-5);
+    const trimId = _id.substr(-7);
 
     return (
         <NavLink to={`/${_id}`}>
@@ -92,5 +95,4 @@ const InvoiceCard = ({ invoice }) => {
         </NavLink>
     );
 };
-
 export default InvoiceCard;

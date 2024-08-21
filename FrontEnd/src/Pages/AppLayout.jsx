@@ -16,7 +16,7 @@ const AppLayout = () => {
         <Header className='header' />
       </GridItem>
       <GridItem
-      // className='border-2 border-solid border-red-700'
+      bg="gray.50"
       colSpan={{ base : 12 , md : 11}}
       >
         <Outlet />
