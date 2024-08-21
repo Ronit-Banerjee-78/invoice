@@ -16,15 +16,21 @@ const FilterMode = ({ filterInvoices }) => {
                 {filterTypes.map((type, index) => (
                     <Button
                         key={index}
-                        px="4"
+                        px="2"
                         fontWeight="700"
                         py="2"
                         m="2"
                         _hover={{
-                            color:"#8973f9",
-                            // transform: "scale(1.1)",
-                            transition: "100ms all"
-                        }}
+      background: selectedType === type 
+        ? 'linear-gradient(to right, #8E54E9, #4776E6) text-transparent bg-clip-text' 
+        : ''
+    }}
+                     className={`mx-2 my-2 px-6 py-2 tracking-wider ${
+    selectedType === type
+        ? 'text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-blue-500'
+        : 'text-black'
+}`}
+
                         rounded="full"
                         variant={selectedType === type ? 'solid' : 'outline'}
                         colorScheme={selectedType === type ? 'purple' : 'gray'}

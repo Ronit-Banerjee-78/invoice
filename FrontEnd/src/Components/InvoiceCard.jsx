@@ -44,8 +44,10 @@ const InvoiceCard = ({ invoice }) => {
     return (
         <NavLink to={`/${_id}`}>
             <Flex
+                w={{base: "90vw" , md: "70vw" , lg: "55vw"}}
+                align={{base: "start" , md: "center"}}
+                justify="space-around"
                 flexWrap="wrap"
-                gap="1rem"
                 pos="relative"
                 borderWidth="1px"
                 borderRadius="md"
@@ -77,7 +79,9 @@ const InvoiceCard = ({ invoice }) => {
                 <Flex
                     justify="space-around"
                     flexWrap="wrap"
-                    gap={{ base: "1em", md: "1.25em" }}
+                    gap={{ base: "1.5em", md: "2em" }}
+                    fontSize={{base: "1em" , md: "1.15em"}}
+
                 >
                     <Text fontWeight="700" className='uppercase'>#{trimId}</Text>
                     <Text>Due {dueDate}</Text>
