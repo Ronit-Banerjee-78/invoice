@@ -15,7 +15,7 @@ const Home = () => {
   }
 
   return (
-    <Box className='home relative p-4'>
+    <Box className='home relative'>
       <Flex 
       align="center"
       justifyContent="space-between"
@@ -25,26 +25,29 @@ const Home = () => {
            as="h1"
            letterSpacing="0.1em"
            fontWeight="700"
-           fontSize="x-large"
+           fontSize={{base: "1.25em" , md: "1.5em" }}
            >Invoices</Text>
 
         <Button
+          varient="outline"
+          colorScheme='blackAlpha'
+          // bg="gray.400"
+          borderRadius="full"
           className="addInvoice"
           display="flex"
           alignItems="center"
           justifyContent="center"
           px={4}
           py={3}
-          variant="ghost"
+
           fontWeight="semibold"
-          borderRadius="full"
           fontSize="base"
-          letterSpacing="widest"
+          letterSpacing="wider"
           cursor={isFormVisible ? 'not-allowed' : 'pointer'}
           isDisabled={isFormVisible}
           onClick={controlFormVisibility}
         > 
-            <FaPlus className='mr-2' />
+            <FaPlus className='mr-1' />
             New Invoice
           </Button>
         </Flex>

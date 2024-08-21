@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button, Box, Flex } from '@chakra-ui/react';
 
 const FilterMode = ({ filterInvoices }) => {
     const filterTypes = ['All', 'Draft', 'Pending', 'Paid'];
@@ -10,24 +11,30 @@ const FilterMode = ({ filterInvoices }) => {
     };
 
     return (
-        <div className='mx-auto p-4 flex items-center justify-center flex-wrap'>
-            {filterTypes.map((type, index) => (
-                <button
-                    key={index}
-                    value={type}
-                    className={`mx-2 my-2 px-6 py-2 rounded-full tracking-wider ${
-                        selectedType === type
-                            ? 'bg-[#8973f9] text-white'
-                            : 'bg-black text-white'
-                    }`}
-                    onClick={() => handleClick(type)}
-                    aria-pressed={selectedType === type}
-                    aria-label={`Filter by ${type}`}
-                >
-                    {type}
-                </button>
-            ))}
-        </div>
+        <Box mx="auto" mb="24" bg="gray.200" rounded="lg">
+            <Flex justify="center" align="center" flexWrap="wrap">
+                {filterTypes.map((type, index) => (
+                    <Button
+                        key={index}
+                        px="4"
+                        fontWeight="700"
+                        py="2"
+                        m="2"
+                        _hover={{
+                            color:"#8973f9",
+                            // transform: "scale(1.1)",
+                            transition: "100ms all"
+                        }}
+                        rounded="full"
+                        variant={selectedType === type ? 'solid' : 'outline'}
+                        colorScheme={selectedType === type ? 'purple' : 'gray'}
+                        onClick={() => handleClick(type)}
+                    >
+                        {type}
+                    </Button>
+                ))}
+            </Flex>
+        </Box>
     );
 };
 

@@ -41,7 +41,7 @@ function App() {
   return (
     <ThemeContext.Provider value={{theme, toggleTheme}}>
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-gb'>
-      <section className='app min-h-screen' id={theme}>
+      <section className='app' id={theme}>
           <RouterProvider router={router} />
       </section>
       </LocalizationProvider>

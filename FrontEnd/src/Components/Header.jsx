@@ -14,17 +14,15 @@ const Header = () => {
     return (
         <Flex 
         direction={{base : "row" , md : "column"}} 
-        justifyContent="space-between" 
+        justify="space-between" 
         alignItems="center"
         minH={{base : "2em" , md: "100vh"}}
-        // className='rounded-b-lg md:rounded-r-lg'
         >
                 <Box
                 minWidth="sm"
                 px="2em"
                 py="1.55em"
                 className="logo text-center rounded-r-2xl md:rounded-bl-2xl md:rounded-tr-none md:rounded-br-2xl"
-                //  rounded-tr-lg md:rounded-br-lg md:rounded-bl-lg
                 >
                 <BiSolidCircleThreeQuarter
                     size={36}
