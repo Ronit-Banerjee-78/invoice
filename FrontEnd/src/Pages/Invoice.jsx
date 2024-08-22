@@ -213,7 +213,7 @@ const totalAmount = itemsTotal.reduce(calculateTotalAmount, 0);
     <Grid templateColumns="repeat(4, 1fr)"  py="1.5em" gap={4} key={index}>
       <Text textTransform="capitalize">{item.name}</Text>
       <Text textAlign="center">{item.quantity}</Text>
-      <Text textAlign="center">${item.price}</Text>
+      <Text textAlign="center">${item.price}.00</Text>
       <Text textAlign="right">${item.total}.00</Text>
     </Grid>
   ))}
@@ -228,22 +228,22 @@ const totalAmount = itemsTotal.reduce(calculateTotalAmount, 0);
 
 
 
- <Box p="1.5em" mt="3em" display={{base: "block" , sm: "none"}} className="">
+ <Box p="1em" mt="3em" bg="gray.100" display={{base: "block" , sm: "none"}} className="">
   {items.map((item, index) => (
     <Flex align="center" key={index} justify="space-between">
       <Box>
         <Text textTransform="capitalize" fontWeight="700">{item.name}</Text>
-        <Text>{item.quantity} X ${item.price}.--</Text>
+        <Text>{item.quantity} X ${item.price}.00</Text>
       </Box>
 
       <Box>
-        <Text  fontWeight="700" fontSize="1.25em">${item.total}.00</Text>
+        <Text  fontWeight="700" fontSize="1em">${item.total}.00</Text>
       </Box>
     </Flex>
   ))}
-   <Flex rounded="md" bg="black" color="white" shadow="md" align="center" justify="space-between">
-    <Text>Grand Total</Text>
-    <Text fontSize="2em" fontWeight="700" letterSpacing="wider">${totalAmount}.00</Text>
+   <Flex mt="1.5em" p="0.5em" rounded="md" bg="black" color="white" shadow="md" align="center" justify="space-between">
+    <Text>Total</Text>
+    <Text fontSize="1.5em" fontWeight="700" letterSpacing="wider">${totalAmount}.00</Text>
   </Flex>
 </Box>
 
