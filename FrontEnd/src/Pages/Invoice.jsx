@@ -3,7 +3,7 @@ import { InvoicesApi } from '../Redux/ApiSlice';
 import { useParams , useNavigate, NavLink } from 'react-router-dom';
 import Form from '../Components/Form';
 import dayjs from 'dayjs';
-import { CircularProgress, Text , Flex , Button, Box} from '@chakra-ui/react'
+import { CircularProgress, Text , Flex , Grid , Button, Box} from '@chakra-ui/react'
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import { calculateDueDate } from '../Components/InvoiceCard';
@@ -104,10 +104,14 @@ const convertDate = (invoiceDate) => {
 }
 
 const ConvertedInvoiceDate = convertDate(invoiceDate)
+const paymentDate = calculateDueDate(invoiceDate , paymentTerms)
+const itemsTotal = items.map((item) => item.total);
 
-  
+function calculateTotalAmount(accumulator, value) {
+  return accumulator + value;
+}
 
- const paymentDate = calculateDueDate(invoiceDate , paymentTerms)
+const totalAmount = itemsTotal.reduce(calculateTotalAmount, 0);
 
 
 
@@ -165,7 +169,7 @@ const ConvertedInvoiceDate = convertDate(invoiceDate)
 
 {/* direction={{base: "column" , md: "row"}} */}
           {/* --------- 3 columns ----------- */}
-          <Flex mt="2em" align="start" flexWrap="wrap"  justify="space-between">
+          <Flex mt="3em" align="start" flexWrap="wrap"  justify="space-between">
             {/* --------- 1 ------ */}
           <Flex align="start" justify={{base: "start" , md: "space-between"}} direction="column" minH={{base: "fit-content" , md: "10em"}} textAlign="left" m="1em">
             <div>
@@ -192,16 +196,62 @@ const ConvertedInvoiceDate = convertDate(invoiceDate)
           <Text mt="0.25em" fontSize={{base: "1.05em" , md: "1.25em"}} fontWeight="700">{client.email}</Text>
           </Flex>
         </Flex>
-        </Box>
+        
 
 
         {/* ---------- items ------------ */}
 
+  <Box p="1.5em" mt="3em" bg="gray.100" rounded="md" shadow="md" display={{base: "none" , sm: "block"}} className="">
+  <Grid templateColumns="repeat(4, 1fr)" py="0.5em" gap={4} fontWeight="bold">
+    <Text>Name</Text>
+    <Text textAlign="center">Qty.</Text>
+    <Text textAlign="center">Price</Text>
+    <Text textAlign="right">Total</Text>
+  </Grid>
+
+  {items.map((item, index) => (
+    <Grid templateColumns="repeat(4, 1fr)"  py="1.5em" gap={4} key={index}>
+      <Text textTransform="capitalize">{item.name}</Text>
+      <Text textAlign="center">{item.quantity}</Text>
+      <Text textAlign="center">${item.price}</Text>
+      <Text textAlign="right">${item.total}.00</Text>
+    </Grid>
+  ))}
+
+  <Flex rounded="md" p="2em" bg="black" color="white" align="center" justify="space-between">
+    <Text>Grand Total</Text>
+    <Text rounded="md" fontSize="2em" fontWeight="700" letterSpacing="wider">${totalAmount}.00</Text>
+  </Flex>
+</Box>
 
 
 
 
 
+ <Box p="1.5em" mt="3em" display={{base: "block" , sm: "none"}} className="">
+  {items.map((item, index) => (
+    <Flex align="center" key={index} justify="space-between">
+      <Box>
+        <Text textTransform="capitalize" fontWeight="700">{item.name}</Text>
+        <Text>{item.quantity} X ${item.price}.--</Text>
+      </Box>
+
+      <Box>
+        <Text  fontWeight="700" fontSize="1.25em">${item.total}.00</Text>
+      </Box>
+    </Flex>
+  ))}
+   <Flex rounded="md" bg="black" color="white" shadow="md" align="center" justify="space-between">
+    <Text>Grand Total</Text>
+    <Text fontSize="2em" fontWeight="700" letterSpacing="wider">${totalAmount}.00</Text>
+  </Flex>
+</Box>
+
+
+
+
+
+        </Box>
     </Box>
   );
 };

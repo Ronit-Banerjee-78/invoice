@@ -61,6 +61,10 @@ const InvoiceCard = ({ invoice }) => {
                 pt="3em"
                 px="1em"
                 pb="2em"
+                _hover={{
+                    transform: "scale(1.05)",
+                    transition: "300ms 10ms linear all"
+                }}
             >
                 <Text
                     pos="absolute"
