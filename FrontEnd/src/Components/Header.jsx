@@ -16,7 +16,7 @@ const Header = () => {
         direction={{base : "row" , md : "column"}} 
         justify="space-between" 
         alignItems="center"
-        minH={{base : "2em" , md: "100vh"}}
+        minH={{base: "2em" , md: "100%"}}
         >
                 <Box
                 minWidth="sm"

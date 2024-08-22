@@ -9,9 +9,9 @@ const AppLayout = () => {
       <GridItem
       as="aside"
       colSpan={{ base: 12 , md : 1}}
-      // minH={{lg: "100vh"}}
       bg="gray.800"
-      marginBottom={{base : "1.5em" , lg: "oem"}}
+      minH={{base: "2em" , md: "100vh"}}
+      marginBottom={{base : "1.5em" , lg: "0em"}}
       >
         <Header className='header' />
       </GridItem>
