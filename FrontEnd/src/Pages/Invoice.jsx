@@ -10,6 +10,8 @@ import { calculateDueDate } from '../Components/InvoiceCard';
 import { RiEdit2Fill } from "react-icons/ri";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
+import { useToast } from '@chakra-ui/react'
+
 
 const Invoice = () => {
   const { id } = useParams();
@@ -26,10 +28,21 @@ const controlFormVisibility = () => {
     setIsFormVisible(prevState => !prevState)
 }
 
+  const toast = useToast()
+
+
  const handleDelete = async () => {
     try {
       await deleteInvoice(id).unwrap();
       navigate('/');
+      toast({
+          title: 'Invoice deleted Successfully.',
+          description: "We've deleted your Invoice for you.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
     } catch (error) {
       console.error('Failed to delete the invoice:', error);
     }
@@ -39,6 +52,14 @@ const controlFormVisibility = () => {
 const handleStatus = async () => {
   try {
     await updateInvoiceStatus({ id, status: 'Paid' }).unwrap();
+    toast({
+          title: 'Invoice status updated.',
+          description: "We've updated your Invoice status for you.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
   } catch (error) {
     console.error('Failed to update the invoice status:', error);
   }

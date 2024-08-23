@@ -61,9 +61,9 @@ const InvoiceCard = ({ invoice }) => {
                 px="1em"
                 pb="2em"
                 m="1em"
+                transition= "300ms 100ms linear all"
                 _hover={{
-                    transform: "scale(1.05)",
-                    transition: "300ms 10ms linear all"
+                transform: "scale(1.05)",
                 }}
             >
                 <Text

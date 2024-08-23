@@ -6,12 +6,7 @@ import { IoTrashBin } from "react-icons/io5";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InvoicesApi } from '../Redux/ApiSlice';
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-} from '@chakra-ui/react'
+import { useToast } from '@chakra-ui/react'
 
 const formSchema = z.object({
   status: z.enum(['Paid', 'Pending', 'Draft'] , {
@@ -101,6 +96,8 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
   const [addInvoice] = InvoicesApi.useAddInvoiceMutation();
   const [updateInvoice] = InvoicesApi.useUpdateInvoiceMutation();
 
+  const toast = useToast()
+
 
   const onFormSubmit = async (formData) => {
   console.log('Form submitted with data:');
@@ -110,10 +107,26 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
     if (_id) {
       console.log('Editing existing invoice');
       await updateInvoice({ id: _id, ...formData }).unwrap();
+      toast({
+          title: 'Invoice Edited Successfully.',
+          description: "We've edited your Invoice for you.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
       console.log('Invoice edited successfully' , formData);
     } else {
       console.log('Adding new invoice');
       await addInvoice(formData).unwrap();
+      toast({
+          title: 'Invoice created Successfully.',
+          description: "We've created your Invoice for you.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
       console.log('Invoice added successfully');
     }
     controlFormVisibility(false);
