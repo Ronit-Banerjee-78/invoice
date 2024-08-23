@@ -84,9 +84,7 @@ const InvoiceCard = ({ invoice }) => {
                     {status}
                 </Text>
                 <Grid
-                    // justify="space-around"
-                    // flexWrap="wrap"
-                        templateColumns={{base: "repeat(2,1fr)" , md:"repeat(4,1fr)"}}
+                    templateColumns={{base: "repeat(2,1fr)" , md:"repeat(4,1fr)"}}
                     gap={{ base: "1em", md: "1.5em" }}
                     fontSize={{base: "1em" , lg: "1.2em"}}
 

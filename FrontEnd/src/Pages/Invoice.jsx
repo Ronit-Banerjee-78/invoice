@@ -142,7 +142,9 @@ const totalAmount = itemsTotal.reduce(calculateTotalAmount, 0);
           <Box>
             <Button variant='ghost'  className='px-4 font-semibold bg-blue-400 text-white rounded-md tracking-wider py-2 m-2' onClick={() => controlFormVisibility()}><RiEdit2Fill size={22} /></Button>
             <Button variant='ghost' className='px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-red-400 text-white' onClick={() => handleDelete()}><IoTrashBinSharp size={22}/></Button>
+            {status !== "Paid" && 
             <Button variant='ghost' className='px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-[#8973f9] text-white' onClick={() => handleStatus()}><MdOutlinePublishedWithChanges size={22}/></Button>
+            }
           </Box>
         </Flex>
 
