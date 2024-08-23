@@ -45,6 +45,14 @@ const controlFormVisibility = () => {
         })
     } catch (error) {
       console.error('Failed to delete the invoice:', error);
+      toast({
+          title: 'Error while deleting invoice.',
+          description: "Failed to delete the invoice.",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
     }
   };
 
@@ -54,7 +62,7 @@ const handleStatus = async () => {
     await updateInvoiceStatus({ id, status: 'Paid' }).unwrap();
     toast({
           title: 'Invoice status updated.',
-          description: "We've updated your Invoice status for you.",
+          description: "We've updated your invoice status for you.",
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -62,6 +70,14 @@ const handleStatus = async () => {
         })
   } catch (error) {
     console.error('Failed to update the invoice status:', error);
+    toast({
+          title: 'Error while updating invoice status.',
+          description: "Failed to update the invoice status",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
   }
 }
 

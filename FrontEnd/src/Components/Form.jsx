@@ -105,23 +105,35 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
 
   try {
     if (_id) {
-      console.log('Editing existing invoice');
+      try {
+        console.log('Editing existing invoice');
       await updateInvoice({ id: _id, ...formData }).unwrap();
       toast({
-          title: 'Invoice Edited Successfully.',
-          description: "We've edited your Invoice for you.",
+          title: 'Invoice edited successfully.',
+          description: "We've edited your invoice for you.",
           status: 'success',
           duration: 3000,
           isClosable: true,
           position: 'top',
         })
       console.log('Invoice edited successfully' , formData);
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: "Failed to edit invoice",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
+      }
+      
     } else {
       console.log('Adding new invoice');
       await addInvoice(formData).unwrap();
       toast({
-          title: 'Invoice created Successfully.',
-          description: "We've created your Invoice for you.",
+          title: 'Invoice created successfully.',
+          description: "We've created your invoice for you.",
           status: 'success',
           duration: 3000,
           isClosable: true,
@@ -132,6 +144,14 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
     controlFormVisibility(false);
   } catch (err) {
     console.error('Failed to save invoice:', err);
+    toast({
+          title: 'Error',
+          description: "Failed to create invoice",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+          position: 'top',
+        })
   }
 };
 
