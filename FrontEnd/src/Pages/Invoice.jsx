@@ -61,22 +61,22 @@ const handleStatus = async () => {
 
   if (isError) {
     return (
-      <section className='min-h-screen bg-red-50 flex items-center justify-center'>
-        <div className='p-6 bg-red-200 border border-red-400 rounded-lg text-red-800'>
-          <h1 className='text-2xl font-semibold'>Error</h1>
-          <p>{error.status} : {error.error}</p>
-        </div>
-      </section>
+      <Flex align="center" justify="center" minH="100vh" bg="red.50">
+        <Box p="6" border="2px" borderColor="red.400" bg="red.200" rounded="lg" color="red.800">
+          <Text as="h1">Error</Text>
+          <Text>{error.status} : {error.error}</Text>
+        </Box>
+      </Flex>
     );
   }
 
   if (!data) {
     return (
-      <section className='min-h-screen bg-gray-50 flex items-center justify-center'>
-        <div className='p-6 bg-gray-200 border border-gray-400 rounded-lg text-gray-800'>
-          <h1 className='text-2xl font-semibold'>No data found.</h1>
-        </div>
-      </section>
+      <Flex align="center" justify="center" minH="100vh" bg="gray.50">
+        <Box p="6" border="2px" borderColor="gray.400" bg="gray.200" rounded="lg" color="gray.800">
+          <Text as="h1">Create Atleast One Invoice</Text>
+        </Box>
+      </Flex>
     );
   }
 
