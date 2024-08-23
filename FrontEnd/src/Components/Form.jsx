@@ -130,7 +130,7 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
     <form
       id='form'
       onSubmit={handleSubmit(onFormSubmit)}
-      className='border-2 z-50 border-solid h-screen absolute left-0 top-[3rem] overflow-y-scroll border-gray-300 p-8 m-4 bg-white rounded-lg'
+      className='border-2 z-50 border-solid h-[90vh] absolute left-0 top-[0.75rem] overflow-y-scroll border-gray-300 p-8 m-4 bg-white rounded-lg'
     >
       {/* Status */}
       <div className='mb-2'>

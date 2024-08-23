@@ -2,8 +2,7 @@ import React from 'react';
 import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
 import { NavLink } from 'react-router-dom';
-import { Box } from '@mui/material';
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Grid, Box , Text } from '@chakra-ui/react';
 
 
 export const calculateDueDate = (invoiceDate, paymentTerms) => {
@@ -47,7 +46,7 @@ const InvoiceCard = ({ invoice }) => {
     return (
         <NavLink to={`/${_id}`}>
             <Flex
-                w={{base: "90vw" , md: "70vw" , lg: "55vw"}}
+                w={{base: "90vw" , md: "80vw" , lg: "70vw"}}
                 align={{base: "start" , md: "center"}}
                 justify="space-around"
                 flexWrap="wrap"
@@ -61,6 +60,7 @@ const InvoiceCard = ({ invoice }) => {
                 pt="3em"
                 px="1em"
                 pb="2em"
+                m="1em"
                 _hover={{
                     transform: "scale(1.05)",
                     transition: "300ms 10ms linear all"
@@ -83,18 +83,19 @@ const InvoiceCard = ({ invoice }) => {
                     <GoDotFill size={18} />
                     {status}
                 </Text>
-                <Flex
-                    justify="space-around"
-                    flexWrap="wrap"
-                    gap={{ base: "1.5em", md: "2em" }}
-                    fontSize={{base: "1em" , md: "1.15em"}}
+                <Grid
+                    // justify="space-around"
+                    // flexWrap="wrap"
+                        templateColumns={{base: "repeat(2,1fr)" , md:"repeat(4,1fr)"}}
+                    gap={{ base: "1em", md: "1.5em" }}
+                    fontSize={{base: "1em" , lg: "1.2em"}}
 
                 >
                     <Text fontWeight="700" className='uppercase'>#{trimId}</Text>
                     <Text>Due {dueDate}</Text>
                     <Text className='capitalize'>{name}</Text>
                     <Text className='text-xl font-bold'>${totalAmount}</Text>
-                </Flex>
+                </Grid>
             </Flex>
         </NavLink>
     );

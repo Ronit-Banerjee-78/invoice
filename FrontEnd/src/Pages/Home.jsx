@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import Form from '../Components/Form.jsx'
 import { FaPlus } from "react-icons/fa";
 import InvoiceList from '../Components/InvoiceList.jsx';
-import { Box } from '@mui/material';
-import { Flex, Text , Button
+import { Flex, Text , Button , Box
  } from '@chakra-ui/react';
 
 const Home = () => {
@@ -29,10 +28,13 @@ const Home = () => {
            >Invoices</Text>
 
         <Button
-          varient="outline"
-          colorScheme='blackAlpha'
-          // bg="gray.400"
-          borderRadius="full"
+          varient="ghost"
+          bg="gray.200"
+          rounded="md"
+          _hover={{
+            bg: "gray.300",
+            transition: "100ms all"
+          }}
           className="addInvoice"
           display="flex"
           alignItems="center"

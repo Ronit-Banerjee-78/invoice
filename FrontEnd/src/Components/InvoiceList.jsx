@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { InvoicesApi } from '../Redux/ApiSlice';
 import InvoiceCard from './InvoiceCard';
 import FilterMode from './FilterMode';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+import { CircularProgress, CircularProgressLabel , Flex , Box , Text} from '@chakra-ui/react'
 
 const InvoiceList = () => {
     const { data, isError, isLoading, error } = InvoicesApi.useGetInvoicesQuery();
@@ -31,35 +31,35 @@ const InvoiceList = () => {
 
     if (isLoading) {
         return (
-            <section className='invoice-list flex items-center justify-center min-h-full'>
+            <Flex align="center" justify="center" minH="100%" className='invoice-list'>
                 <CircularProgress
                 isIndeterminate
                 size="75px"
                 thickness="10px"
                 color="#8973f9"/>
-            </section>
+            </Flex>
         );
     }
 
     if (isError) {
         return (
-            <section className='invoice-list min-h-full'>
+            <Flex align="center" justify="center" minH="100%" className='invoice-list'>
                 <h1>{error.status} : {error.error}</h1>
-            </section>
+            </Flex>
         );
     }
 
     return (
-        <section className='invoice-list min-h-full p-4 flex flex-col items-center'>
+        <Flex direction="column" justify="center" align="center" minH="100%" p="4" className='invoice-list'>
             <FilterMode filterInvoices={filterInvoices} />
             {filterData.length === 0 ? (
-                <p className='text-center font-bold capitalize tracking-widest text-xl m-8'>No invoices found</p>
+                <Text textAlign="center" fontWeight="700" textTransform="capitalize" fontSize="1.5em" m="8" letterSpacing="wider">No invoices found</Text>
             ) : (
                 filterData.map((invoice) => (
                     <InvoiceCard invoice={invoice} key={invoice._id} />
                 ))
             )}
-        </section>
+        </Flex>
     );
 };
 
