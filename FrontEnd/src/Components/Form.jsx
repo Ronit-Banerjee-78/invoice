@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InvoicesApi } from '../Redux/ApiSlice';
 import { useToast } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react';
 
 const formSchema = z.object({
   status: z.enum(['Paid', 'Pending', 'Draft'] , {
@@ -163,7 +164,7 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
     <form
       id='form'
       onSubmit={handleSubmit(onFormSubmit)}
-      className='border-2 z-50 border-solid h-[90vh] absolute left-0 top-[0.75rem] overflow-y-scroll border-gray-300 p-8 m-4 bg-white rounded-lg'
+      className='border-4 z-50 border-solid h-[90vh] absolute left-0 top-[0.75rem] overflow-y-scroll border-gray-300 p-8 m-4 bg-white rounded-lg'
     >
       {/* Status */}
       <div className='mb-2'>
@@ -243,7 +244,7 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
 
       {/* Invoice Details */}
       <div className='mb-4'>
-        <div className="flex flex-wrap items-start justify-start sm:justify-around">
+        <div className="flex flex-wrap items-start justify-start">
         <div className='mb-2 mx-2'>
           <label className='label'>Invoice Date</label>
           <Controller
@@ -264,7 +265,7 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
         </div>
         <div className='mb-2 mx-2'>
           <label className='label'>Payment Terms</label>
-          <select {...register('paymentTerms')} className='w-full px-10  py-2 border rounded-md'>
+          <select {...register('paymentTerms')} className='w-full px-10 py-2 border rounded-md'>
             <option value=""></option>
             <option value="Net 30 Days">Net 30 Days</option>
             <option value="Net 60 Days">Net 60 Days</option>
@@ -282,7 +283,7 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
 
       {/* Items */}
       <div className='mb-4'>
-        <h3 className='text-lg font-semibold mt-4  mb-2 text-[#8973f9]'>Item List</h3>
+        <h3 className='tag'>Item List</h3>
         {fields.map((field, index) => (
           <div key={field.id} className='mb-4 border rounded-md p-4'>
             <div className='mb-2'>
@@ -329,40 +330,68 @@ const Form = ({ isFormVisible, controlFormVisibility , data }) => {
                 {errors.items?.[index]?.total && <p className="text-red-500">{errors.items[index].total.message}</p>}
               </div>
             </div>
-            <button
+            <Button
+              cursor={fields.length === 1 ? 'not-allowed' : 'pointer'}
+              color="red.500"
+              mt="4"
+              p="2"
+              bg="red.100"
+              // border="2px"
+              rounded="md"
               type="button"
               onClick={() => remove(index)}
-              disabled={fields.length === 1}
-              className={`text-red-500 mt-2 flex items-center ${fields.length === 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              isDisabled={fields.length === 1}
+              varient="outline"
+              colorScheme='red'
             >
-              <IoTrashBin className='mr-1' /> Remove
-            </button>
+              <IoTrashBin size={22} />
+            </Button>
           </div>
         ))}
-        <button
+        <Button
+          py="2"
+          px="6"
+          bg="#8973f9"
+          color="white"
+          fontWeight="600"
+          letterSpacing="wider"
+          rounded="md"
           type="button"
           onClick={() => append({ name: '', quantity: 1, price: 0, total: 0 })}
-          className='w-full bg-blue-500 text-white py-2 rounded-md'
         >
           Add Item
-        </button>
+        </Button>
       </div>
 
       {/* Form Actions */}
-      <div className='flex justify-between'>
-        <button
-          type="button"
+      <div className='flex items-center justify-end'>
+        <Button
+          py="2"
+          px="6"
+          bg="gray.300"
+          color="black"
+          fontWeight="600"
+          letterSpacing="wider"
+          rounded="md"
+          type="submit"
+          m="2"
           onClick={() => controlFormVisibility(false)}
-          className='bg-gray-300 py-2 px-4 rounded-md'
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
+          py="2"
+          px="6"
+          bg="#8973f9"
+          color="white"
+          fontWeight="600"
+          letterSpacing="wider"
+          rounded="md"
           type="submit"
-          className='bg-blue-500 text-white py-2 px-4 rounded-md'
+          m="2"
         >
           Save
-        </button>
+        </Button>
       </div>
     </form>
   );

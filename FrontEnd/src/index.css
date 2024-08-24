@@ -4,15 +4,15 @@
 
 @layer components {
     .input{
-        @apply w-full px-3 py-2 border rounded-md
+        @apply w-full px-3 py-2 border-2 rounded-md my-1 outline-none
     }
 
     .label{
-        @apply block mb-1 tracking-wider
+        @apply block mb-1 tracking-wider font-semibold my-1
     }
 
     .tag{
-        @apply text-lg font-semibold mt-4 mb-2 text-[#8973f9]
+        @apply text-lg font-semibold mt-6 mb-2 text-[#8973f9] tracking-wider
     }
 
 
