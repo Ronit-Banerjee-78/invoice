@@ -1,5 +1,5 @@
 // models/Item.js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const itemSchema = new mongoose.Schema({
   name: {
@@ -17,42 +17,44 @@ const itemSchema = new mongoose.Schema({
   total: {
     type: Number,
     required: true,
-  }
+  },
 });
 
-
-const invoiceSchema = new mongoose.Schema({
-  client: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Client',
-    required: true,
+const invoiceSchema = new mongoose.Schema(
+  {
+    client: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Client",
+      required: true,
+    },
+    organization: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true,
+    },
+    invoiceDate: {
+      type: Date,
+      required: true,
+    },
+    paymentTerms: {
+      type: String,
+      enum: ["Net 30 Days", "Net 60 Days", "Net 90 Days"],
+      required: true,
+    },
+    projectDescription: {
+      type: String,
+      required: true,
+    },
+    items: [itemSchema],
+    status: {
+      type: String,
+      enum: ["Draft", "Pending", "Paid"],
+      required: true,
+    },
   },
-  organization: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Organization',
-    required: true,
-  },
-  invoiceDate: {
-    type: Date,
-    required: true,
-  },
-  paymentTerms: {
-    type: String,
-    enum: ['Net 30 Days', 'Net 60 Days', 'Net 90 Days'],
-    required: true,
-  },
-  projectDescription: {
-    type: String,
-    required: true,
-  },
-  items: [itemSchema],
-  status: {
-    type: String,
-    enum: ['Draft', 'Pending', 'Paid'],
-    required: true,
+  {
+    timestamps: true,
   }
-}, {
-  timestamps: true
-});
+);
 
-export const Invoice = mongoose.model('Invoice', invoiceSchema);
+export const Invoice = mongoose.model("Invoice", invoiceSchema);

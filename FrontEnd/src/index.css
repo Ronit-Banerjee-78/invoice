@@ -3,25 +3,23 @@
 @tailwind utilities;
 
 @layer components {
-    .input{
-        @apply w-full px-3 py-2 border-2 rounded-md my-1 outline-none
-    }
+  .input {
+    @apply w-full px-3 py-2 border-2 rounded-md my-1 outline-none;
+  }
 
-    .label{
-        @apply block mb-1 tracking-wider font-semibold my-1
-    }
+  .label {
+    @apply block mb-1 tracking-wider font-semibold my-1;
+  }
 
-    .tag{
-        @apply text-lg font-semibold mt-6 mb-2 text-[#8973f9] tracking-wider
-    }
+  .tag {
+    @apply text-lg font-semibold mt-6 mb-2 text-[#8973f9] tracking-wider;
+  }
 
-
-    
-    /* .cell-title{
+  /* .cell-title{
         @apply text-[#8973f9] font-semibold text-base tracking-wider mb-2
     } */
 
-    /* .input-group {
+  /* .input-group {
         @apply flex items-center justify-around min-w-fit h-fit
     } */
 }
