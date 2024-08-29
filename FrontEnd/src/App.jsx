@@ -38,7 +38,13 @@ function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
-        <section className="app" id={theme}>
+        <section
+          className={`app ${
+            theme === "light"
+              ? "bg-[#F1F6F9] text-black "
+              : "bg-[#131315] text-white"
+          } `}
+        >
           <RouterProvider router={router} />
         </section>
       </LocalizationProvider>

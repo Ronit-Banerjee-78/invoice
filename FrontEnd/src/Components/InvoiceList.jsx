@@ -68,6 +68,23 @@ const InvoiceList = () => {
     );
   }
 
+  if (!data) {
+    return (
+      <Flex align="center" justify="center" minH="100vh">
+        <Box
+          p="6"
+          border="2px"
+          borderColor="gray.400"
+          bg="gray.200"
+          rounded="lg"
+          color="gray.800"
+        >
+          <Text as="h1">Create Atleast One Invoice</Text>
+        </Box>
+      </Flex>
+    );
+  }
+
   return (
     <Flex
       direction="column"

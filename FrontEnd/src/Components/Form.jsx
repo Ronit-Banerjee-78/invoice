@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { useForm, Controller, useFieldArray, useWatch } from "react-hook-form";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { InvoicesApi } from "../Redux/ApiSlice";
 import { useToast } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+import { ThemeContext } from "../App";
 
 const formSchema = z.object({
   status: z.enum(["Paid", "Pending", "Draft"], {
@@ -45,6 +46,8 @@ const formSchema = z.object({
 });
 
 const Form = ({ isFormVisible, controlFormVisibility, data }) => {
+  const themeData = useContext(ThemeContext);
+  const { theme, toggleTheme } = themeData;
   const {
     client,
     organization,
@@ -130,7 +133,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
     try {
       if (_id) {
         try {
-          console.log("Editing existing invoice");
+          // console.log("Editing existing invoice");
           await updateInvoice({ id: _id, ...formData }).unwrap();
           toast({
             title: "Invoice edited successfully.",
@@ -140,7 +143,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
             isClosable: true,
             position: "top",
           });
-          console.log("Invoice edited successfully", formData);
+          // console.log("Invoice edited successfully", formData);
         } catch (error) {
           toast({
             title: "Error",
@@ -152,7 +155,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
           });
         }
       } else {
-        console.log("Adding new invoice");
+        // console.log("Adding new invoice");
         await addInvoice(formData).unwrap();
         toast({
           title: "Invoice created successfully.",
@@ -162,11 +165,11 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
           isClosable: true,
           position: "top",
         });
-        console.log("Invoice added successfully");
+        // console.log("Invoice added successfully");
       }
       controlFormVisibility(false);
     } catch (err) {
-      console.error("Failed to save invoice:", err);
+      // console.error("Failed to save invoice:", err);
       toast({
         title: "Error",
         description: "Failed to create invoice",
@@ -184,7 +187,11 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
     <form
       id="form"
       onSubmit={handleSubmit(onFormSubmit)}
-      className="border-4 z-50 border-solid h-[90vh] absolute left-0 top-[0.75rem] overflow-y-scroll border-gray-300 p-8 m-4 bg-white rounded-lg"
+      className={`border-4 ${
+        theme === "light"
+          ? "bg-[#F5F7F8] text-black"
+          : "bg-[#F5F7F8] text-black"
+      } z-50 border-solid h-[90vh] absolute left-0 top-[0.75rem] overflow-y-scroll border-gray-300 p-8 m-4 rounded-lg`}
     >
       {/* Status */}
       <div className="mb-2">

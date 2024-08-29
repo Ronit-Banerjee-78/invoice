@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Form from "../Components/Form.jsx";
 import { FaPlus } from "react-icons/fa";
 import InvoiceList from "../Components/InvoiceList.jsx";
 import { Flex, Text, Button, Box } from "@chakra-ui/react";
+import { ThemeContext } from "../App";
 
 const Home = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const themeData = useContext(ThemeContext);
+  const { theme, toggleTheme } = themeData;
 
   const controlFormVisibility = () => {
     setIsFormVisible((prevState) => !prevState);
@@ -26,10 +29,11 @@ const Home = () => {
 
         <Button
           varient="ghost"
-          bg="gray.200"
+          bg={theme === "light" ? "#F1F6F9" : "#131315"}
+          color={theme === "light" ? "black" : "white"}
           rounded="md"
           _hover={{
-            bg: "gray.300",
+            bg: theme === "light" ? "gray.200" : "gray.700",
             transition: "100ms all",
           }}
           className="addInvoice"

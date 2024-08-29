@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { InvoicesApi } from "../Redux/ApiSlice";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import Form from "../Components/Form";
@@ -11,6 +11,7 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
+import { ThemeContext } from "../App";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { GoDotFill } from "react-icons/go";
 import { calculateDueDate } from "../Components/InvoiceCard";
@@ -23,6 +24,8 @@ const Invoice = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const themeData = useContext(ThemeContext);
+  const { theme, toggleTheme } = themeData;
   const { data, isError, isLoading, error } =
     InvoicesApi.useGetSingleInvoiceQuery(id);
   const [deleteInvoice] = InvoicesApi.useDeleteInvoiceMutation(id);
@@ -118,23 +121,6 @@ const Invoice = () => {
     );
   }
 
-  if (!data) {
-    return (
-      <Flex align="center" justify="center" minH="100vh" bg="gray.50">
-        <Box
-          p="6"
-          border="2px"
-          borderColor="gray.400"
-          bg="gray.200"
-          rounded="lg"
-          color="gray.800"
-        >
-          <Text as="h1">Create Atleast One Invoice</Text>
-        </Box>
-      </Flex>
-    );
-  }
-
   const {
     organization,
     client,
@@ -170,6 +156,8 @@ const Invoice = () => {
       marginX="auto"
       p="8"
       width={{ base: "100vw", md: "80vw" }}
+      bg={theme === "light" ? "#F1F6F9" : "#131315"}
+      color={theme === "light" ? "black" : "white"}
     >
       <NavLink to="/">
         <Text
@@ -193,7 +181,8 @@ const Invoice = () => {
 
       <Flex
         align="center"
-        bg="gray.200"
+        bg={theme === "light" ? "#F1F6F9" : "#252527"}
+        color={theme === "light" ? "black" : "white"}
         flexWrap="wrap"
         justify="space-between"
         p="4"
@@ -234,7 +223,7 @@ const Invoice = () => {
           {status !== "Paid" && (
             <Button
               variant="ghost"
-              className="px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-[#8973f9] text-white"
+              className="px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-[#8973f9]"
               onClick={() => handleStatus()}
             >
               <MdOutlinePublishedWithChanges size={22} />
@@ -247,7 +236,9 @@ const Invoice = () => {
 
       <Box
         shadow="lg"
-        bg="gray.200"
+        bg={theme === "light" ? "#F1F6F9" : "#131315"}
+        color={theme === "light" ? "black" : "white"}
+        borderWidth="2px"
         rounded="md"
         p={{ base: "1.5em", md: "2em" }}
         mt="3em"
@@ -349,7 +340,8 @@ const Invoice = () => {
         <Box
           p="1.5em"
           mt="3em"
-          bg="gray.100"
+          bg={theme === "light" ? "#F1F6F9" : "#252527"}
+          color={theme === "light" ? "black" : "white"}
           rounded="md"
           shadow="md"
           display={{ base: "none", sm: "block" }}
@@ -404,7 +396,8 @@ const Invoice = () => {
         <Box
           p="1em"
           mt="3em"
-          bg="gray.100"
+          bg={theme === "light" ? "#F1F6F9" : "#252527"}
+          color={theme === "light" ? "black" : "white"}
           display={{ base: "block", sm: "none" }}
           className=""
         >

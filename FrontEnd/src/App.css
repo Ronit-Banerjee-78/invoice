@@ -1,18 +1,3 @@
-/* theme */
-
-#light {
-  --primary-color: #131315;
-  --secondary-color: #dddddd;
-  --highlight-color: #8973f9;
-  --highlight-hover-color: #775df7;
-}
-
-#dark {
-  --primary-color: #dddddd;
-  --secondary-color: #131315;
-  --highlight-color: #8973f9;
-}
-
 .logo {
   background: #4776e6;
   /* fallback for old browsers */

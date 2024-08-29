@@ -3,6 +3,8 @@ import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
 import { NavLink } from "react-router-dom";
 import { Flex, Grid, Box, Text } from "@chakra-ui/react";
+import { ThemeContext } from "../App";
+import { useContext } from "react";
 
 export const calculateDueDate = (invoiceDate, paymentTerms) => {
   const date = new Date(invoiceDate);
@@ -37,6 +39,9 @@ const InvoiceCard = ({ invoice }) => {
   } = invoice;
   const { name, steetAddress, city, postCode, country } = client;
 
+  const themeData = useContext(ThemeContext);
+  const { theme, toggleTheme } = themeData;
+
   const itemsTotal = items.map((item) => item.total);
 
   function calculateTotalAmount(accumulator, value) {
@@ -56,42 +61,26 @@ const InvoiceCard = ({ invoice }) => {
         justify="space-around"
         flexWrap="wrap"
         pos="relative"
-        borderWidth="1px"
-        borderRadius="md"
-        shadow="sm"
-        bg="gray.200"
+        borderWidth="2px"
+        shadow="lg"
         minH="7em"
         className="invoiceCard w-fit"
         pt="3em"
         px="1em"
         pb="2em"
         m="1em"
-        transition="300ms 100ms linear all"
-        _hover={{
-          transform: "scale(1.05)",
-        }}
+        transition="200ms 100ms linear all"
       >
         <Text
           pos="absolute"
           top="0"
           left="0"
-          borderTopLeftRadius="md"
-          borderBottomRightRadius="md"
           fontWeight="600"
           letterSpacing="widest"
-          className={`flex items-center justify-center
-                        ${
-                          status === "Pending"
-                            ? "bg-yellow-300 text-yellow-600"
-                            : ""
-                        }
-                        ${
-                          status === "Paid" ? "text-green-600 bg-green-300" : ""
-                        }
-                        ${
-                          status === "Draft" ? "bg-gray-500 text-gray-100" : ""
-                        } 
-                        px-4 py-2`}
+          className={`flex items-center justify-center 
+          ${status === "Pending" ? "bg-yellow-200 text-yellow-600" : ""}
+          ${status === "Paid" ? "bg-green-200 text-green-600 " : ""}
+          ${status === "Draft" ? "bg-gray-500 text-gray-100" : ""} px-4 py-2`}
         >
           <GoDotFill size={18} />
           {status}
