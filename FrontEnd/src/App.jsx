@@ -41,8 +41,8 @@ function App() {
         <section
           className={`app ${
             theme === "light"
-              ? "bg-[#F1F6F9] text-black "
-              : "bg-[#131315] text-white"
+              ? "bg-[#F5F7F8] text-black "
+              : "bg-[#6060e5] text-white"
           } `}
         >
           <RouterProvider router={router} />

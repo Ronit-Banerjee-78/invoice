@@ -183,6 +183,7 @@ const Invoice = () => {
         align="center"
         bg={theme === "light" ? "#F1F6F9" : "#252527"}
         color={theme === "light" ? "black" : "white"}
+        // direction={{ base: "column", sm: "row" }}
         flexWrap="wrap"
         justify="space-between"
         p="4"
@@ -205,17 +206,17 @@ const Invoice = () => {
           <GoDotFill size={18} />
           {status}
         </Text>
-        <Box>
+        <Box className="">
           <Button
             variant="ghost"
-            className="px-4 font-semibold bg-blue-400 text-white rounded-md tracking-wider py-2 m-2"
+            className="px-2 font-semibold bg-blue-400 text-white rounded-md tracking-wider py-2 m-2"
             onClick={() => controlFormVisibility()}
           >
             <RiEdit2Fill size={22} />
           </Button>
           <Button
             variant="ghost"
-            className="px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-red-400 text-white"
+            className="px-2 rounded-md font-semibold tracking-wider py-2 m-2 bg-red-400 text-white"
             onClick={() => handleDelete()}
           >
             <IoTrashBinSharp size={22} />
@@ -223,7 +224,7 @@ const Invoice = () => {
           {status !== "Paid" && (
             <Button
               variant="ghost"
-              className="px-4 rounded-md font-semibold tracking-wider py-2 m-2 bg-[#8973f9]"
+              className="px-2 rounded-md font-semibold tracking-wider py-2 m-2 bg-[#8973f9]"
               onClick={() => handleStatus()}
             >
               <MdOutlinePublishedWithChanges size={22} />
@@ -232,29 +233,29 @@ const Invoice = () => {
         </Box>
       </Flex>
 
-      {/* direction={{base: "column" , md: "row"}} */}
-
       <Box
         shadow="lg"
         bg={theme === "light" ? "#F1F6F9" : "#131315"}
         color={theme === "light" ? "black" : "white"}
         borderWidth="2px"
         rounded="md"
-        p={{ base: "1.5em", md: "2em" }}
+        p={{ base: "1em", md: "2em" }}
         mt="3em"
         m="1em"
       >
         <Flex
           align="start"
+          direction={{ base: "column", md: "row" }}
           justify={{ base: "space-between", md: "space-between" }}
+          p={{ base: "1em", md: "2em" }}
         >
-          <Box>
+          <Box className="mb-4 md:mb-0">
             <Text
               as="h1"
               letterSpacing="wider"
               fontWeight="700"
               textTransform="uppercase"
-              fontSize={{ base: "1em", sm: "1.25em" }}
+              fontSize={{ base: "1.5em", sm: "1.25em" }}
             >
               #{trimId}
             </Text>
@@ -264,6 +265,7 @@ const Invoice = () => {
             textAlign={{ base: "left", md: "right" }}
             textTransform="capitalize"
           >
+            <h1 className="mb-2">Bill From</h1>
             <Text>{organization.streetAddress}</Text>
             <Text>{organization.city}</Text>
             <Text>{organization.postCode}</Text>
@@ -402,7 +404,12 @@ const Invoice = () => {
           className=""
         >
           {items.map((item, index) => (
-            <Flex align="center" key={index} justify="space-between">
+            <Flex
+              align="center"
+              marginBottom="0.5em"
+              key={index}
+              justify="space-between"
+            >
               <Box>
                 <Text textTransform="capitalize" fontWeight="700">
                   {item.name}
@@ -430,7 +437,12 @@ const Invoice = () => {
             justify="space-between"
           >
             <Text>Total</Text>
-            <Text fontSize="1.5em" fontWeight="700" letterSpacing="wider">
+            <Text
+              fontSize="1.5em"
+              paddingX="4"
+              fontWeight="700"
+              letterSpacing="wider"
+            >
               ${totalAmount}.00
             </Text>
           </Flex>

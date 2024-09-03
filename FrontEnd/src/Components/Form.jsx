@@ -121,8 +121,10 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
     name: "items",
   });
 
-  const [addInvoice] = InvoicesApi.useAddInvoiceMutation();
-  const [updateInvoice] = InvoicesApi.useUpdateInvoiceMutation();
+  const [addInvoice, { isLoading: isAddLoading }] =
+    InvoicesApi.useAddInvoiceMutation();
+  const [updateInvoice, { isLoading: isUpdateLoading }] =
+    InvoicesApi.useUpdateInvoiceMutation();
 
   const toast = useToast();
 
@@ -512,7 +514,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
           type="submit"
           m="2"
         >
-          Save
+          {isAddLoading || isUpdateLoading ? "Submitting ..." : "Submit"}
         </Button>
       </div>
     </form>

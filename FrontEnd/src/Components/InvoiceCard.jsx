@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { Flex, Grid, Box, Text } from "@chakra-ui/react";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
+import { transform } from "framer-motion";
 
 export const calculateDueDate = (invoiceDate, paymentTerms) => {
   const date = new Date(invoiceDate);
@@ -56,25 +57,28 @@ const InvoiceCard = ({ invoice }) => {
   return (
     <NavLink to={`/${_id}`}>
       <Flex
-        w={{ base: "90vw", md: "80vw", lg: "70vw" }}
+        w="fit-content"
         align={{ base: "start", md: "center" }}
+        bg={theme === "light" ? "#F5F7F8" : "#000000"}
         justify="space-around"
         flexWrap="wrap"
         pos="relative"
-        borderWidth="2px"
         shadow="lg"
         minH="7em"
+        rounded="md"
         className="invoiceCard w-fit"
         pt="3em"
-        px="1em"
+        px={{ base: "1em", md: "1em" }}
         pb="2em"
         m="1em"
-        transition="200ms 100ms linear all"
+        transition="200ms 100ms linear transform"
+        _hover={{ transform: "Scale(1.05)" }}
       >
         <Text
           pos="absolute"
           top="0"
           left="0"
+          roundedTopLeft="md"
           fontWeight="600"
           letterSpacing="widest"
           className={`flex items-center justify-center 
@@ -88,7 +92,8 @@ const InvoiceCard = ({ invoice }) => {
         <Grid
           templateColumns={{ base: "repeat(2,1fr)", md: "repeat(4,1fr)" }}
           gap={{ base: "1em", md: "1.5em" }}
-          fontSize={{ base: "1em", lg: "1.2em" }}
+          fontSize={{ base: "1em", md: "1.05em", lg: "1.2em" }}
+          className="text-left md:text-center"
         >
           <Text fontWeight="700" className="uppercase">
             #{trimId}
