@@ -33,6 +33,5 @@ As I work on this project, I'm deepening my understanding of the MERN stack and 
 ## Project Status
 
 The project has been successfully completed. You can view it live using the following link: [Live](https://invoicely-mern.vercel.app/)
----
 
 **Frontend Mentor Challenge**: [Invoice App](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl)
