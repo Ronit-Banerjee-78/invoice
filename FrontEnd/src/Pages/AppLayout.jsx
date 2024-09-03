@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import Header from "../Components/Header";
 import { Outlet } from "react-router-dom";
 import { Grid, GridItem } from "@chakra-ui/react";
-import { ThemeContext } from "../App";
 
 const AppLayout = () => {
-  const themeData = useContext(ThemeContext);
-  const { theme, toggleTheme } = themeData;
   return (
     <Grid templateColumns="repeat(12,1fr)">
       <GridItem
@@ -18,12 +15,7 @@ const AppLayout = () => {
       >
         <Header className="header" />
       </GridItem>
-      <GridItem
-        minH="100vh"
-        bg={theme === "light" ? "#F1F6F9" : "#131315"}
-        color={theme === "light" ? "black" : "white"}
-        colSpan={{ base: 12, md: 11 }}
-      >
+      <GridItem minH="100vh" colSpan={{ base: 12, md: 11 }}>
         <Outlet />
       </GridItem>
     </Grid>
