@@ -56,3 +56,12 @@ export const InvoicesApi = createApi({
     }),
   }),
 });
+
+export const {
+  useGetInvoicesQuery,
+  useGetSingleInvoiceQuery,
+  useAddInvoiceMutation,
+  useUpdateInvoiceMutation,
+  useUpdateInvoiceStatusMutation,
+  useDeleteInvoiceMutation,
+} = InvoicesApi;
