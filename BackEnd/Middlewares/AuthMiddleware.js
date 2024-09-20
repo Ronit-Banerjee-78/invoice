@@ -20,7 +20,7 @@ export const UserAuthMiddleware = (req, res, next) => {
         message: "Error while verifying token",
       });
     } else {
-      const user = await User.findById(data.id);
+      const user = await User.findById(data._id);
       if (user) {
         req.user = user;
         next(); // Continue to the next middleware or route handler
