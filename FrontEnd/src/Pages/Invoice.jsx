@@ -1,5 +1,9 @@
 import React, { useState, useContext } from "react";
-import { InvoicesApi } from "../Redux/ApiSlice";
+import {
+  useGetSingleInvoiceQuery,
+  useUpdateInvoiceStatusMutation,
+  useDeleteInvoiceMutation,
+} from "../Redux/ApiSlice";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import Form from "../Components/Form";
 import dayjs from "dayjs";
@@ -26,10 +30,9 @@ const Invoice = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const themeData = useContext(ThemeContext);
   const { theme, toggleTheme } = themeData;
-  const { data, isError, isLoading, error } =
-    InvoicesApi.useGetSingleInvoiceQuery(id);
-  const [deleteInvoice] = InvoicesApi.useDeleteInvoiceMutation(id);
-  const [updateInvoiceStatus] = InvoicesApi.useUpdateInvoiceStatusMutation(id);
+  const { data, isError, isLoading, error } = useGetSingleInvoiceQuery(id);
+  const [deleteInvoice] = useDeleteInvoiceMutation(id);
+  const [updateInvoiceStatus] = useUpdateInvoiceStatusMutation(id);
 
   const trimId = id.substr(-7);
 

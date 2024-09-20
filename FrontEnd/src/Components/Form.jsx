@@ -5,7 +5,10 @@ import dayjs from "dayjs";
 import { IoTrashBin } from "react-icons/io5";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { InvoicesApi } from "../Redux/ApiSlice";
+import {
+  useAddInvoiceMutation,
+  useUpdateInvoiceMutation,
+} from "../Redux/ApiSlice";
 import { useToast } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { ThemeContext } from "../App";
@@ -121,10 +124,9 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
     name: "items",
   });
 
-  const [addInvoice, { isLoading: isAddLoading }] =
-    InvoicesApi.useAddInvoiceMutation();
+  const [addInvoice, { isLoading: isAddLoading }] = useAddInvoiceMutation();
   const [updateInvoice, { isLoading: isUpdateLoading }] =
-    InvoicesApi.useUpdateInvoiceMutation();
+    useUpdateInvoiceMutation();
 
   const toast = useToast();
 

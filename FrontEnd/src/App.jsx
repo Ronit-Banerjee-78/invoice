@@ -4,6 +4,8 @@ import AppLayout from "./Pages/AppLayout";
 import Error from "./Pages/Error";
 import Invoice from "./Pages/Invoice";
 import Home from "./Pages/Home";
+import Signup from "./Pages/Signup";
+import Login from "./Pages/Login";
 import { createContext, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/:id",
