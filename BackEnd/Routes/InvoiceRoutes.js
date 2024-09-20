@@ -6,7 +6,7 @@ import {
   postInvoice,
   updateInvoiceStatus,
   updateInvoice,
-} from "../Controllers/InvoiceControllers.js";
+} from "../Controllers/InvoiceController.js";
 
 const router = express.Router();
 
