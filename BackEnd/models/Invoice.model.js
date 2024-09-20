@@ -51,6 +51,11 @@ const invoiceSchema = new mongoose.Schema(
       enum: ["Draft", "Pending", "Paid"],
       required: true,
     },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,

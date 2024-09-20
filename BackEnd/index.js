@@ -22,6 +22,8 @@ dotenv.config({
 });
 
 // routes middleware
+// i will have to add signup and login routes for here , so when user first visit the site it will redirect them to signup or either login route.
+// these are the secure routes
 app.use("/api/invoices", InvoiceRoutes);
 
 connectDB();
