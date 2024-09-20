@@ -43,3 +43,38 @@ export const signupUser = async (req, res) => {
       .json({ message: "Error during User Sign up", error: error.message });
   }
 };
+
+// log in
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(401).json({ message: "All fileds are required" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ message: "Incorrect user credentials" });
+    }
+    const auth = await bcrypt.compare(password, user.password);
+    if (!auth) {
+      return res.status(401).json({ message: "Incorrect user credentials" });
+    }
+
+    const token = JWTGenerator(user._id);
+    res.cookie("token", token, {
+      withCredentials: true,
+      httpOnly: false,
+    });
+    res
+      .status(201)
+      .json({ message: "User logged in successfully", success: true });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error during User Log in", error: error.message });
+  }
+};

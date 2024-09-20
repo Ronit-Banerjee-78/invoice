@@ -7,8 +7,12 @@ import {
   updateInvoiceStatus,
   updateInvoice,
 } from "../Controllers/InvoiceController.js";
+import { UserAuthMiddleware } from "../Middlewares/AuthMiddleware.js";
 
 const router = express.Router();
+
+// Apply UserAuthMiddleware to all invoice routes
+router.use(UserAuthMiddleware);
 
 // GET invoices
 router.get("/", getInvoices);
