@@ -23,7 +23,7 @@ export const UserAuthMiddleware = (req, res, next) => {
       const user = await User.findById(data._id);
       if (user) {
         req.user = user;
-        next(); // Continue to the next middleware or route handler
+        next();
       } else {
         return res.status(404).json({ message: "Could not find the user" });
       }

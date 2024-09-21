@@ -5,27 +5,32 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
-import { useSignupUserMutation } from "../Redux/UserApi.js";
+import { useLoginUserMutation } from "../Redux/UserApi.js";
+import { loginSuccess } from "../Redux/UserSlice.js";
+import { useDispatch } from "react-redux";
 
 const formSchema = z.object({
-  username: z.string().min(3, "Username is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(8, "Password atleast consists of 8 characters"),
 });
 
-function Signup() {
+function Login() {
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [signupUser, { isLoading }] = useSignupUserMutation();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
 
   // handle form submit
 
   const onFormSubmit = async (formData) => {
     try {
-      await signupUser({ ...formData }).unwrap();
+      const user = await loginUser({ ...formData }).unwrap();
+      // If successful, dispatch loginSuccess action
+      dispatch(loginSuccess({ user }));
+
       toast({
-        title: "Sign up Successfully",
+        title: "Log in Successfully",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -34,7 +39,7 @@ function Signup() {
       navigate("/");
     } catch (error) {
       toast({
-        title: "Failed to Sign up",
+        title: "Failed to Log in",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -71,15 +76,6 @@ function Signup() {
         onSubmit={handleSubmit(onFormSubmit)}
         className="w-[90vw] md:w-[45vw] lg:w-[35vw] p-4 border-2 mx-auto rounded-md border-solid border-slate-400"
       >
-        {/* username */}
-        <div className="mb-2">
-          <label className="label">Username</label>
-          <input {...register("username")} className="input" />
-          {errors?.username && (
-            <p className="text-red-500">{errors.username.message}</p>
-          )}
-        </div>
-
         {/* email */}
         <div className="mb-2">
           <label className="label">Email</label>
@@ -92,7 +88,7 @@ function Signup() {
         {/* password */}
         <div className="mb-2">
           <label className="label">Password</label>
-          <input {...register("password")} className="input" />
+          <input {...register("password")} className="password" />
           {errors?.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}
@@ -115,14 +111,14 @@ function Signup() {
       <p className="text-center mt-4">
         Already have an account ?
         <NavLink
-          className="font-semibold mx-2 text-[#8973f9] text-base tracking-wide"
-          to="/login"
+          className="font-semibold mx-2  text-[#8973f9] text-base tracking-wide"
+          to="/signup"
         >
-          Login
+          Signup
         </NavLink>
       </p>
     </section>
   );
 }
 
-export default Signup;
+export default Login;

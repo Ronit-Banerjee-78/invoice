@@ -6,6 +6,7 @@ import Invoice from "./Pages/Invoice";
 import Home from "./Pages/Home";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
+import ProtectedRoute from "./Pages/ProtectedRoutes";
 import { createContext, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,7 +21,12 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/signup",
