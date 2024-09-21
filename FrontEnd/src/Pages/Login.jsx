@@ -88,7 +88,7 @@ function Login() {
         {/* password */}
         <div className="mb-2">
           <label className="label">Password</label>
-          <input {...register("password")} className="password" />
+          <input type="password" {...register("password")} className="input" />
           {errors?.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}

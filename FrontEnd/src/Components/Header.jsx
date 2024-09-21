@@ -3,13 +3,30 @@ import { BiSolidCircleThreeQuarter } from "react-icons/bi";
 import { FaMoon } from "react-icons/fa";
 import { PiSunFill } from "react-icons/pi";
 import { ThemeContext } from "../App";
-import User from "../assets/Images/User.jpg";
 import { Flex } from "@chakra-ui/react";
 import { Box } from "@mui/material";
+import { useLogoutUserMutation } from "../Redux/UserApi";
+import { useDispatch, useSelector } from "react-redux";
+import { IoMdLogOut } from "react-icons/io";
+import { logout } from "../Redux/UserSlice";
 
 const Header = () => {
   const themeData = useContext(ThemeContext);
   const { theme, toggleTheme } = themeData;
+  const [logoutUser] = useLogoutUserMutation();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    try {
+      // Call the backend to clear the cookie
+      await logoutUser().unwrap();
+      // Dispatch the logout action to reset Redux state
+      dispatch(logout());
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <Flex
@@ -33,6 +50,7 @@ const Header = () => {
         mr={{ base: "1em", md: "0em" }}
         mb={{ base: "0em", md: "1em" }}
         className="profile"
+        align="center"
       >
         {theme === "light" ? (
           <button className="m-4" onClick={toggleTheme}>
@@ -43,11 +61,14 @@ const Header = () => {
             <PiSunFill size={20} className="text-gray-200" />
           </button>
         )}
-        <img
-          src={User}
-          className="rounded-full border-2 border-solid border-slate-400 w-12 h-12 object-cover"
-          alt="User"
-        />
+        {isAuthenticated && (
+          <button
+            onClick={handleLogout}
+            className="text-gray-200 tracking-wider border-2 border-solid border-gray-200 rounded-full px-1 py-1 font-semibold"
+          >
+            <IoMdLogOut size={24} />
+          </button>
+        )}
       </Flex>
     </Flex>
   );

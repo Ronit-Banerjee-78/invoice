@@ -4,11 +4,13 @@ import { FaPlus } from "react-icons/fa";
 import InvoiceList from "../Components/InvoiceList.jsx";
 import { Flex, Text, Button, Box } from "@chakra-ui/react";
 import { ThemeContext } from "../App";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const themeData = useContext(ThemeContext);
-  const { theme, toggleTheme } = themeData;
+  const { theme } = themeData;
+  const { user } = useSelector((state) => state.auth);
 
   const controlFormVisibility = () => {
     setIsFormVisible((prevState) => !prevState);
@@ -17,15 +19,20 @@ const Home = () => {
   return (
     <Box className="home relative">
       <Flex align="center" justifyContent="space-between" p="1em">
-        <Text
-          as="h1"
-          letterSpacing="0.1em"
-          fontWeight="700"
-          textTransform="uppercase"
-          fontSize={{ base: "1.25em", md: "1.5em" }}
-        >
-          Invoicely
-        </Text>
+        <div>
+          <Text
+            as="h1"
+            letterSpacing="0.1em"
+            fontWeight="700"
+            textTransform="uppercase"
+            fontSize={{ base: "1.25em", md: "1.5em" }}
+          >
+            Invoicely
+          </Text>
+          <Text letterSpacing="0.05em" fontWeight="600">
+            {user && `Hi, ${user.user.username}`}
+          </Text>
+        </div>
 
         <Button
           varient="ghost"
