@@ -6,8 +6,8 @@ export const InvoicesApi = createApi({
   reducerPath: "InvoicesApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${URL}`,
-    prepareHeaders: async (headers, { getState }) => {
-      const token = await getState().auth.token; // Get token from the Redux store
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token; // Get token from the Redux store
       console.log("Token in state:", token); // Debug token presence
 
       if (token) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useGetInvoicesQuery } from "../Redux/ApiSlice";
 import InvoiceCard from "./InvoiceCard";
 import FilterMode from "./FilterMode";
@@ -9,15 +9,12 @@ const InvoiceList = () => {
   console.log(data);
   const [filterData, setFilterData] = useState([]);
   const [filterType, setFilterType] = useState("");
-  const count = useRef(0);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setFilterData(data);
-  //   }
-  //   count.current += 1;
-  //   console.log(count);
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      setFilterData(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (data) {

@@ -34,6 +34,7 @@ export const signupUser = async (req, res) => {
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: true,
+      sameSite: "strict",
     });
 
     // Remove the password field before returning the user object
@@ -78,7 +79,9 @@ export const loginUser = async (req, res) => {
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: true,
+      sameSite: "strict",
     });
+
     // Remove the password field before returning the user object
     const { password: removedPassword, ...userWithoutPassword } = user._doc;
 

@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AppLayout from "./Pages/AppLayout";
 import Error from "./Pages/Error";
@@ -47,8 +48,21 @@ const router = createBrowserRouter([
 function App() {
   const [theme, setTheme] = useState("light");
 
+  // Load the theme from localStorage when the component mounts
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  // Update localStorage whenever the theme changes
   const toggleTheme = () => {
-    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+    setTheme((currentTheme) => {
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      localStorage.setItem("theme", newTheme);
+      return newTheme;
+    });
   };
 
   return (

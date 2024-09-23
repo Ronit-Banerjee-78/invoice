@@ -86,7 +86,7 @@ function Login() {
         {/* email */}
         <div className="mb-2">
           <label className="label">Email</label>
-          <input {...register("email")} className="input" />
+          <input {...register("email")} className="input text-black" />
           {errors?.email && (
             <p className="text-red-500">{errors.email.message}</p>
           )}
@@ -95,7 +95,11 @@ function Login() {
         {/* password */}
         <div className="mb-2">
           <label className="label">Password</label>
-          <input type="password" {...register("password")} className="input" />
+          <input
+            type="password"
+            {...register("password")}
+            className="input text-black"
+          />
           {errors?.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}

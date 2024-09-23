@@ -87,7 +87,7 @@ function Signup() {
         {/* username */}
         <div className="mb-2">
           <label className="label">Username</label>
-          <input {...register("username")} className="input" />
+          <input {...register("username")} className="input text-black" />
           {errors?.username && (
             <p className="text-red-500">{errors.username.message}</p>
           )}
@@ -96,7 +96,11 @@ function Signup() {
         {/* email */}
         <div className="mb-2">
           <label className="label">Email</label>
-          <input type="email" {...register("email")} className="input" />
+          <input
+            type="email"
+            {...register("email")}
+            className="input text-black"
+          />
           {errors?.email && (
             <p className="text-red-500">{errors.email.message}</p>
           )}
@@ -105,7 +109,11 @@ function Signup() {
         {/* password */}
         <div className="mb-2">
           <label className="label">Password</label>
-          <input type="password" {...register("password")} className="input" />
+          <input
+            type="password"
+            {...register("password")}
+            className="input text-black"
+          />
           {errors?.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}
