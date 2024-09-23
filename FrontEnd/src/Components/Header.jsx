@@ -20,7 +20,8 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       // Call the backend to clear the cookie
-      await logoutUser().unwrap();
+      const response = await logoutUser().unwrap();
+      console.log(response);
       // Dispatch the logout action to reset Redux state
       dispatch(logout());
     } catch (error) {

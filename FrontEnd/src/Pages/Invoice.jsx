@@ -55,10 +55,10 @@ const Invoice = () => {
         position: "top",
       });
     } catch (error) {
-      console.error("Failed to delete the invoice:", error);
+      // console.error("Failed to delete the invoice:", error);
       toast({
-        title: "Error while deleting invoice.",
-        description: "Failed to delete the invoice.",
+        title: "Error",
+        description: error?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -79,10 +79,10 @@ const Invoice = () => {
         position: "top",
       });
     } catch (error) {
-      console.error("Failed to update the invoice status:", error);
+      // console.error("Failed to update the invoice status:", error);
       toast({
-        title: "Error while updating invoice status.",
-        description: "Failed to update the invoice status",
+        title: "Error",
+        description: error?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,

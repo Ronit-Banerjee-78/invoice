@@ -30,7 +30,7 @@ const Home = () => {
             Invoicely
           </Text>
           <Text letterSpacing="0.05em" fontWeight="600">
-            {user && `Hi, ${user.user.username}`}
+            {user && `Hi, ${user?.username}`}
           </Text>
         </div>
 

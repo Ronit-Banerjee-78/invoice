@@ -1,13 +1,25 @@
 import { Invoice } from "../models/Invoice.model.js";
 import { Organization } from "../models/Organization.model.js";
 import { Client } from "../models/Client.model.js";
+import { User } from "../models/User.model.js";
+import jwt from "jsonwebtoken";
 
 // GET Invoices
 export const getInvoices = async (req, res) => {
+  console.log("REQ COOKIES", req.cookies);
   try {
-    const invoices = await Invoice.find({})
+    const token = req.headers.authorization?.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
+    // console.log("Decoded ", decoded);
+    const userId = decoded._id;
+    console.log("User ID from controller", userId);
+    const invoices = await Invoice.find({
+      createdBy: userId,
+    })
       .populate("client")
       .populate("organization");
+    console.log("-----------------------------------------------------");
+    console.log("Invoices", invoices);
     return res.json(invoices);
   } catch (error) {
     return res
@@ -37,6 +49,11 @@ export const getSingleInvoice = async (req, res) => {
 // POST Invoice
 export const postInvoice = async (req, res) => {
   try {
+    const token = req.headers.authorization?.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
+    console.log("Decoded ", decoded);
+    const userId = decoded._id;
+    console.log("User ID", userId);
     const {
       clientData,
       organizationData,
@@ -64,7 +81,10 @@ export const postInvoice = async (req, res) => {
       projectDescription,
       items,
       status,
+      createdBy: userId,
     });
+
+    console.log(invoice);
 
     await invoice.save();
 

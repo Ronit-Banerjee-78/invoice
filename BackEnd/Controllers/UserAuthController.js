@@ -36,7 +36,15 @@ export const signupUser = async (req, res) => {
       httpOnly: true,
     });
 
-    res.status(201).json({ message: "User signed in successfully", user });
+    // Remove the password field before returning the user object
+    const { password: removedPassword, ...userWithoutPassword } = user._doc;
+
+    res.status(201).json({
+      message: "User sign up successfully",
+      success: true,
+      user: userWithoutPassword, // password is excluded here
+      token, // token is sent back to the frontend
+    });
   } catch (error) {
     res
       .status(500)
@@ -67,7 +75,7 @@ export const loginUser = async (req, res) => {
     const token = JWTGenerator(user._id);
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
     });
     // Remove the password field before returning the user object
     const { password: removedPassword, ...userWithoutPassword } = user._doc;
@@ -76,6 +84,7 @@ export const loginUser = async (req, res) => {
       message: "User logged in successfully",
       success: true,
       user: userWithoutPassword, // password is excluded here
+      token, // token is sent back to the frontend
     });
   } catch (error) {
     res
@@ -92,5 +101,6 @@ export const logoutUser = async (req, res) => {
     // secure: process.env.NODE_ENV === "production", // Ensure secure cookies in production
     sameSite: "strict",
   });
+  // console.log(res);
   res.status(200).json({ message: "Logout successful" });
 };

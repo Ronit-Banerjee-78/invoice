@@ -5,8 +5,15 @@ import { User } from "../models/User.model.js";
 dotenv.config({
   path: "./env",
 });
-export const UserAuthMiddleware = (req, res, next) => {
-  const token = req.cookies.token;
+
+export const UserAuthMiddleware = async (req, res, next) => {
+  // Extract token from the Authorization header
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1]; // Token is usually prefixed by 'Bearer'
+  const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
+  // console.log("Decoded ", decoded);
+  const userId = decoded._id;
+  console.log("User ID from middleware", userId);
 
   if (!token) {
     return res
@@ -14,19 +21,24 @@ export const UserAuthMiddleware = (req, res, next) => {
       .json({ message: "You are unauthorized to access the resources" });
   }
 
-  jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET, async (err, data) => {
+  // Verify the token
+  jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET, async (err, decoded) => {
     if (err) {
-      return res.status(500).json({
-        message: "Error while verifying token",
-      });
-    } else {
-      const user = await User.findById(data._id);
-      if (user) {
-        req.user = user;
-        next();
-      } else {
-        return res.status(404).json({ message: "Could not find the user" });
+      return res.status(403).json({ message: "Invalid or expired token" });
+    }
+
+    try {
+      const user = await User.findById(decoded._id);
+      console.log("-----------------------------------------------------");
+      console.log("Middleware User", user);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
       }
+
+      req.user = user; // Add user data to the request
+      next(); // Proceed to the next middleware
+    } catch (error) {
+      return res.status(500).json({ message: "Error fetching user data" });
     }
   });
 };

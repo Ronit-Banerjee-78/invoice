@@ -25,9 +25,13 @@ function Login() {
 
   const onFormSubmit = async (formData) => {
     try {
-      const user = await loginUser({ ...formData }).unwrap();
+      const response = await loginUser({ ...formData }).unwrap();
       // If successful, dispatch loginSuccess action
-      dispatch(loginSuccess({ user }));
+      // Extract token and user from the response
+      console.log("Response", response);
+      const { token, user } = response;
+      console.log("User", user);
+      dispatch(loginSuccess({ user, token }));
 
       toast({
         title: "Log in Successfully",
@@ -38,8 +42,9 @@ function Login() {
       });
       navigate("/");
     } catch (error) {
+      console.log(error);
       toast({
-        title: "Failed to Log in",
+        title: error?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -73,8 +78,9 @@ function Login() {
 
       {/* form */}
       <form
+        autoComplete="off"
         onSubmit={handleSubmit(onFormSubmit)}
-        className="w-[90vw] md:w-[45vw] lg:w-[35vw] p-4 border-2 mx-auto rounded-md border-solid border-slate-400"
+        className="w-[90vw] md:w-[45vw] lg:w-[35vw] mt-16 p-4 border-2 mx-auto rounded-md border-solid border-slate-400"
       >
         {/* email */}
         <div className="mb-2">

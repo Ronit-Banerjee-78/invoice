@@ -151,7 +151,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
         } catch (error) {
           toast({
             title: "Error",
-            description: "Failed to edit invoice",
+            description: error?.data?.message,
             status: "error",
             duration: 3000,
             isClosable: true,
@@ -172,11 +172,11 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
         // console.log("Invoice added successfully");
       }
       controlFormVisibility(false);
-    } catch (err) {
-      // console.error("Failed to save invoice:", err);
+    } catch (error) {
+      // console.error("Failed to save invoice:", error);
       toast({
         title: "Error",
-        description: "Failed to create invoice",
+        description: error?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,

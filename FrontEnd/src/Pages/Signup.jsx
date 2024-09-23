@@ -6,6 +6,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
 import { useSignupUserMutation } from "../Redux/UserApi.js";
+import { signupSuccess } from "../Redux/UserSlice.js";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const formSchema = z.object({
   username: z.string().min(3, "Username is required"),
@@ -16,6 +19,10 @@ const formSchema = z.object({
 function Signup() {
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const { user } = useSelector((state) => state.auth);
+  // const { token } = useSelector((state) => state.auth);
+  // console.log(user, token);
 
   const [signupUser, { isLoading }] = useSignupUserMutation();
 
@@ -23,7 +30,13 @@ function Signup() {
 
   const onFormSubmit = async (formData) => {
     try {
-      await signupUser({ ...formData }).unwrap();
+      const response = await signupUser({ ...formData }).unwrap();
+
+      // Extract token and user from the response
+      console.log("Response", response);
+      const { token, user } = response;
+      dispatch(signupSuccess({ user, token }));
+      navigate("/");
       toast({
         title: "Sign up Successfully",
         status: "success",
@@ -31,10 +44,9 @@ function Signup() {
         isClosable: true,
         position: "top",
       });
-      navigate("/");
     } catch (error) {
       toast({
-        title: "Failed to Sign up",
+        title: error?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -68,8 +80,9 @@ function Signup() {
 
       {/* form */}
       <form
+        autoComplete="off"
         onSubmit={handleSubmit(onFormSubmit)}
-        className="w-[90vw] md:w-[45vw] lg:w-[35vw] p-4 border-2 mx-auto rounded-md border-solid border-slate-400"
+        className="w-[90vw] md:w-[45vw] lg:w-[35vw] mt-16 p-4 border-2 mx-auto rounded-md border-solid border-slate-400"
       >
         {/* username */}
         <div className="mb-2">
@@ -83,7 +96,7 @@ function Signup() {
         {/* email */}
         <div className="mb-2">
           <label className="label">Email</label>
-          <input {...register("email")} className="input" />
+          <input type="email" {...register("email")} className="input" />
           {errors?.email && (
             <p className="text-red-500">{errors.email.message}</p>
           )}
@@ -92,7 +105,7 @@ function Signup() {
         {/* password */}
         <div className="mb-2">
           <label className="label">Password</label>
-          <input {...register("password")} className="input" />
+          <input type="password" {...register("password")} className="input" />
           {errors?.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}

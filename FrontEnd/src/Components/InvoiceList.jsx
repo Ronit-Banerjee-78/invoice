@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { InvoicesApi } from "../Redux/ApiSlice";
+import { useGetInvoicesQuery } from "../Redux/ApiSlice";
 import InvoiceCard from "./InvoiceCard";
 import FilterMode from "./FilterMode";
-import {
-  CircularProgress,
-  CircularProgressLabel,
-  Flex,
-  Box,
-  Text,
-} from "@chakra-ui/react";
+import { CircularProgress, Flex, Box, Text } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const InvoiceList = () => {
-  const { data, isError, isLoading, error } = InvoicesApi.useGetInvoicesQuery();
+  const { data, isError, isLoading, error } = useGetInvoicesQuery();
   const [filterData, setFilterData] = useState([]);
   const [filterType, setFilterType] = useState("");
+  const { token, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (data) {
       setFilterData(data);
     }
-  }, [data]);
+  }, [data, token, user]);
 
   useEffect(() => {
     if (data) {
