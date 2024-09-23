@@ -6,13 +6,14 @@ export const InvoicesApi = createApi({
   reducerPath: "InvoicesApi",
   baseQuery: fetchBaseQuery({
     baseUrl: `${URL}`,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token; // Get token from the Redux store
-      console.log(token);
+    prepareHeaders: async (headers, { getState }) => {
+      const token = await getState().auth.token; // Get token from the Redux store
+      console.log("Token in state:", token); // Debug token presence
 
       if (token) {
         headers.set("Authorization", `Bearer ${token}`); // Attach token to headers
       }
+      console.log("Headers before returning:", headers);
 
       return headers;
     },
@@ -38,9 +39,9 @@ export const InvoicesApi = createApi({
       query: ({ id, status }) => ({
         url: `api/invoices/${id}`,
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
         body: { status },
       }),
       invalidatesTags: ["invoice"],
@@ -49,9 +50,9 @@ export const InvoicesApi = createApi({
       query: ({ id, ...updatedData }) => ({
         url: `api/invoices/${id}`,
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
         body: updatedData,
       }),
       invalidatesTags: ["invoice"],

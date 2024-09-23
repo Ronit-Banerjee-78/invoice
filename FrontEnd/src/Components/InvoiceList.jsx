@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useGetInvoicesQuery } from "../Redux/ApiSlice";
 import InvoiceCard from "./InvoiceCard";
 import FilterMode from "./FilterMode";
 import { CircularProgress, Flex, Box, Text } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
 
 const InvoiceList = () => {
   const { data, isError, isLoading, error } = useGetInvoicesQuery();
+  console.log(data);
   const [filterData, setFilterData] = useState([]);
   const [filterType, setFilterType] = useState("");
-  const { token, user } = useSelector((state) => state.auth);
+  const count = useRef(0);
 
-  useEffect(() => {
-    if (data) {
-      setFilterData(data);
-    }
-  }, [data, token, user]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setFilterData(data);
+  //   }
+  //   count.current += 1;
+  //   console.log(count);
+  // }, [data]);
 
   useEffect(() => {
     if (data) {

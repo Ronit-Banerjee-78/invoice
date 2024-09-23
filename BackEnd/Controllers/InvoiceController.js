@@ -6,20 +6,20 @@ import jwt from "jsonwebtoken";
 
 // GET Invoices
 export const getInvoices = async (req, res) => {
-  console.log("REQ COOKIES", req.cookies);
   try {
+    console.log("Authorization header:", req.headers.authorization);
     const token = req.headers.authorization?.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
     // console.log("Decoded ", decoded);
     const userId = decoded._id;
-    console.log("User ID from controller", userId);
+    // console.log("User ID from controller", userId);
     const invoices = await Invoice.find({
       createdBy: userId,
     })
       .populate("client")
       .populate("organization");
     console.log("-----------------------------------------------------");
-    console.log("Invoices", invoices);
+    // console.log("Invoices", invoices);
     return res.json(invoices);
   } catch (error) {
     return res

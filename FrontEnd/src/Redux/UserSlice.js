@@ -16,6 +16,7 @@ const UserSlice = createSlice({
       state.token = action.payload.token; // Save token to the store
     },
     loginSuccess: (state, action) => {
+      console.log(action);
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.token = action.payload.token; // Save token to the store

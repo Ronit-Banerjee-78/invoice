@@ -28,9 +28,10 @@ function Login() {
       const response = await loginUser({ ...formData }).unwrap();
       // If successful, dispatch loginSuccess action
       // Extract token and user from the response
-      console.log("Response", response);
+      // console.log("Response", response);
       const { token, user } = response;
-      console.log("User", user);
+      console.log("log in token ", token);
+      // console.log("User", user);
       dispatch(loginSuccess({ user, token }));
 
       toast({
