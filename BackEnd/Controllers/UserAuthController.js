@@ -32,7 +32,6 @@ export const signupUser = async (req, res) => {
     const token = JWTGenerator(user._id);
 
     res.cookie("token", token, {
-      withCredentials: true,
       httpOnly: true,
       sameSite: "strict",
     });
@@ -77,10 +76,11 @@ export const loginUser = async (req, res) => {
 
     const token = JWTGenerator(user._id);
     res.cookie("token", token, {
-      withCredentials: true,
       httpOnly: true,
       sameSite: "strict",
     });
+
+    console.log(token);
 
     // Remove the password field before returning the user object
     const { password: removedPassword, ...userWithoutPassword } = user._doc;

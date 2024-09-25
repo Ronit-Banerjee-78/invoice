@@ -9,10 +9,14 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 // middleware
-
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 // {
-//     origin: ["http://localhost:5173"],
 //     // "https://invoicely-mern-fm.vercel.app/
 //   }
 app.use(express.json());
@@ -22,7 +26,6 @@ dotenv.config({
   path: "./env",
 });
 
-app.use(cookieParser());
 // routes middleware
 
 app.use("/api/user", UserRoutes);
