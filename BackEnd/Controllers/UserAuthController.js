@@ -80,8 +80,6 @@ export const loginUser = async (req, res) => {
       sameSite: "strict",
     });
 
-    console.log(token);
-
     // Remove the password field before returning the user object
     const { password: removedPassword, ...userWithoutPassword } = user._doc;
 
