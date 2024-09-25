@@ -32,6 +32,7 @@ As I work on this project, I'm deepening my understanding of the MERN stack and 
 
 ## Project Status
 
-The project has been successfully completed. You can view it live using the following link: [Live](https://invoicely-mern.vercel.app/)
+Currently, I'm in the development phase, implementing core features and refining the user interface. I am excited to continue improving the app and incorporating feedback to make it more robust and user-friendly.
+Stay tuned for updates and the final release of the Invoice App!
 
 **Frontend Mentor Challenge**: [Invoice App](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl)
