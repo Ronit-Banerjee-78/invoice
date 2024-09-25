@@ -30,7 +30,7 @@ function Login() {
       // Extract token and user from the response
       // console.log("Response", response);
       const { token, user } = response;
-      console.log("log in token ", token);
+      // console.log("log in token ", token);
       // console.log("User", user);
       dispatch(loginSuccess({ user, token }));
 

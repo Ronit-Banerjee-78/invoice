@@ -8,19 +8,24 @@ export const InvoicesApi = createApi({
     baseUrl: `${URL}`,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token; // Get token from the Redux store
-      console.log("Token in state:", token); // Debug token presence
+      // console.log("Token in state:", token); // Debug token presence
 
       if (token) {
         headers.set("Authorization", `Bearer ${token}`); // Attach token to headers
       }
-      console.log("Headers before returning:", headers);
+      // console.log("Headers before returning:", headers);
 
       return headers;
     },
   }),
   endpoints: (builder) => ({
     getInvoices: builder.query({
-      query: () => "api/invoices",
+      query: (token) => ({
+        url: "api/invoices",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
       providesTags: ["invoice"],
     }),
     getSingleInvoice: builder.query({

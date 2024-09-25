@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { useGetInvoicesQuery } from "../Redux/ApiSlice";
 import InvoiceCard from "./InvoiceCard";
 import FilterMode from "./FilterMode";
 import { CircularProgress, Flex, Box, Text } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const InvoiceList = () => {
-  const { data, isError, isLoading, error } = useGetInvoicesQuery();
-  console.log(data);
-  const [filterData, setFilterData] = useState([]);
+  // The problem is that the useGetInvoicesQuery hook is not automatically refetching the data when the user logs in again. This is because the hook's behavior is to only refetch data when the cache expires or when the input parameters change.that's why i had to pass token in the hook.
+  const { token } = useSelector((state) => state.auth);
+  const { data, isError, refetch, isLoading, error } =
+    useGetInvoicesQuery(token);
   const [filterType, setFilterType] = useState("");
 
-  useEffect(() => {
-    if (data) {
-      setFilterData(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (data) {
-      if (filterType === "") {
-        setFilterData(data);
-      } else {
-        setFilterData(data.filter((invoice) => filterType === invoice.status));
-      }
-    }
-  }, [filterType, data]);
+  const filteredInvoices = data?.filter(
+    (invoice) => filterType === "" || filterType === invoice.status
+  );
 
   const filterInvoices = (type) => {
     setFilterType(type);
@@ -63,7 +53,7 @@ const InvoiceList = () => {
     );
   }
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return (
       <Flex align="center" justify="center" minH="100vh">
         <Box
@@ -90,7 +80,7 @@ const InvoiceList = () => {
       className="invoice-list"
     >
       <FilterMode filterInvoices={filterInvoices} />
-      {filterData.length === 0 ? (
+      {filteredInvoices.length === 0 ? (
         <Text
           textAlign="center"
           fontWeight="700"
@@ -102,7 +92,7 @@ const InvoiceList = () => {
           No invoices found
         </Text>
       ) : (
-        filterData.map((invoice) => (
+        filteredInvoices.map((invoice) => (
           <InvoiceCard invoice={invoice} key={invoice._id} />
         ))
       )}
@@ -110,4 +100,4 @@ const InvoiceList = () => {
   );
 };
 
-export default InvoiceList;
+export default memo(InvoiceList);

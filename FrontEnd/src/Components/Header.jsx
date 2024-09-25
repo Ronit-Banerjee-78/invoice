@@ -9,6 +9,7 @@ import { useLogoutUserMutation } from "../Redux/UserApi";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdLogOut } from "react-icons/io";
 import { logout } from "../Redux/UserSlice";
+import { useToast } from "@chakra-ui/react";
 
 const Header = () => {
   const themeData = useContext(ThemeContext);
@@ -16,6 +17,7 @@ const Header = () => {
   const [logoutUser] = useLogoutUserMutation();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const handleLogout = async () => {
     try {
@@ -23,8 +25,21 @@ const Header = () => {
       const response = await logoutUser().unwrap();
       // Dispatch the logout action to reset Redux state
       dispatch(logout());
+      toast({
+        title: "Log out Successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
     } catch (error) {
-      console.error("Error logging out:", error);
+      toast({
+        title: error?.data?.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
 

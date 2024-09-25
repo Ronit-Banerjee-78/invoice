@@ -29,8 +29,8 @@ export const UserAuthMiddleware = async (req, res, next) => {
 
     try {
       const user = await User.findById(decoded._id);
-      console.log("-----------------------------------------------------");
-      console.log("Middleware User", user);
+      // console.log("-----------------------------------------------------");
+      // console.log("Middleware User", user);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }

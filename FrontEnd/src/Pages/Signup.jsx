@@ -33,7 +33,7 @@ function Signup() {
       const response = await signupUser({ ...formData }).unwrap();
 
       // Extract token and user from the response
-      console.log("Response", response);
+      // console.log("Response", response);
       const { token, user } = response;
       dispatch(signupSuccess({ user, token }));
       navigate("/");

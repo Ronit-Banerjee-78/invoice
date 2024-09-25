@@ -10,12 +10,11 @@ const app = express();
 
 // middleware
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    // "https://invoicely-mern-fm.vercel.app/
-  })
-);
+app.use(cors());
+// {
+//     origin: ["http://localhost:5173"],
+//     // "https://invoicely-mern-fm.vercel.app/
+//   }
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
