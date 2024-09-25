@@ -45,7 +45,7 @@ function Login() {
     } catch (error) {
       console.log(error);
       toast({
-        title: error?.data?.message,
+        title: error?.error,
         status: "error",
         duration: 3000,
         isClosable: true,

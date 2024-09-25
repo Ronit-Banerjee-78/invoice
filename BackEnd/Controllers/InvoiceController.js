@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 // GET Invoices
 export const getInvoices = async (req, res) => {
   try {
-    console.log("Authorization header:", req.headers.authorization);
+    // console.log("Authorization header:", req.headers.authorization);
     const token = req.headers.authorization?.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
     // console.log("Decoded ", decoded);
@@ -18,7 +18,7 @@ export const getInvoices = async (req, res) => {
     })
       .populate("client")
       .populate("organization");
-    console.log("-----------------------------------------------------");
+    // console.log("-----------------------------------------------------");
     // console.log("Invoices", invoices);
     return res.json(invoices);
   } catch (error) {
