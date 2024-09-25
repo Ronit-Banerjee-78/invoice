@@ -120,12 +120,12 @@ function Login() {
         </Button>
       </form>
       <p className="text-center mt-4">
-        Already have an account ?
+        Don't have an account ?
         <NavLink
           className="font-semibold mx-2  text-[#8973f9] text-base tracking-wide"
           to="/signup"
         >
-          Signup
+          Sign Up
         </NavLink>
       </p>
     </section>

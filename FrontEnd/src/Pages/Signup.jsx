@@ -139,7 +139,7 @@ function Signup() {
           className="font-semibold mx-2 text-[#8973f9] text-base tracking-wide"
           to="/login"
         >
-          Login
+          Log In
         </NavLink>
       </p>
     </section>
