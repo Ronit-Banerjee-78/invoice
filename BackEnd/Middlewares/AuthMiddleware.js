@@ -28,7 +28,7 @@ export const UserAuthMiddleware = async (req, res, next) => {
     }
 
     try {
-      const user = await User.findById(decoded._id);
+      const user = await User.findById(userId);
       // console.log("-----------------------------------------------------");
       // console.log("Middleware User", user);
       if (!user) {

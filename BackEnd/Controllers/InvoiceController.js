@@ -1,7 +1,6 @@
 import { Invoice } from "../models/Invoice.model.js";
 import { Organization } from "../models/Organization.model.js";
 import { Client } from "../models/Client.model.js";
-import { User } from "../models/User.model.js";
 import jwt from "jsonwebtoken";
 
 // GET Invoices

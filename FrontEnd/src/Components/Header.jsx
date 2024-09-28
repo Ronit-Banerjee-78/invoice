@@ -8,7 +8,6 @@ import { Box } from "@mui/material";
 import { useLogoutUserMutation } from "../Redux/UserApi";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdLogOut } from "react-icons/io";
-import { logout } from "../Redux/UserSlice";
 import { useToast } from "@chakra-ui/react";
 import { checkLogoutUser } from "../../Utils.js/AuthUtils";
 
@@ -23,8 +22,8 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       // Call the backend to clear the cookie
-      const response = await logoutUser().unwrap();
-      // Dispatch the logout action to reset Redux state
+      await logoutUser().unwrap();
+      // Call LogoutUser Utils Function
       checkLogoutUser(dispatch);
       toast({
         title: "Log out Successfully",

@@ -27,12 +27,13 @@ function Login() {
   const onFormSubmit = async (formData) => {
     try {
       const response = await loginUser({ ...formData }).unwrap();
-      // If successful, dispatch loginSuccess action
-      // Extract token and user from the response
       console.log("Response", response);
+      // Extract token and user from the response
       const { token, user } = response;
+
       // console.log("log in token ", token);
       // console.log("User", user);
+      // Call the LoginUser Utils Function - we had to pass the dispatch function from here , cause we can't call hook outside of the FC.
       checkLoginUser(dispatch, user, token);
 
       toast({

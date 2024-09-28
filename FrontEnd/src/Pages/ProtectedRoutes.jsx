@@ -8,6 +8,7 @@ const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, token } = useSelector((state) => state.auth);
   const localStorageUser = JSON.parse(localStorage.getItem("user"));
 
+  // Checking if the user is stored in LocalStorage but token is null , if that is the case then we can regenerate token - (so user won't logged out while refreshing the page)
   useEffect(() => {
     if (localStorageUser && !token) {
       checkAndRefreshToken(dispatch);

@@ -12,6 +12,12 @@ export const checkLoginUser = (dispatch, userData, token) => {
   dispatch(setUserAndToken({ user: userData, token }));
 };
 
+export const checkSignupUser = (dispatch, userData, token) => {
+  localStorage.setItem("user", JSON.stringify(userData));
+  console.log(token);
+  dispatch(setUserAndToken({ user: userData, token }));
+};
+
 export const checkLogoutUser = (dispatch) => {
   localStorage.removeItem("user");
   dispatch(logout());
@@ -27,7 +33,7 @@ export const checkAndRefreshToken = async (dispatch) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId: userData._id }), // uncomment this if you need to send the userId
+        body: JSON.stringify({ userId: userData._id }), // Sending UserID to regenerate the Token
       });
 
       // Ensure response is ok before proceeding
@@ -35,7 +41,7 @@ export const checkAndRefreshToken = async (dispatch) => {
         throw new Error("Failed to refresh token");
       }
 
-      // Parse the response body once
+      // Parse the response body
       const responseJson = await response.json();
       const { token } = responseJson;
 
