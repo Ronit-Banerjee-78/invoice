@@ -6,8 +6,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
 import { useLoginUserMutation } from "../Redux/UserApi.js";
-import { loginSuccess } from "../Redux/UserSlice.js";
+import { setUserAndToken } from "../Redux/UserSlice.js";
 import { useDispatch } from "react-redux";
+import { checkLoginUser } from "../../Utils.js/AuthUtils.js";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -28,11 +29,11 @@ function Login() {
       const response = await loginUser({ ...formData }).unwrap();
       // If successful, dispatch loginSuccess action
       // Extract token and user from the response
-      // console.log("Response", response);
+      console.log("Response", response);
       const { token, user } = response;
       // console.log("log in token ", token);
       // console.log("User", user);
-      dispatch(loginSuccess({ user, token }));
+      checkLoginUser(dispatch, user, token);
 
       toast({
         title: "Log in Successfully",

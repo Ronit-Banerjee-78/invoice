@@ -6,9 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@chakra-ui/react";
 import { useSignupUserMutation } from "../Redux/UserApi.js";
-import { signupSuccess } from "../Redux/UserSlice.js";
+import { setUserAndToken } from "../Redux/UserSlice.js";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 
 const formSchema = z.object({
   username: z.string().min(3, "Username is required"),
@@ -35,7 +34,7 @@ function Signup() {
       // Extract token and user from the response
       // console.log("Response", response);
       const { token, user } = response;
-      dispatch(signupSuccess({ user, token }));
+      dispatch(setUserAndToken({ user, token }));
       navigate("/");
       toast({
         title: "Sign up Successfully",

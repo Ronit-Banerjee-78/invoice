@@ -96,6 +96,28 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// refresh token
+
+export const refreshToken = async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const token = JWTGenerator(user._id);
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "strict",
+    });
+
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: "Error While regenerating refresh token" });
+  }
+};
+
 // log out
 
 export const logoutUser = async (req, res) => {

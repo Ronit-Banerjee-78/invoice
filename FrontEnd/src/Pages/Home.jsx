@@ -1,20 +1,43 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Form from "../Components/Form.jsx";
 import { FaPlus } from "react-icons/fa";
 import InvoiceList from "../Components/InvoiceList.jsx";
 import { Flex, Text, Button, Box } from "@chakra-ui/react";
 import { ThemeContext } from "../App";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { checkAndRefreshToken } from "../../Utils.js/AuthUtils.js";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const themeData = useContext(ThemeContext);
   const { theme } = themeData;
-  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, token, isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const localStorageUser = JSON.parse(localStorage.getItem("user"));
+
+    if (localStorageUser && !token) {
+      checkAndRefreshToken(dispatch).then((success) => {
+        if (!success) {
+          navigate("/login");
+        }
+      });
+    } else if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [dispatch, token, isAuthenticated, navigate]);
 
   const controlFormVisibility = () => {
     setIsFormVisible((prevState) => !prevState);
   };
+
+  if (!user) {
+    return null; // or a loading spinner
+  }
 
   return (
     <Box className="home relative">
@@ -30,12 +53,11 @@ const Home = () => {
             Invoicely
           </Text>
           <Text letterSpacing="0.05em" fontWeight="600">
-            {user && `Hi, ${user?.username}`}
+            {user && `Hi, ${user.username}`}
           </Text>
         </div>
-
         <Button
-          varient="ghost"
+          variant="ghost"
           bg={theme === "light" ? "#F1F6F9" : "#131315"}
           color={theme === "light" ? "black" : "white"}
           rounded="md"
@@ -60,7 +82,6 @@ const Home = () => {
           New Invoice
         </Button>
       </Flex>
-
       {isFormVisible && (
         <Form
           controlFormVisibility={controlFormVisibility}

@@ -1,10 +1,20 @@
+import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { checkAndRefreshToken } from "../../Utils.js/AuthUtils.js";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { isAuthenticated, token } = useSelector((state) => state.auth);
+  const localStorageUser = JSON.parse(localStorage.getItem("user"));
 
-  if (!isAuthenticated) {
+  useEffect(() => {
+    if (localStorageUser && !token) {
+      checkAndRefreshToken(dispatch);
+    }
+  }, [dispatch, token]);
+
+  if (!isAuthenticated && !localStorageUser) {
     return <Navigate to="/login" replace />;
   }
 
