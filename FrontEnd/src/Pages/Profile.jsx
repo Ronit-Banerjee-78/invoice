@@ -47,8 +47,8 @@ function Profile() {
   const lastUpdateDate = calculateLastUpdateDate(updatedAt);
 
   return (
-    <div className="p-4">
-      <NavLink to="/">
+    <div className="p-4 relative flex items-center justify-center">
+      <NavLink to="/" className="absolute top-0 md:top-10 left-5">
         <Text
           gap="0"
           maxW="fit-content"
@@ -60,7 +60,7 @@ function Profile() {
         </Text>
       </NavLink>
       <div
-        className={` m-6 p-6 rounded-lg shadow-lg ${
+        className={`m-6 p-6 w-[90%] md:w-[50vw] lg:w-[50vw] rounded-lg shadow-lg ${
           theme === "light"
             ? "bg-white text-gray-800"
             : "bg-gray-800 text-white"

@@ -66,7 +66,7 @@ function UserForm({ data, setIsFormVisible }) {
       <form
         autoComplete="off"
         onSubmit={handleSubmit(onFormSubmit)}
-        className="w-[90%] md:w-[50vw] lg:w-[30vw] mt-16 p-4 border-2 mx-auto rounded-md border-solid border-slate-400"
+        className="w-[90%] md:w-[50vw] lg:w-[30vw] mt-16 mb-8 p-4 border-2 mx-auto rounded-md border-solid border-slate-400"
       >
         {/* Username */}
         <div className="mb-2">
