@@ -7,6 +7,7 @@ import Invoice from "./Pages/Invoice";
 import Home from "./Pages/Home";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
+import Profile from "./Pages/Profile";
 import ProtectedRoute from "./Pages/ProtectedRoutes";
 import { createContext, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/profile/:id",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/:id",

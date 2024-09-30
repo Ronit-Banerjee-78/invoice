@@ -1,23 +1,26 @@
 import React, { useContext } from "react";
 import { BiSolidCircleThreeQuarter } from "react-icons/bi";
-import { FaMoon } from "react-icons/fa";
+import { MdExitToApp } from "react-icons/md";
+import { PiMoonStarsFill } from "react-icons/pi";
 import { PiSunFill } from "react-icons/pi";
 import { ThemeContext } from "../App";
 import { Flex } from "@chakra-ui/react";
 import { Box } from "@mui/material";
 import { useLogoutUserMutation } from "../Redux/UserApi";
 import { useDispatch, useSelector } from "react-redux";
-import { IoMdLogOut } from "react-icons/io";
 import { useToast } from "@chakra-ui/react";
 import { checkLogoutUser } from "../../Utils.js/AuthUtils";
+import { NavLink } from "react-router-dom";
+import { LuUserSquare } from "react-icons/lu";
 
 const Header = () => {
   const themeData = useContext(ThemeContext);
   const { theme, toggleTheme } = themeData;
   const [logoutUser] = useLogoutUserMutation();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const toast = useToast();
+  const { _id } = user || {};
 
   const handleLogout = async () => {
     try {
@@ -66,23 +69,41 @@ const Header = () => {
         mb={{ base: "0em", md: "1em" }}
         className="profile"
         align="center"
+        // border="2px"
+        // borderColor="white"
+        // borderStyle="solid"
+        // // backgroundColor="#775df7"
       >
         {theme === "light" ? (
-          <button className="m-4" onClick={toggleTheme}>
-            <FaMoon size={20} className="text-gray-200" />
+          <button className="m-2" onClick={toggleTheme}>
+            <PiMoonStarsFill
+              size={24}
+              className="text-gray-200 hover:text-[#775df7]"
+            />
           </button>
         ) : (
-          <button className="m-4" onClick={toggleTheme}>
-            <PiSunFill size={20} className="text-gray-200" />
+          <button className="m-2" onClick={toggleTheme}>
+            <PiSunFill
+              size={24}
+              className="text-gray-200 hover:text-[#775df7]"
+            />
           </button>
         )}
         {isAuthenticated && (
-          <button
-            onClick={handleLogout}
-            className="text-gray-200 tracking-wider border-2 border-solid border-gray-200 rounded-full px-1 py-1 font-semibold"
-          >
-            <IoMdLogOut size={24} />
-          </button>
+          <>
+            <NavLink
+              className="tracking-wider m-2 text-gray-200 hover:text-[#775df7] font-semibold"
+              to={`profile/${_id}`}
+            >
+              <LuUserSquare size={26} />
+            </NavLink>
+            <button
+              onClick={handleLogout}
+              className="m-2 text-gray-200 hover:text-[#775df7]"
+            >
+              <MdExitToApp size={28} />
+            </button>
+          </>
         )}
       </Flex>
     </Flex>

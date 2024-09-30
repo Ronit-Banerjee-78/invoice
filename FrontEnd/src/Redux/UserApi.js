@@ -8,6 +8,10 @@ export const UserAuthentication = createApi({
     baseUrl: `${URL}`,
   }),
   endpoints: (builder) => ({
+    getUser: builder.query({
+      query: (id) => `api/user/profile/${id}`,
+      providesTags: ["user"],
+    }),
     signupUser: builder.mutation({
       query: (userCredentials) => ({
         url: "api/user/signup",
@@ -24,6 +28,15 @@ export const UserAuthentication = createApi({
         credentials: "include",
       }),
     }),
+    updateUserProfile: builder.mutation({
+      query: (newUserCredentials) => ({
+        url: "api/user/update-profile",
+        method: "POST",
+        body: newUserCredentials,
+        // credentials: "include",
+        invalidatesTags: ["user"],
+      }),
+    }),
     logoutUser: builder.mutation({
       query: () => ({
         url: "api/user/logout",
@@ -34,7 +47,9 @@ export const UserAuthentication = createApi({
 });
 
 export const {
+  useGetUserQuery,
   useSignupUserMutation,
   useLoginUserMutation,
+  useUpdateUserProfileMutation,
   useLogoutUserMutation,
 } = UserAuthentication;

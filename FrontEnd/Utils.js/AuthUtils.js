@@ -2,6 +2,7 @@ import {
   setUserAndToken,
   setToken,
   logout,
+  setUser,
 } from "../../FrontEnd/src/Redux/UserSlice.js";
 
 const URL = "http://localhost:8000/";
@@ -13,6 +14,19 @@ export const checkLoginUser = (dispatch, userData, token) => {
   localStorage.setItem("user", JSON.stringify(userData));
   console.log(token);
   dispatch(setUserAndToken({ user: userData, token }));
+};
+
+export const updateUserProfile = (dispatch, userData) => {
+  // Get the existing user data from localStorage
+  const existingUser = JSON.parse(localStorage.getItem("user")) || {};
+  // console.log("Existing User : ", existingUser);
+
+  // Merge the existing user data with the new userData
+  const updatedUser = { ...existingUser, ...userData };
+  localStorage.setItem("user", JSON.stringify(updatedUser));
+
+  // console.log("Updated User: ", updatedUser);
+  dispatch(setUser({ user: updatedUser }));
 };
 
 export const checkSignupUser = (dispatch, userData, token) => {
@@ -49,7 +63,7 @@ export const checkAndRefreshToken = async (dispatch) => {
       const { token } = responseJson;
 
       // Use the parsed data
-      console.log("Response from RefreshToken EndPoint", responseJson);
+      // console.log("Response from RefreshToken EndPoint", responseJson);
 
       dispatch(setToken(token));
       dispatch(setUserAndToken({ user: userData, token }));

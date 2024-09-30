@@ -2,6 +2,23 @@ import { User } from "../models/User.model.js";
 import bcrypt from "bcryptjs";
 import { JWTGenerator } from "../Utils/JWTGenerator.js";
 
+// get User Details
+
+export const getUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(404).json({ message: "Error While Fetching User Data" });
+  }
+};
+
 // sign up
 export const signupUser = async (req, res) => {
   try {
@@ -96,13 +113,58 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// update User Profile
+
+export const updateUserProfile = async (req, res) => {
+  const { email, username, password } = req.body;
+  // console.log("Request Body", req.body);
+
+  // console.log("-------------------------------");
+
+  try {
+    const user = await User.findOne({ email });
+    // console.log("Found User", user);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // hashing the password
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
+    const updatedUserData = {
+      email,
+      username,
+      password: hashedPassword,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(
+      user._id,
+      updatedUserData,
+      {
+        new: true,
+      }
+    );
+    // console.log("-------------------------------");
+    // console.log("Updated User ", updatedUser);
+
+    // Remove the password field before returning the user object
+    const { password: removedPassword, ...userWithoutPassword } = user._doc;
+
+    res.status(200).json(userWithoutPassword);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // refresh token
 
 export const refreshToken = async (req, res) => {
   const { userId } = req.body;
   try {
     const user = await User.findById(userId);
-    console.log(user);
+    // console.log(user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
