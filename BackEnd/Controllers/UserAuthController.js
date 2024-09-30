@@ -1,4 +1,7 @@
 import { User } from "../models/User.model.js";
+import { Invoice } from "../models/Invoice.model.js";
+import { Client } from "../models/Client.model.js";
+import { Organization } from "../models/Organization.model.js";
 import bcrypt from "bcryptjs";
 import { JWTGenerator } from "../Utils/JWTGenerator.js";
 
@@ -189,6 +192,68 @@ export const logoutUser = async (req, res) => {
     // secure: process.env.NODE_ENV === "production", // Ensure secure cookies in production
     sameSite: "strict",
   });
+
+  // Optional: If you're using sessions, destroy the session
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Error logging out" });
+      }
+    });
+  }
+
   // console.log(res);
   res.status(200).json({ message: "Logout successful" });
+};
+
+// Delete User
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.body;
+  console.log(id);
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ message: "Please provide the User ID to delete" });
+  }
+
+  try {
+    // Find the user
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Find and delete invoices
+    const invoices = await Invoice.find({ createdBy: id });
+    console.log(invoices);
+    if (invoices.length) {
+      await Invoice.deleteMany({ createdBy: id });
+    }
+
+    // Find and delete clients
+    const clients = await Client.find({ createdBy: id });
+    if (clients.length) {
+      await Client.deleteMany({ createdBy: id });
+    }
+
+    // Find and delete organizations
+    const organizations = await Organization.find({ createdBy: id });
+    if (organizations.length) {
+      await Organization.deleteMany({ createdBy: id });
+    }
+
+    // Finally, delete the user
+    await User.findByIdAndDelete(id);
+
+    return res
+      .status(200)
+      .json({ message: "User and associated data deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error occurred while deleting User",
+      error: error.message,
+    });
+  }
 };

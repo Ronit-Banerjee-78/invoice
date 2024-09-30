@@ -43,6 +43,13 @@ export const UserAuthentication = createApi({
         method: "POST",
       }),
     }),
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `api/user/profile/${id}`,
+        method: "DELETE",
+        body: id,
+      }),
+    }),
   }),
 });
 
@@ -52,4 +59,5 @@ export const {
   useLoginUserMutation,
   useUpdateUserProfileMutation,
   useLogoutUserMutation,
+  useDeleteUserMutation,
 } = UserAuthentication;

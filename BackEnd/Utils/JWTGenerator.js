@@ -2,11 +2,11 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
 dotenv.config({
-  path: "./env",
+  path: "../env",
 });
 
 export const JWTGenerator = (_id) => {
   return jwt.sign({ _id }, process.env.JSON_WEB_TOKEN_SECRET, {
-    expiresIn: 1 * 24 * 60 * 60,
+    expiresIn: "1d",
   });
 };

@@ -6,7 +6,6 @@ import {
 } from "../Redux/ApiSlice";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import Form from "../Components/Form";
-import dayjs from "dayjs";
 import {
   CircularProgress,
   Text,
@@ -34,7 +33,7 @@ const Invoice = () => {
   const [deleteInvoice] = useDeleteInvoiceMutation(id);
   const [updateInvoiceStatus] = useUpdateInvoiceStatusMutation(id);
 
-  const trimId = id.substr(-7);
+  const trimId = id.slice(-7);
 
   const controlFormVisibility = () => {
     setIsFormVisible((prevState) => !prevState);

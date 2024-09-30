@@ -1,11 +1,9 @@
 import React from "react";
-import { IoIosArrowDroprightCircle } from "react-icons/io";
 import { GoDotFill } from "react-icons/go";
 import { NavLink } from "react-router-dom";
 import { Flex, Grid, Box, Text } from "@chakra-ui/react";
 import { ThemeContext } from "../App";
 import { useContext } from "react";
-import { transform } from "framer-motion";
 
 export const calculateDueDate = (invoiceDate, paymentTerms) => {
   const date = new Date(invoiceDate);

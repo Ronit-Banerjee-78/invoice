@@ -9,13 +9,14 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 // middleware
-app.use(cookieParser());
 app.use(
   cors({
     origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
+app.use(cookieParser());
+
 // {
 //     // "https://invoicely-mern-fm.vercel.app/
 //   }

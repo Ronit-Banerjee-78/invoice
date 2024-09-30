@@ -6,6 +6,7 @@ import {
   updateUserProfile,
   refreshToken,
   logoutUser,
+  deleteUser,
 } from "../Controllers/UserAuthController.js";
 
 const router = express.Router();
@@ -27,5 +28,8 @@ router.post("/refresh-token", refreshToken);
 
 // POST Log out User
 router.post("/logout", logoutUser);
+
+// DELETE Log out User
+router.delete("/profile/:id", deleteUser);
 
 export default router;

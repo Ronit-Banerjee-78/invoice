@@ -29,6 +29,11 @@ export const updateUserProfile = (dispatch, userData) => {
   dispatch(setUser({ user: updatedUser }));
 };
 
+export const deleteUser = (dispatch, id) => {
+  localStorage.removeItem("user");
+  dispatch(logout());
+};
+
 export const checkSignupUser = (dispatch, userData, token) => {
   localStorage.setItem("user", JSON.stringify(userData));
   console.log(token);

@@ -6,10 +6,10 @@ import { PiSunFill } from "react-icons/pi";
 import { ThemeContext } from "../App";
 import { Flex } from "@chakra-ui/react";
 import { Box } from "@mui/material";
-import { useLogoutUserMutation } from "../Redux/UserApi";
+import { useLogoutUserMutation } from "../Redux/UserApi.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
-import { checkLogoutUser } from "../../Utils.js/AuthUtils";
+import { checkLogoutUser } from "../../Utils.js/AuthUtils.js";
 import { NavLink } from "react-router-dom";
 import { LuUserSquare } from "react-icons/lu";
 

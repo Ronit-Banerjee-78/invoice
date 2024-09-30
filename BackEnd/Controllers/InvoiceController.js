@@ -50,9 +50,9 @@ export const postInvoice = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
-    console.log("Decoded ", decoded);
+    // console.log("Decoded ", decoded);
     const userId = decoded._id;
-    console.log("User ID", userId);
+    // console.log("User ID", userId);
     const {
       clientData,
       organizationData,
@@ -64,11 +64,25 @@ export const postInvoice = async (req, res) => {
     } = req.body;
 
     // Create and save new Client
-    const client = new Client(clientData);
+    const client = new Client({
+      name: clientData.name,
+      email: clientData.email,
+      streetAddress: clientData.streetAddress,
+      city: clientData.city,
+      postCode: clientData.postCode,
+      country: clientData.country,
+      createdBy: userId,
+    });
     await client.save();
 
     // Create and save new Organization
-    const organization = new Organization(organizationData);
+    const organization = new Organization({
+      streetAddress: organizationData.streetAddress,
+      city: organizationData.city,
+      postCode: organizationData.postCode,
+      country: organizationData.country,
+      createdBy: userId,
+    });
     await organization.save();
 
     // Create and save new Invoice

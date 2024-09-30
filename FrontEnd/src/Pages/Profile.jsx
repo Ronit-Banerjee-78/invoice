@@ -8,8 +8,10 @@ import { IoTrashBinSharp } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 import UserForm from "../Components/UserForm";
 import { Text, CircularProgress } from "@chakra-ui/react";
-import { useGetUserQuery } from "../Redux/UserApi";
-import { NavLink } from "react-router-dom";
+import { useGetUserQuery, useDeleteUserMutation } from "../Redux/UserApi";
+import { useNavigate, NavLink } from "react-router-dom";
+import { logoutUser } from "../../../BackEnd/Controllers/UserAuthController";
+import { checkLogoutUser } from "../../Utils.js/AuthUtils";
 
 export const calculateLastUpdateDate = (lastUpdateDate) => {
   const date = new Date(lastUpdateDate);
@@ -24,13 +26,15 @@ export const calculateLastUpdateDate = (lastUpdateDate) => {
 function Profile() {
   const themeData = useContext(ThemeContext);
   const { theme } = themeData;
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  // console.log(user?._id);
-  const { data, refetch, isLoading, isError, error } = useGetUserQuery(
-    user?._id
-  );
   const dispatch = useDispatch();
+  const { _id } = user || {};
+  const { data, refetch, isLoading, isError, error } = useGetUserQuery(_id);
+
+  const [deleteUser, { isLoading: isDeleteLoading }] =
+    useDeleteUserMutation(_id);
 
   // console.log("Redux User", user);
   // console.log("DB User", data);
@@ -38,6 +42,13 @@ function Profile() {
   useEffect(() => {
     refetch();
   }, [user]);
+
+  const handleDeleteUser = async () => {
+    deleteUser();
+    // await logoutUser().unwrap();
+    // // Call LogoutUser Utils Function
+    // checkLogoutUser(dispatch);
+  };
 
   const handleFormVisibility = () => {
     setIsFormVisible(!isFormVisible);
@@ -109,7 +120,7 @@ function Profile() {
               </button>
               <button
                 className="px-4 py-2 bg-red-500 text-white  tracking-wider font-semibold rounded-lg hover:bg-red-600"
-                onClick={() => console.log("Delete Profile")}
+                onClick={() => handleDeleteUser()}
               >
                 <IoTrashBinSharp size={22} />
               </button>
