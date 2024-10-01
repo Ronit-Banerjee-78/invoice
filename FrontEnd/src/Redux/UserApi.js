@@ -7,6 +7,7 @@ export const UserAuthentication = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${URL}`,
   }),
+  tagTypes: ["user"],
   endpoints: (builder) => ({
     getUser: builder.query({
       query: (id) => `api/user/profile/${id}`,
@@ -47,7 +48,6 @@ export const UserAuthentication = createApi({
       query: (id) => ({
         url: `api/user/profile/${id}`,
         method: "DELETE",
-        body: id,
       }),
     }),
   }),

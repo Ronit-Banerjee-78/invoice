@@ -18,6 +18,7 @@ export const InvoicesApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["invoice"],
   endpoints: (builder) => ({
     getInvoices: builder.query({
       query: (token) => ({

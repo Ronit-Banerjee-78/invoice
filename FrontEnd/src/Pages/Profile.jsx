@@ -10,7 +10,7 @@ import UserForm from "../Components/UserForm";
 import { Text, CircularProgress } from "@chakra-ui/react";
 import { useGetUserQuery, useDeleteUserMutation } from "../Redux/UserApi";
 import { useNavigate, NavLink } from "react-router-dom";
-import { logoutUser } from "../../../BackEnd/Controllers/UserAuthController";
+import { useToast } from "@chakra-ui/react";
 import { checkLogoutUser } from "../../Utils.js/AuthUtils";
 
 export const calculateLastUpdateDate = (lastUpdateDate) => {
@@ -27,14 +27,17 @@ function Profile() {
   const themeData = useContext(ThemeContext);
   const { theme } = themeData;
   const navigate = useNavigate();
+  const toast = useToast();
+
   const { user } = useSelector((state) => state.auth);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const dispatch = useDispatch();
   const { _id } = user || {};
   const { data, refetch, isLoading, isError, error } = useGetUserQuery(_id);
 
-  const [deleteUser, { isLoading: isDeleteLoading }] =
-    useDeleteUserMutation(_id);
+  console.log(_id);
+
+  const [deleteUser, { isLoading: isDeleteLoading }] = useDeleteUserMutation();
 
   // console.log("Redux User", user);
   // console.log("DB User", data);
@@ -44,10 +47,29 @@ function Profile() {
   }, [user]);
 
   const handleDeleteUser = async () => {
-    deleteUser();
-    // await logoutUser().unwrap();
-    // // Call LogoutUser Utils Function
-    // checkLogoutUser(dispatch);
+    try {
+      // Delete User
+      deleteUser(_id);
+      // Delete User from LocalStorage
+      checkLogoutUser(dispatch);
+      // user will navigate to login
+      navigate("/login");
+      toast({
+        title: "User and associated data deleted successfully",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    } catch (error) {
+      toast({
+        title: error?.data?.message || error?.message || error,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    }
   };
 
   const handleFormVisibility = () => {

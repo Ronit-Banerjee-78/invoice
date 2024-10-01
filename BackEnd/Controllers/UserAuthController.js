@@ -209,7 +209,7 @@ export const logoutUser = async (req, res) => {
 // Delete User
 
 export const deleteUser = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   console.log(id);
 
   if (!id) {
@@ -227,7 +227,7 @@ export const deleteUser = async (req, res) => {
 
     // Find and delete invoices
     const invoices = await Invoice.find({ createdBy: id });
-    console.log(invoices);
+    console.log("Invoices", invoices);
     if (invoices.length) {
       await Invoice.deleteMany({ createdBy: id });
     }

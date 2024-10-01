@@ -56,16 +56,9 @@ const InvoiceList = () => {
   if (!data || data.length === 0) {
     return (
       <Flex align="center" justify="center" minH="100vh">
-        <Box
-          p="6"
-          border="2px"
-          borderColor="gray.400"
-          bg="gray.200"
-          rounded="lg"
-          color="gray.800"
-        >
-          <Text as="h1">Create Atleast One Invoice</Text>
-        </Box>
+        <p className="font-semibold text-[1.15rem] tracking-wider">
+          Create Atleast One Invoice
+        </p>
       </Flex>
     );
   }

@@ -15,8 +15,8 @@ const formSchema = z.object({
 });
 
 function UserForm({ data, setIsFormVisible }) {
-  const navigate = useNavigate(); // Use navigate hook
-  const toast = useToast(); // Use toast hook
+  const navigate = useNavigate();
+  const toast = useToast();
   const { username, email, _id } = data;
   const dispatch = useDispatch();
   const [updateUser, { isLoading }] = useUpdateUserProfileMutation();
