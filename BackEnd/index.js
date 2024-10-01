@@ -11,7 +11,8 @@ const app = express();
 // middleware
 app.use(
   cors({
-    origin: ["https://invoicely-mern.vercel.app/", "http://localhost:5173"],
+    origin: ["http://localhost:5173"],
+    // "https://invoicely-mern.vercel.app/",
     credentials: true,
   })
 );
