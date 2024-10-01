@@ -17,7 +17,7 @@ app.use(
   cors({
     origin: [import.meta.env.FRONT_END_URL, "http://localhost:5173"],
     // "https://invoicely-mern.vercel.app/",
-    // credentials: true,
+    credentials: true,
   })
 );
 app.use(cookieParser());
