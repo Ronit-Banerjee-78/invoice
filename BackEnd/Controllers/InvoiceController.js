@@ -12,6 +12,7 @@ export const getInvoices = async (req, res) => {
     // console.log("Decoded ", decoded);
     const userId = decoded._id;
     // console.log("User ID from controller", userId);
+
     const invoices = await Invoice.find({
       createdBy: userId,
     })

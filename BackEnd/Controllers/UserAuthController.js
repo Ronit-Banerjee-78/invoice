@@ -16,6 +16,12 @@ export const getUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://invoicely-mern.vercel.app/"
+    );
+
     return res.status(200).json(user);
   } catch (error) {
     return res.status(404).json({ message: "Error While Fetching User Data" });
@@ -46,6 +52,12 @@ export const signupUser = async (req, res) => {
       password: hashedPassword,
       username,
     });
+
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Origin", [
+      "https://invoicely-mern.vercel.app/",
+      "https://localhost:5173",
+    ]);
 
     await user.save();
 
@@ -95,7 +107,14 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Incorrect user credentials" });
     }
 
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Origin", [
+      "https://invoicely-mern.vercel.app/",
+      "https://localhost:5173",
+    ]);
+
     const token = JWTGenerator(user._id);
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
@@ -144,6 +163,12 @@ export const updateUserProfile = async (req, res) => {
       password: hashedPassword,
     };
 
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Origin", [
+      "https://invoicely-mern.vercel.app/",
+      "https://localhost:5173",
+    ]);
+
     const updatedUser = await User.findByIdAndUpdate(
       user._id,
       updatedUserData,
@@ -174,6 +199,13 @@ export const refreshToken = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     const token = JWTGenerator(user._id);
+
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Origin", [
+      "https://invoicely-mern.vercel.app/",
+      "https://localhost:5173",
+    ]);
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,

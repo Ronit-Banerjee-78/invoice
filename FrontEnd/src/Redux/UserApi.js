@@ -1,13 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const URL = import.meta.env.VITE_API_URL;
-// "http://localhost:8000/";
-//  ||
+const URL = import.meta.env.VITE_API_URL || "https://localhost:8000/";
+
+// Shared base query configuration
+const baseQueryWithCreds = fetchBaseQuery({
+  baseUrl: URL,
+  credentials: "include",
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token;
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
 export const UserAuthentication = createApi({
   reducerPath: "UserAuthentication",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${URL}`,
-  }),
+  baseQuery: baseQueryWithCreds,
   tagTypes: ["user"],
   endpoints: (builder) => ({
     getUser: builder.query({
@@ -19,7 +29,6 @@ export const UserAuthentication = createApi({
         url: "api/user/signup",
         method: "POST",
         body: userCredentials,
-        credentials: "include",
       }),
     }),
     loginUser: builder.mutation({
@@ -27,7 +36,6 @@ export const UserAuthentication = createApi({
         url: "api/user/login",
         method: "POST",
         body: userCredentials,
-        credentials: "include",
       }),
     }),
     updateUserProfile: builder.mutation({

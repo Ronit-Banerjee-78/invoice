@@ -1,24 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const URL = import.meta.env.VITE_API_URL;
-// "http://localhost:8000/";
-//  ||
+const URL = import.meta.env.VITE_API_URL || "https://localhost:8000/";
+
+// Shared base query configuration
+const baseQueryWithCreds = fetchBaseQuery({
+  baseUrl: URL,
+  credentials: "include",
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token;
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
 export const InvoicesApi = createApi({
   reducerPath: "InvoicesApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${URL}`,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token; // Get token from the Redux store
-      // console.log("Token in state:", token);
-
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`); // Attach token to headers
-      }
-      // console.log("Headers before returning:", headers);
-
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithCreds,
   tagTypes: ["invoice"],
   endpoints: (builder) => ({
     getInvoices: builder.query({
@@ -32,6 +31,7 @@ export const InvoicesApi = createApi({
     }),
     getSingleInvoice: builder.query({
       query: (id) => `api/invoices/${id}`,
+      credentials: "include",
       providesTags: ["invoice"],
     }),
     addInvoice: builder.mutation({
