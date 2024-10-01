@@ -29,6 +29,7 @@ export const updateUserProfile = (dispatch, userData) => {
   dispatch(setUser({ user: updatedUser }));
 };
 
+// Logout user does the same operations so i had to comment it out.
 // export const deleteUser = (dispatch, id) => {
 //   localStorage.removeItem("user");
 //   dispatch(logout());

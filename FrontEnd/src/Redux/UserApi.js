@@ -34,7 +34,6 @@ export const UserAuthentication = createApi({
         url: "api/user/update-profile",
         method: "POST",
         body: newUserCredentials,
-        // credentials: "include",
         invalidatesTags: ["user"],
       }),
     }),

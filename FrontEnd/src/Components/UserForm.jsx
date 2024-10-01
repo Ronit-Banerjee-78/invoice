@@ -115,7 +115,6 @@ function UserForm({ data, setIsFormVisible }) {
           rounded="md"
           type="submit"
           my="6"
-          // onClick={() => setIsFormVisible(false)}
         >
           {isLoading ? "Updating ..." : "Update"}
         </Button>

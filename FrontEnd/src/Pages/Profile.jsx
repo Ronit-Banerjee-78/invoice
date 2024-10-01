@@ -79,6 +79,16 @@ function Profile() {
   const { updatedAt, username, email } = data || {};
   const lastUpdateDate = calculateLastUpdateDate(updatedAt);
 
+  if (isError) {
+    return (
+      <Flex align="center" justify="center" minH="100%" className="profile">
+        <h1>
+          {error.status} : {error.error}
+        </h1>
+      </Flex>
+    );
+  }
+
   return (
     <div className="p-4 relative flex items-center justify-center">
       <NavLink to="/" className="absolute top-0 md:top-10 left-5">

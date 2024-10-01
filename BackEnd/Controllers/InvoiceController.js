@@ -65,24 +65,18 @@ export const postInvoice = async (req, res) => {
 
     // Create and save new Client
     const client = new Client({
-      name: clientData.name,
-      email: clientData.email,
-      streetAddress: clientData.streetAddress,
-      city: clientData.city,
-      postCode: clientData.postCode,
-      country: clientData.country,
-      createdBy: userId,
+      ...clientData, // spread the incoming clinetData object
+      createdBy: userId, // add createdBy separately
     });
+
     await client.save();
 
     // Create and save new Organization
     const organization = new Organization({
-      streetAddress: organizationData.streetAddress,
-      city: organizationData.city,
-      postCode: organizationData.postCode,
-      country: organizationData.country,
+      ...organizationData,
       createdBy: userId,
     });
+
     await organization.save();
 
     // Create and save new Invoice
@@ -97,7 +91,7 @@ export const postInvoice = async (req, res) => {
       createdBy: userId,
     });
 
-    console.log(invoice);
+    // console.log(invoice);
 
     await invoice.save();
 

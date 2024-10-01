@@ -8,7 +8,7 @@ export const InvoicesApi = createApi({
     baseUrl: `${URL}`,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token; // Get token from the Redux store
-      // console.log("Token in state:", token); // Debug token presence
+      // console.log("Token in state:", token);
 
       if (token) {
         headers.set("Authorization", `Bearer ${token}`); // Attach token to headers
@@ -45,9 +45,6 @@ export const InvoicesApi = createApi({
       query: ({ id, status }) => ({
         url: `api/invoices/${id}`,
         method: "PATCH",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
         body: { status },
       }),
       invalidatesTags: ["invoice"],
@@ -56,9 +53,6 @@ export const InvoicesApi = createApi({
       query: ({ id, ...updatedData }) => ({
         url: `api/invoices/${id}`,
         method: "PATCH",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
         body: updatedData,
       }),
       invalidatesTags: ["invoice"],
