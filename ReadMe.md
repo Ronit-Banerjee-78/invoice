@@ -11,7 +11,7 @@ This project is an Invoice App that I'm currently developing using the MERN stac
 - **Real-time Data Updates**: Leveraging WebSockets to provide real-time updates to invoice data.
 - **Filtering and Sorting**: Advanced filtering and sorting options to quickly find and organize invoices.
 - **Dashboard Overview**: A comprehensive dashboard displaying key invoice metrics and insights.
-- **User Authentication**: Secure login and registration system to protect user data(optional).
+- **User Authentication**: Secure login and registration system to protect user data.
 
 ## Technologies Used
 
