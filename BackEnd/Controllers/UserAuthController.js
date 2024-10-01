@@ -53,6 +53,7 @@ export const signupUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true,
       sameSite: "strict",
     });
 
@@ -97,6 +98,7 @@ export const loginUser = async (req, res) => {
     const token = JWTGenerator(user._id);
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true,
       sameSite: "strict",
     });
 
@@ -174,6 +176,7 @@ export const refreshToken = async (req, res) => {
     const token = JWTGenerator(user._id);
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true,
       sameSite: "strict",
     });
 
