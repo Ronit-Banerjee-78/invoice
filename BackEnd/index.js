@@ -8,6 +8,10 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 const app = express();
 
+dotenv.config({
+  path: "./env",
+});
+
 // middleware
 app.use(
   cors({
@@ -19,10 +23,6 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-dotenv.config({
-  path: "./env",
-});
 
 // routes middleware
 
