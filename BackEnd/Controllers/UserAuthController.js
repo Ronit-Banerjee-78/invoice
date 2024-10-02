@@ -10,7 +10,7 @@ import { JWTGenerator } from "../Utils/JWTGenerator.js";
 const cookieOptions = {
   partitioned: true, //Add the Partitioned attribute to your cookie:This will allow the cookie to continue functioning as a third-party cookie in browsers that support this feature.
   httpOnly: true,
-  secure: false,
+  secure: true,
   sameSite: "none",
   // domain: "invoicely-mern-backend.vercel.app",
 };
