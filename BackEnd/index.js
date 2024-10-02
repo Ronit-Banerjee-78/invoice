@@ -12,33 +12,27 @@ dotenv.config({
 });
 
 const PORT = process.env.PORT;
-const ALLOWED_ORIGINS = [
-  "https://invoicely-mern.vercel.app",
-  "http://localhost:5173",
-];
+// const ALLOWED_ORIGINS = [
+//   "https://invoicely-mern.vercel.app",
+//   "http://localhost:5173",
+// ];
 
 // CORS middleware
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || ALLOWED_ORIGINS.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: [
-      "Origin",
-      "X-Requested-With",
-      "Content-Type",
-      "Accept",
-      "Authorization",
-    ],
-  })
-);
+app.options("*", cors()); // include before other routes
 
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://invoicely-mern.vercel.app"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", true);
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

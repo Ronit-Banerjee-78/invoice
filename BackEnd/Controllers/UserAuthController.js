@@ -24,11 +24,11 @@ export const getUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://invoicely-mern.vercel.app/"
-    );
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+    // res.setHeader(
+    //   "Access-Control-Allow-Origin",
+    //   "https://invoicely-mern.vercel.app/"
+    // );
     // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     return res.status(200).json(user);
@@ -62,11 +62,11 @@ export const signupUser = async (req, res) => {
       username,
     });
 
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://invoicely-mern.vercel.app/"
-    );
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+    // res.setHeader(
+    //   "Access-Control-Allow-Origin",
+    //   "https://invoicely-mern.vercel.app/"
+    // );
     // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     await user.save();
@@ -113,11 +113,11 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Incorrect user credentials" });
     }
 
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://invoicely-mern.vercel.app/"
-    );
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+    // res.setHeader(
+    //   "Access-Control-Allow-Origin",
+    //   "https://invoicely-mern.vercel.app/"
+    // );
     // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     const token = JWTGenerator(user._id);
@@ -166,11 +166,11 @@ export const updateUserProfile = async (req, res) => {
       password: hashedPassword,
     };
 
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://invoicely-mern.vercel.app/"
-    );
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+    // res.setHeader(
+    //   "Access-Control-Allow-Origin",
+    //   "https://invoicely-mern.vercel.app/"
+    // );
     // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -204,11 +204,11 @@ export const refreshToken = async (req, res) => {
     }
     const token = JWTGenerator(user._id);
 
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://invoicely-mern.vercel.app/"
-    );
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+    // res.setHeader(
+    //   "Access-Control-Allow-Origin",
+    //   "https://invoicely-mern.vercel.app/"
+    // );
     // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     res.cookie("token", token, cookieOptions);
