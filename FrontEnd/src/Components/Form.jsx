@@ -190,6 +190,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
   return (
     <form
       id="form"
+      autoComplete="off"
       onSubmit={handleSubmit(onFormSubmit)}
       className={`border-4 ${
         theme === "light"
