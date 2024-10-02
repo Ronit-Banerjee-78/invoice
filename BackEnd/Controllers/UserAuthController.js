@@ -7,6 +7,14 @@ import { JWTGenerator } from "../Utils/JWTGenerator.js";
 
 // get User Details
 
+const cookieOptions = {
+  partitioned: true, //Add the Partitioned attribute to your cookie:This will allow the cookie to continue functioning as a third-party cookie in browsers that support this feature.
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  // domain: "invoicely-mern-backend.vercel.app",
+};
+
 export const getUser = async (req, res) => {
   const { id } = req.params;
   try {
@@ -65,11 +73,7 @@ export const signupUser = async (req, res) => {
 
     const token = JWTGenerator(user._id);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
+    res.cookie("token", token, cookieOptions);
 
     // Remove the password field before returning the user object
     const { password: removedPassword, ...userWithoutPassword } = user._doc;
@@ -118,11 +122,7 @@ export const loginUser = async (req, res) => {
 
     const token = JWTGenerator(user._id);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
+    res.cookie("token", token, cookieOptions);
 
     // Remove the password field before returning the user object
     const { password: removedPassword, ...userWithoutPassword } = user._doc;
@@ -211,11 +211,7 @@ export const refreshToken = async (req, res) => {
     );
     // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-    });
+    res.cookie("token", token, cookieOptions);
 
     res.json({ token });
   } catch (error) {
