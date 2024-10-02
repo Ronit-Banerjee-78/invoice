@@ -14,7 +14,7 @@ dotenv.config({
 const PORT = process.env.PORT;
 const ALLOWED_ORIGINS = [
   "https://invoicely-mern.vercel.app",
-  "https://localhost:5173",
+  "http://localhost:5173",
 ];
 
 // CORS middleware

@@ -21,6 +21,7 @@ export const getUser = async (req, res) => {
       "Access-Control-Allow-Origin",
       "https://invoicely-mern.vercel.app/"
     );
+    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     return res.status(200).json(user);
   } catch (error) {
@@ -54,10 +55,11 @@ export const signupUser = async (req, res) => {
     });
 
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Origin", [
-      "https://invoicely-mern.vercel.app/",
-      "https://localhost:5173",
-    ]);
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://invoicely-mern.vercel.app/"
+    );
+    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     await user.save();
 
@@ -66,7 +68,7 @@ export const signupUser = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     // Remove the password field before returning the user object
@@ -108,17 +110,18 @@ export const loginUser = async (req, res) => {
     }
 
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Origin", [
-      "https://invoicely-mern.vercel.app/",
-      "https://localhost:5173",
-    ]);
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://invoicely-mern.vercel.app/"
+    );
+    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     const token = JWTGenerator(user._id);
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     // Remove the password field before returning the user object
@@ -164,10 +167,11 @@ export const updateUserProfile = async (req, res) => {
     };
 
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Origin", [
-      "https://invoicely-mern.vercel.app/",
-      "https://localhost:5173",
-    ]);
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://invoicely-mern.vercel.app/"
+    );
+    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     const updatedUser = await User.findByIdAndUpdate(
       user._id,
@@ -201,15 +205,16 @@ export const refreshToken = async (req, res) => {
     const token = JWTGenerator(user._id);
 
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Origin", [
-      "https://invoicely-mern.vercel.app/",
-      "https://localhost:5173",
-    ]);
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "https://invoicely-mern.vercel.app/"
+    );
+    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     res.json({ token });
@@ -225,7 +230,7 @@ export const logoutUser = async (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     // secure: process.env.NODE_ENV === "production", // Ensure secure cookies in production
-    sameSite: "strict",
+    sameSite: "none",
   });
 
   // Optional: If you're using sessions, destroy the session
