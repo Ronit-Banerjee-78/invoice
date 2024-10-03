@@ -5,13 +5,12 @@ import {
   setUser,
 } from "../../FrontEnd/src/Redux/UserSlice.js";
 
-const URL = import.meta.env.VITE_API_URL;
+const URL = "http://localhost:8000/"; //import.meta.env.VITE_API_URL;
 // import.meta.env.VITE_API_URL ||
 // LocalStorage Operation for UserLogin , UserLogout and In RefreshPage Case
 
 export const checkLoginUser = (dispatch, userData, token) => {
   localStorage.setItem("user", JSON.stringify(userData));
-  console.log(token);
   dispatch(setUserAndToken({ user: userData, token }));
 };
 
@@ -58,6 +57,8 @@ export const checkAndRefreshToken = async (dispatch) => {
         body: JSON.stringify({ userId: userData._id }), // Sending UserID to regenerate the Token
       });
 
+      console.log("Response from fetch request in refreshtoken", response);
+
       // Ensure response is ok before proceeding
       if (!response.ok) {
         throw new Error("Failed to refresh token");
@@ -65,6 +66,8 @@ export const checkAndRefreshToken = async (dispatch) => {
 
       // Parse the response body
       const responseJson = await response.json();
+      console.log("Response : ", responseJson);
+
       const { token } = responseJson;
 
       // Use the parsed data

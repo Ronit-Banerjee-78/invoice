@@ -142,11 +142,16 @@ export const updateInvoiceStatus = async (req, res) => {
 export const updateInvoice = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("id:", id);
     const data = req.body;
+
+    console.log(req.body);
 
     if (!data) {
       return res.status(400).json({ message: "No data provided" });
     }
+
+    console.log("Received Updated Data : ", data);
 
     const {
       organizationData,
@@ -169,12 +174,12 @@ export const updateInvoice = async (req, res) => {
     // Update Client and Organization
     const updatedClient = await Client.findByIdAndUpdate(
       client._id,
-      clientData,
+      { ...clientData },
       { new: true }
     );
     const updatedOrganization = await Organization.findByIdAndUpdate(
       organization._id,
-      organizationData,
+      { ...organizationData },
       { new: true }
     );
 
@@ -188,9 +193,16 @@ export const updateInvoice = async (req, res) => {
       status,
       items,
     };
-    const updatedInvoice = await Invoice.findByIdAndUpdate(id, updatedData, {
+    const updatedInvoice = await Invoice.findByIdAndUpdate(id, ...updatedData, {
       new: true,
     });
+
+    console.log("---------------------------------");
+
+    console.log("DB Updated Data : ", updateInvoice);
+
+    console.log("---------------------------------");
+
     res.status(200).json(updatedInvoice);
   } catch (error) {
     res.status(500).json({ message: error.message });

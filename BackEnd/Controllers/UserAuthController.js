@@ -10,7 +10,7 @@ import { JWTGenerator } from "../Utils/JWTGenerator.js";
 const cookieOptions = {
   partitioned: true, //Add the Partitioned attribute to your cookie:This will allow the cookie to continue functioning as a third-party cookie in browsers that support this feature.
   httpOnly: true,
-  secure: true,
+  secure: false,
   sameSite: "none",
   // domain: "invoicely-mern-backend.vercel.app",
 };
@@ -168,9 +168,10 @@ export const updateUserProfile = async (req, res) => {
 
 export const refreshToken = async (req, res) => {
   const { userId } = req.body;
+
   try {
     const user = await User.findById(userId);
-    // console.log(user);
+    console.log("refreshToken User", user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

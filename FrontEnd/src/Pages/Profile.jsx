@@ -7,7 +7,7 @@ import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { MdOutlineCancel } from "react-icons/md";
 import UserForm from "../Components/UserForm";
-import { Text, CircularProgress } from "@chakra-ui/react";
+import { Text, CircularProgress, Flex } from "@chakra-ui/react";
 import { useGetUserQuery, useDeleteUserMutation } from "../Redux/UserApi";
 import { useNavigate, NavLink } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
@@ -32,9 +32,9 @@ function Profile() {
   const { user } = useSelector((state) => state.auth);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const dispatch = useDispatch();
-  const { _id } = user || {};
+  const userData = JSON.parse(localStorage.getItem("user"));
+  const { _id } = userData || {};
   const { data, refetch, isLoading, isError, error } = useGetUserQuery(_id);
-
   console.log(_id);
 
   const [deleteUser, { isLoading: isDeleteLoading }] = useDeleteUserMutation();

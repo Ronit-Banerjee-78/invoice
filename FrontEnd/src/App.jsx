@@ -48,7 +48,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/:id",
-        element: <Invoice />,
+        element: (
+          <ProtectedRoute>
+            <Invoice />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

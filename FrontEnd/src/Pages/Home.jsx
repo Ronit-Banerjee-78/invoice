@@ -17,19 +17,19 @@ const Home = () => {
 
   const { user, token, isAuthenticated } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    const localStorageUser = JSON.parse(localStorage.getItem("user"));
+  // useEffect(() => {
+  //   const localStorageUser = JSON.parse(localStorage.getItem("user"));
 
-    if (localStorageUser && !token) {
-      checkAndRefreshToken(dispatch).then((success) => {
-        if (!success) {
-          navigate("/login");
-        }
-      });
-    } else if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [dispatch, token, isAuthenticated, navigate]);
+  //   if (localStorageUser && !token) {
+  //     checkAndRefreshToken(dispatch).then((success) => {
+  //       if (!success) {
+  //         navigate("/login");
+  //       }
+  //     });
+  //   } else if (!isAuthenticated) {
+  //     navigate("/login");
+  //   }
+  // }, [dispatch, token, isAuthenticated, navigate]);
 
   const controlFormVisibility = () => {
     setIsFormVisible((prevState) => !prevState);

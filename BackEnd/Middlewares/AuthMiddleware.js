@@ -9,11 +9,12 @@ dotenv.config({
 export const UserAuthMiddleware = async (req, res, next) => {
   // Extract token from the Authorization header
   const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(" ")[1]; // Token is usually prefixed by 'Bearer'
+  const token = (authHeader && authHeader.split(" ")[1]) || req.cookies.token; // Token is usually prefixed by 'Bearer'
+  console.log("Token in middleware", token);
   const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
   // console.log("Decoded ", decoded);
   const userId = decoded._id;
-  // console.log("User ID from middleware", userId);
+  console.log("User ID from middleware", userId);
 
   if (!token) {
     return res
@@ -29,8 +30,8 @@ export const UserAuthMiddleware = async (req, res, next) => {
 
     try {
       const user = await User.findById(userId);
-      // console.log("-----------------------------------------------------");
-      // console.log("Middleware User", user);
+      console.log("-----------------------------------------------------");
+      console.log("Middleware User", user);
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }

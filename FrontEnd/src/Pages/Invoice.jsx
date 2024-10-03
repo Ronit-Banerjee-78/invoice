@@ -29,7 +29,8 @@ const Invoice = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const themeData = useContext(ThemeContext);
   const { theme, toggleTheme } = themeData;
-  const { data, isError, isLoading, error } = useGetSingleInvoiceQuery(id);
+  const { data, isError, isLoading, error, refetch } =
+    useGetSingleInvoiceQuery(id);
   const [deleteInvoice] = useDeleteInvoiceMutation(id);
   const [updateInvoiceStatus] = useUpdateInvoiceStatusMutation(id);
 

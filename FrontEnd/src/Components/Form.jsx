@@ -137,7 +137,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
     try {
       if (_id) {
         try {
-          // console.log("Editing existing invoice");
+          console.log("Updated Data :", formData);
           await updateInvoice({ id: _id, ...formData }).unwrap();
           toast({
             title: "Invoice edited successfully.",

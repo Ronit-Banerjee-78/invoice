@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const URL = import.meta.env.VITE_API_URL;
+const URL = "http://localhost:8000/"; //import.meta.env.VITE_API_URL;
 // import.meta.env.VITE_API_URL ||
 // Shared base query configuration
 const baseQueryWithCreds = fetchBaseQuery({
@@ -11,6 +11,7 @@ const baseQueryWithCreds = fetchBaseQuery({
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
+    headers.set("Content-Type", "application/json");
     return headers;
   },
 });

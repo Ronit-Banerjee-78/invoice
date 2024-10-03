@@ -8,6 +8,7 @@ import {
   logoutUser,
   deleteUser,
 } from "../Controllers/UserAuthController.js";
+import { UserAuthMiddleware } from "../Middlewares/AuthMiddleware.js";
 
 const router = express.Router();
 
