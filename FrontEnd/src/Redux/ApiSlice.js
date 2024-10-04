@@ -63,7 +63,6 @@ export const InvoicesApi = createApi({
       query: (id) => ({
         url: `api/invoices/${id}`,
         method: "DELETE",
-        body: id,
       }),
       invalidatesTags: ["invoice"],
     }),

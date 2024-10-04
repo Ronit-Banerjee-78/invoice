@@ -131,14 +131,17 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
   const toast = useToast();
 
   const onFormSubmit = async (formData) => {
-    console.log("Form submitted with data:");
+    console.log("Form submitted with data:", formData);
     // console.log('Existing data id:', _id);
 
     try {
       if (_id) {
         try {
           console.log("Updated Data :", formData);
-          await updateInvoice({ id: _id, ...formData }).unwrap();
+          const response = await updateInvoice({
+            id: _id,
+            ...formData,
+          }).unwrap();
           toast({
             title: "Invoice edited successfully.",
             description: "We've edited your invoice for you.",
@@ -147,7 +150,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
             isClosable: true,
             position: "top",
           });
-          // console.log("Invoice edited successfully", formData);
+          console.log("Invoice edited successfully", response);
         } catch (error) {
           toast({
             title: "Error",

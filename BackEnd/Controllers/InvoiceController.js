@@ -92,7 +92,7 @@ export const postInvoice = async (req, res) => {
       createdBy: userId,
     });
 
-    // console.log(invoice);
+    console.log("Invoice Added", invoice);
 
     await invoice.save();
 
@@ -174,26 +174,27 @@ export const updateInvoice = async (req, res) => {
     // Update Client and Organization
     const updatedClient = await Client.findByIdAndUpdate(
       client._id,
-      { ...clientData },
+      { clientData },
       { new: true }
     );
     const updatedOrganization = await Organization.findByIdAndUpdate(
       organization._id,
-      { ...organizationData },
+      { organizationData },
       { new: true }
     );
 
     // Update Invoice
     const updatedData = {
-      client: updatedClient,
-      organization: updatedOrganization,
+      client: updatedClient._id,
+      organization: updatedOrganization._id,
       invoiceDate,
       paymentTerms,
       projectDescription,
-      status,
       items,
+      status,
+      createdBy,
     };
-    const updatedInvoice = await Invoice.findByIdAndUpdate(id, ...updatedData, {
+    const updatedInvoice = await Invoice.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
@@ -220,7 +221,7 @@ export const deleteInvoice = async (req, res) => {
 
   try {
     const invoice = await Invoice.findById(id).exec();
-    console.log(invoice);
+    // console.log(invoice);
     const { client, organization } = invoice;
     // Delete Invoice , Client & Organization
     await Client.findByIdAndDelete(client);

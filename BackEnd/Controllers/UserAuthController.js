@@ -171,7 +171,7 @@ export const refreshToken = async (req, res) => {
 
   try {
     const user = await User.findById(userId);
-    console.log("refreshToken User", user);
+    // console.log("refreshToken User", user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

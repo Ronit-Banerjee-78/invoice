@@ -46,7 +46,7 @@ export const checkLogoutUser = (dispatch) => {
 
 export const checkAndRefreshToken = async (dispatch) => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  console.log("Local Storage User : ", userData);
+  // console.log("Local Storage User : ", userData);
   if (userData) {
     try {
       const response = await fetch(`${URL}api/user/refresh-token`, {
@@ -57,7 +57,7 @@ export const checkAndRefreshToken = async (dispatch) => {
         body: JSON.stringify({ userId: userData._id }), // Sending UserID to regenerate the Token
       });
 
-      console.log("Response from fetch request in refreshtoken", response);
+      // console.log("Response from fetch request in refreshtoken", response);
 
       // Ensure response is ok before proceeding
       if (!response.ok) {
@@ -66,7 +66,7 @@ export const checkAndRefreshToken = async (dispatch) => {
 
       // Parse the response body
       const responseJson = await response.json();
-      console.log("Response : ", responseJson);
+      // console.log("Response : ", responseJson);
 
       const { token } = responseJson;
 
