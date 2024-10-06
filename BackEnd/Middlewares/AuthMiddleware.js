@@ -9,7 +9,9 @@ dotenv.config({
 export const UserAuthMiddleware = async (req, res, next) => {
   // Extract token from the Authorization header
   const authHeader = req.headers.authorization;
-  const token = (authHeader && authHeader.split(" ")[1]) || req.cookies.token; // Token is usually prefixed by 'Bearer'
+  const token = (authHeader && authHeader.split(" ")[1]) || req.cookies.token;
+  // the reason i am checking the existence of token in both authHeader and request cookie is because if the user is already logged in and data hasn't been changed then the singleInvoice hook won't get triggered and we will get the cached data from the hook. meaning that no backend query that means we have to get toke from request cookie.
+  // Token is usually prefixed by 'Bearer'
   // console.log("Token in middleware", token);
   const decoded = jwt.verify(token, process.env.JSON_WEB_TOKEN_SECRET);
   // console.log("Decoded ", decoded);

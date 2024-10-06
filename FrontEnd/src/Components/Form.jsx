@@ -12,6 +12,7 @@ import {
 import { useToast } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { ThemeContext } from "../App";
+import { useParams } from "react-router-dom";
 
 const formSchema = z.object({
   status: z.enum(["Paid", "Pending", "Draft"], {
@@ -51,6 +52,8 @@ const formSchema = z.object({
 const Form = ({ isFormVisible, controlFormVisibility, data }) => {
   const themeData = useContext(ThemeContext);
   const { theme, toggleTheme } = themeData;
+  const { id } = useParams();
+  console.log(id);
   const {
     client,
     organization,
@@ -59,7 +62,6 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
     invoiceDate,
     items,
     paymentTerms,
-    _id,
   } = data || {};
   const { streetAddress, city, postCode, country } = organization || {};
   const {
@@ -131,15 +133,15 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
   const toast = useToast();
 
   const onFormSubmit = async (formData) => {
-    console.log("Form submitted with data:", formData);
-    // console.log('Existing data id:', _id);
+    // console.log("Form submitted with data:", formData);
+    // console.log('Existing data id:', id);
 
     try {
-      if (_id) {
+      if (id) {
         try {
           console.log("Updated Data :", formData);
           const response = await updateInvoice({
-            id: _id,
+            id: id,
             ...formData,
           }).unwrap();
           toast({

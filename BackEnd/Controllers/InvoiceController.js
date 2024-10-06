@@ -144,14 +144,11 @@ export const updateInvoice = async (req, res) => {
     const { id } = req.params;
     console.log("id:", id);
     const data = req.body;
-
-    console.log(req.body);
-
     if (!data) {
       return res.status(400).json({ message: "No data provided" });
     }
 
-    console.log("Received Updated Data : ", data);
+    // console.log("Received Updated Data : ", data);
 
     const {
       organizationData,
@@ -169,17 +166,17 @@ export const updateInvoice = async (req, res) => {
       .populate("organization");
     console.log(existingInvoice);
 
-    const { client, organization } = existingInvoice;
+    const { client, organization, createdBy } = existingInvoice;
 
     // Update Client and Organization
     const updatedClient = await Client.findByIdAndUpdate(
       client._id,
-      { clientData },
+      { clientData, createdBy },
       { new: true }
     );
     const updatedOrganization = await Organization.findByIdAndUpdate(
       organization._id,
-      { organizationData },
+      { organizationData, createdBy },
       { new: true }
     );
 
@@ -198,11 +195,11 @@ export const updateInvoice = async (req, res) => {
       new: true,
     });
 
-    console.log("---------------------------------");
+    // console.log("---------------------------------");
 
-    console.log("DB Updated Data : ", updateInvoice);
+    // console.log("DB Updated Data : ", updateInvoice);
 
-    console.log("---------------------------------");
+    // console.log("---------------------------------");
 
     res.status(200).json(updatedInvoice);
   } catch (error) {

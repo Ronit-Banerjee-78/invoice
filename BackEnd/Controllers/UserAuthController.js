@@ -10,8 +10,8 @@ import { JWTGenerator } from "../Utils/JWTGenerator.js";
 const cookieOptions = {
   partitioned: true, //Add the Partitioned attribute to your cookie:This will allow the cookie to continue functioning as a third-party cookie in browsers that support this feature.
   httpOnly: true,
-  secure: false,
-  sameSite: "none",
+  secure: true,
+  sameSite: "lax",
   // domain: "invoicely-mern-backend.vercel.app",
 };
 
@@ -190,9 +190,7 @@ export const refreshToken = async (req, res) => {
 export const logoutUser = async (req, res) => {
   req.user = null;
   res.clearCookie("token", {
-    httpOnly: true,
-    // secure: process.env.NODE_ENV === "production", // Ensure secure cookies in production
-    sameSite: "none",
+    cookieOptions,
   });
 
   // Optional: If you're using sessions, destroy the session

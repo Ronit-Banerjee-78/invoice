@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   useGetSingleInvoiceQuery,
   useUpdateInvoiceStatusMutation,
@@ -22,6 +22,7 @@ import { RiEdit2Fill } from "react-icons/ri";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { MdOutlinePublishedWithChanges } from "react-icons/md";
 import { useToast } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const Invoice = () => {
   const { id } = useParams();
@@ -33,12 +34,17 @@ const Invoice = () => {
     useGetSingleInvoiceQuery(id);
   const [deleteInvoice] = useDeleteInvoiceMutation(id);
   const [updateInvoiceStatus] = useUpdateInvoiceStatusMutation(id);
+  const { token } = useSelector((state) => state.auth);
 
   const trimId = id.slice(-7);
 
   const controlFormVisibility = () => {
     setIsFormVisible((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [token]);
 
   const toast = useToast();
 
