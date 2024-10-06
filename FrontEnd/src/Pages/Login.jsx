@@ -27,7 +27,7 @@ function Login() {
   const onFormSubmit = async (formData) => {
     try {
       const response = await loginUser({ ...formData }).unwrap();
-      console.log("Response", response);
+      // console.log("Response", response);
       // Extract token and user from the response
       const { token, user } = response;
 

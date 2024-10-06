@@ -12,7 +12,6 @@ const cookieOptions = {
   httpOnly: true,
   secure: true,
   sameSite: "none",
-  // domain: "invoicely-mern-backend.vercel.app",
 };
 
 export const getUser = async (req, res) => {

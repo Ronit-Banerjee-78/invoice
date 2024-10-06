@@ -26,7 +26,7 @@ router.post("/", postInvoice);
 // PATCH invoices
 router.patch("/:id", updateInvoiceStatus);
 
-// PATCH invoices
+// PUT invoices
 router.put("/:id", updateInvoice);
 
 // DELETE Invoice

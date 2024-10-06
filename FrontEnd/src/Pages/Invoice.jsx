@@ -42,9 +42,9 @@ const Invoice = () => {
     setIsFormVisible((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [token]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [token]);
 
   const toast = useToast();
 

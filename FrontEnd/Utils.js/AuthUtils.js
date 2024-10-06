@@ -35,7 +35,7 @@ export const updateUserProfile = (dispatch, userData) => {
 
 export const checkSignupUser = (dispatch, userData, token) => {
   localStorage.setItem("user", JSON.stringify(userData));
-  console.log(token);
+  // console.log(token);
   dispatch(setUserAndToken({ user: userData, token }));
 };
 
@@ -77,7 +77,7 @@ export const checkAndRefreshToken = async (dispatch) => {
       dispatch(setUserAndToken({ user: userData, token }));
       return true;
     } catch (error) {
-      console.error("Error refreshing token:", error);
+      // console.error("Error refreshing token:", error);
       checkLogoutUser(dispatch);
       return false;
     }

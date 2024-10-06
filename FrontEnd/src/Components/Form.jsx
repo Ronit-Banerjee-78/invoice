@@ -139,7 +139,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
     try {
       if (id) {
         try {
-          console.log("Updated Data :", formData);
+          // console.log("Updated Data :", formData);
           const response = await updateInvoice({
             id: id,
             ...formData,
@@ -152,7 +152,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
             isClosable: true,
             position: "top",
           });
-          console.log("Invoice edited successfully", response);
+          // console.log("Invoice edited successfully", response);
         } catch (error) {
           toast({
             title: "Error",
