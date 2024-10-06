@@ -53,7 +53,7 @@ const Form = ({ isFormVisible, controlFormVisibility, data }) => {
   const themeData = useContext(ThemeContext);
   const { theme, toggleTheme } = themeData;
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const {
     client,
     organization,

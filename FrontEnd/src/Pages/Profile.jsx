@@ -35,7 +35,7 @@ function Profile() {
   const userData = JSON.parse(localStorage.getItem("user"));
   const { _id } = userData || {};
   const { data, refetch, isLoading, isError, error } = useGetUserQuery(_id);
-  console.log(_id);
+  // console.log(_id);
 
   const [deleteUser, { isLoading: isDeleteLoading }] = useDeleteUserMutation();
 
