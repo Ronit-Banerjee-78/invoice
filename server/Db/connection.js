@@ -4,7 +4,7 @@ import { DB_NAME } from "../constant.js";
 const connectDB = async () => {
   try {
     const connectionInstance = mongoose.connect(
-      `${process.env.MONGODB_URL}`
+      `${process.env.MONGODB_URL}`,{ useNewUrlParser: true, useUnifiedTopology: true }
     );
   } catch (error) {
     console.log("MongoDB Connection error : ", error);
