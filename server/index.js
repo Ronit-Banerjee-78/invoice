@@ -13,7 +13,7 @@ dotenv.config({
 
 app.use(
   cors({
-    origin: process.env.FRONT_END_URL, //process.env.FRONT_END_URL,
+    origin: 'https://invoice-six-theta.vercel.app/', //process.env.FRONT_END_URL,
     credentials: true,
   })
 );
