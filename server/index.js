@@ -40,4 +40,5 @@ connectDB();
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
+  console.log(`Server is running on PORT ${process.env.MONGODB_URL}`);
 });
